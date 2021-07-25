@@ -34,7 +34,7 @@ Import to docker from a local archive:
 docker import /path/to/image.tgz
 ```
 
-# Snapshhoting!
+# Image Snapshots!
 
 Basiscally commit commad shohuld be used for snnapshot operations. That snapshot is an image, which you can put on a (private) repository to be able to pull it on another host.
 ```
