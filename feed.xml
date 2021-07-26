@@ -4,7 +4,7 @@
   <id>www.cihatyildiz.com/</id>
   <title>Cihat Yildiz</title>
   <subtitle>A minimal, portfolio, sidebar, bootstrap Jekyll theme with responsive web design and focuses on text presentation.</subtitle>
-  <updated>2021-07-26T14:24:12+08:00</updated>
+  <updated>2021-07-26T15:00:59+08:00</updated>
   <author>
     <name>Cihat Yildiz</name>
     <uri>www.cihatyildiz.com/</uri>
@@ -22,9 +22,9 @@
   <entry>
     <title>Reversing Challenge - Hack The Box - Impossible Password</title>
     <link href="www.cihatyildiz.com/posts/hack-the-box-reversing-impossible-password/" rel="alternate" type="text/html" title="Reversing Challenge - Hack The Box - Impossible Password" />
-    <published>2021-07-25T20:55:00+08:00</published>
+    <published>2021-07-26T04:55:00+08:00</published>
   
-    <updated>2021-07-25T20:55:00+08:00</updated>
+    <updated>2021-07-26T14:51:52+08:00</updated>
   
     <id>www.cihatyildiz.com/posts/hack-the-box-reversing-impossible-password/</id>
     <content src="www.cihatyildiz.com/posts/hack-the-box-reversing-impossible-password/" />
@@ -46,12 +46,12 @@
 
 
 
-      In this article I show how to solve the HTB reversing challenge called “Impossible Password”. Its been a long time solving some reversing puzzles. I want to start with this one and share with you.
+      In this blog post, we will see the solution of a Hack-The-Box reversing challenge called “Impossible Password”. Its been a long time solving some reversing puzzles :)
 
 Let’s check the binary first.
 
 $ file impossible_password.bin 
-impossible_password.bin: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so....
+impossible_password.bin: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, Build...
     </summary>
   
 
@@ -185,7 +185,7 @@ Port and Service Discover...
     <link href="www.cihatyildiz.com/posts/a-cheatsheet-for-docker/" rel="alternate" type="text/html" title="A Cheatsheet for Docker" />
     <published>2020-10-01T20:55:00+08:00</published>
   
-    <updated>2021-07-25T14:22:58+08:00</updated>
+    <updated>2020-10-01T20:55:00+08:00</updated>
   
     <id>www.cihatyildiz.com/posts/a-cheatsheet-for-docker/</id>
     <content src="www.cihatyildiz.com/posts/a-cheatsheet-for-docker/" />
