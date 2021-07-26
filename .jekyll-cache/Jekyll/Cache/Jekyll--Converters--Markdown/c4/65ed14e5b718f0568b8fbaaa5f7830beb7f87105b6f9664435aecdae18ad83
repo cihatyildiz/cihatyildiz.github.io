@@ -1,0 +1,250 @@
+I"�J<p>In this article I show how to solve the HTB reversing challenge called “Impossible Password”. Its been a long time solving some reversing puzzles. I want to start with this one and share with you.</p>
+
+<p>Let’s check the binary first.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>file impossible_password.bin 
+impossible_password.bin: ELF 64-bit LSB executable, x86-64, version 1 <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span class="k">for </span>GNU/Linux 2.6.32, BuildID[sha1]<span class="o">=</span>ba116ba1912a8c3779ddeb579404e2fdf34b1568, stripped
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This is a 64-bit ELF binary. So, we can use <em>objdump</em> command to see imported functions in this application</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>objdump <span class="nt">-T</span> impossible_password.bin 
+
+impossible_password.bin:     file format elf64-x86-64
+
+DYNAMIC SYMBOL TABLE:
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 putchar
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 <span class="nb">printf
+</span>0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 __libc_start_main
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 srand
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 strcmp
+0000000000000000  w   D  <span class="k">*</span>UND<span class="k">*</span>  0000000000000000              __gmon_start__
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 <span class="nb">time
+</span>0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 malloc
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.7   __isoc99_scanf
+0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 <span class="nb">exit
+</span>0000000000000000      DF <span class="k">*</span>UND<span class="k">*</span>  0000000000000000  GLIBC_2.2.5 rand
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>We can the that the application uses a couple functions from <em>glibc</em> library. We can use this information during our analysis.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>strings impossible_password.bin 
+<span class="nt">---</span> SNIP <span class="nt">---</span>
+<span class="nb">printf
+</span>malloc
+strcmp
+__libc_start_main
+GLIBC_2.7
+GLIBC_2.2.5
+SuperSeKretKey
+%20s
+GCC: <span class="o">(</span>GNU<span class="o">)</span> 4.8.5 20150623 <span class="o">(</span>Red Hat 4.8.5-11<span class="o">)</span>
+<span class="nt">---</span> SNIP <span class="nt">---</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>When I search strings in the application I can see many information, but looks like “SuperSeKretKey” is different than others. Now let’s run the application and see how it works.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>./impossible_password.bin 
+<span class="k">*</span> asdada
+<span class="o">[</span>asdada]
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The application shows what I enter as an input. Now I will use ltrace application to see if there is any library functions are used.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>ltrace ./impossible_password.bin                                                                                                                                                                                                                     1 ⨯
+__libc_start_main<span class="o">(</span>0x40085d, 1, 0x7ffdb1afea48, 0x4009e0 &lt;unfinished ...&gt;
+<span class="nb">printf</span><span class="o">(</span><span class="s2">"* "</span><span class="o">)</span>                                                                                                                                                 <span class="o">=</span> 2
+__isoc99_scanf<span class="o">(</span>0x400a82, 0x7ffdb1afe930, 0, 0<span class="k">*</span> testString
+<span class="o">)</span>                                                                                                               <span class="o">=</span> 1
+<span class="nb">printf</span><span class="o">(</span><span class="s2">"[%s]</span><span class="se">\n</span><span class="s2">"</span>, <span class="s2">"testString"</span><span class="o">[</span>testString]
+<span class="o">)</span>                                                                                                                               <span class="o">=</span> 13
+strcmp<span class="o">(</span><span class="s2">"testString"</span>, <span class="s2">"SuperSeKretKey"</span><span class="o">)</span>                                                                                                                       <span class="o">=</span> 33
+<span class="nb">exit</span><span class="o">(</span>1 &lt;no <span class="k">return</span> ...&gt;
++++ exited <span class="o">(</span>status 1<span class="o">)</span> +++
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Basically what happens is, the application compare my input with “<em>SuperSeKretKey</em>”. if my input doesn’t match with the string data, exit the program.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>ltrace ./impossible_password.bin                                                                                                                                                                                                                   130 ⨯
+__libc_start_main<span class="o">(</span>0x40085d, 1, 0x7ffed7da77a8, 0x4009e0 &lt;unfinished ...&gt;
+<span class="nb">printf</span><span class="o">(</span><span class="s2">"* "</span><span class="o">)</span>                                                                                                                                                 <span class="o">=</span> 2
+__isoc99_scanf<span class="o">(</span>0x400a82, 0x7ffed7da7690, 0, 0<span class="k">*</span> SuperSeKretKey
+<span class="o">)</span>                                                                                                               <span class="o">=</span> 1
+<span class="nb">printf</span><span class="o">(</span><span class="s2">"[%s]</span><span class="se">\n</span><span class="s2">"</span>, <span class="s2">"SuperSeKretKey"</span><span class="o">[</span>SuperSeKretKey]
+<span class="o">)</span>                                                                                                                           <span class="o">=</span> 17
+strcmp<span class="o">(</span><span class="s2">"SuperSeKretKey"</span>, <span class="s2">"SuperSeKretKey"</span><span class="o">)</span>                                                                                                                   <span class="o">=</span> 0
+<span class="nb">printf</span><span class="o">(</span><span class="s2">"** "</span><span class="o">)</span>                                                                                                                                                <span class="o">=</span> 3
+__isoc99_scanf<span class="o">(</span>0x400a82, 0x7ffed7da7690, 0, 0<span class="k">**</span> testString
+<span class="o">)</span>                                                                                                               <span class="o">=</span> 1
+<span class="nb">time</span><span class="o">(</span>0<span class="o">)</span>                                                                                                                                                      <span class="o">=</span> 1626591042
+srand<span class="o">(</span>0x9489d839, 10, 0x930c3128, 0<span class="o">)</span>                                                                                                                         <span class="o">=</span> 0
+malloc<span class="o">(</span>21<span class="o">)</span>                                                                                                                                                   <span class="o">=</span> 0x22e9ac0
+rand<span class="o">(</span>0x22e9ac0, 21, 33, 0x22e9ad0<span class="o">)</span>                                                                                                                           <span class="o">=</span> 0x6c8094
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac0, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x5436d442
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac1, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0xa242547
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac2, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x2a045efa
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac3, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x379c34a0
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac4, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x75ec02c3
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac5, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x74091ee1
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac6, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x22097b52
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac7, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x156e190a
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac8, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x624047de
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ac9, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x6893f2f1
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9aca, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x17211d98
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9acb, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x264b215c
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9acc, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x106a3853
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9acd, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0xce7992a
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ace, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x3d0562f5
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9acf, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x14484045
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ad0, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x4e8f4c28
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ad1, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x2b6ff460
+rand<span class="o">(</span>0x7f3b53b9c740, 0x7ffed7da75f4, 0x22e9ad2, 94<span class="o">)</span>                                                                                                          <span class="o">=</span> 0x33cf64a2
+strcmp<span class="o">(</span><span class="s2">"testString"</span>, <span class="s2">"q3</span><span class="se">\\</span><span class="s2">?C4&lt;=c'~G#</span><span class="nv">$[</span><span class="s2">h8Kck"</span><span class="o">)</span>                                                                                                                <span class="o">=</span> 3
++++ exited <span class="o">(</span>status 3<span class="o">)</span> +++                                                                                                                                                                                                                                  
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Once we use the key in the first step we see another step. After I enter the second input the applications runs number of rand function before comparison</p>
+
+<p>We need to analyze the binary. I will use radare2 for binary analysis.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre><span class="nv">$ </span>r2 <span class="nt">-w</span> impossible_password.bin
+<span class="o">[</span>0x004006a0]&gt; s main
+<span class="o">[</span>0x0040085d]&gt; aaa
+<span class="o">[</span>x] Analyze all flags starting with sym. and entry0 <span class="o">(</span>aa<span class="o">)</span>
+<span class="o">[</span>x] Analyze <span class="k">function </span>calls <span class="o">(</span>aac<span class="o">)</span>
+<span class="o">[</span>x] Analyze len bytes of instructions <span class="k">for </span>references <span class="o">(</span>aar<span class="o">)</span>
+<span class="o">[</span>x] Check <span class="k">for </span>vtables
+<span class="o">[</span>x] Type matching analysis <span class="k">for </span>all functions <span class="o">(</span>aaft<span class="o">)</span>
+<span class="o">[</span>x] Propagate noreturn information
+<span class="o">[</span>x] Use <span class="nt">-AA</span> or aaaa to perform additional experimental analysis.
+<span class="o">[</span>0x0040085d]&gt; s main
+<span class="o">[</span>0x0040085d]&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Let’s disassembly the application</p>
+
+<p><img src="/assets/img/htb/htb_reverse_impossible_password_1.png" alt="upload-image" /></p>
+
+<p>In the assembly code we can see the <em>SuperSeKretKey</em> in the code. When we review the rest of the code, we see that there are two <em>strcmp</em> function in the code. Those functions used for to compare user input.</p>
+
+<p><img src="/assets/img/htb/htb_reverse_impossible_password_2.png" alt="upload-image" /></p>
+
+<p>As we see above, in the line 0x0040094f, application runs a function. When you see the details this function is to generate random string number. After this line, the generated string is used in the second <em>strcmp</em> operation. That means we will see different strings in every run and we won’t be able to match strings. The code never will come to the address <em>0x00400971</em>. I assume the flag for this challenge is stored in the function <em>fcn.00400978</em>.</p>
+
+<p>To access the function <em>fcn.00400978,</em> we can add JMP just before 0x00400968 or change the instruction at 0x00400968. Adding NOPs would be a good option i think. I added one NOP but I got “segmentation fault”. So you need to add minimum 2 NOPs in the app</p>
+
+<p><img src="/assets/img/htb/htb_reverse_impossible_password_3.png" alt="upload-image" /></p>
+
+<p>Next step I removed the JNE instruction and added 9090 instead. After the change we can run the code again and get the flag.</p>
+
+<p><img src="/assets/img/htb/htb_reverse_impossible_password_4.png" alt="upload-image" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> --><td class="rouge-code"><pre>Radare2 Tips:
+V - for visual view
+c - for cursor navigation
+i - insert instruction
+s &lt;functions&gt; - to select the function
+pdf - print function details
+aaa - analyze all referenced code 
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

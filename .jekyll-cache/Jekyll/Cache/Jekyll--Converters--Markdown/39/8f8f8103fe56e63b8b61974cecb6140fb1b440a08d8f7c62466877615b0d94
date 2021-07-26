@@ -1,0 +1,127 @@
+I"ù#<p>if you are using Docker in your local or remote ennvironment, sometimes you might have trouble to manage Docker images and containers. I want to share a small cheatsheet that I used. I think this is very short and usefull cheatsheet.</p>
+
+<h1 id="exportimport">Export/Import</h1>
+
+<p>Export docker image to tar file:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker export &lt;container-name&gt; &gt; latest.tar
+</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker export --output="latest.tar" &lt;container-name&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Import docker image via stdin:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>cat image.tgz | docker import - imagelocal:new
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Import with a commit message</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>cat image.tgz | docker import --message "New image imported from tarball" - imagelocal:new
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Import to docker from a local archive:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker import /path/to/image.tgz
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="image-snapshots">Image Snapshots!</h1>
+
+<p>Basiscally commit commad shohuld be used for snnapshot operations. That snapshot is an image, which you can put on a (private) repository to be able to pull it on another host.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker commit
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Downnload image from private registery.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> --><td class="rouge-code"><pre>docker login myrepo.com
+docker pull myrepo.com/myimage
+docker pull myrepo.com/myimage:mytag
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>If you dont specify a private repo, docker will try to download thhe image from docker-hub</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker pull debian
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="other-docker-commands">Other Docker Commands</h1>
+
+<p>Manage the Docker serivice:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>service docker start/stop/status/restart
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>list running docker containers:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker ps
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Open a shell in a container:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker exec -it &lt;container-name&gt; /bin/bash
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>run a command innside docker:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker exec &lt;container-name&gt; &lt;command&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>list docker images:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker image ls
+</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker images
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>list docker cotainers:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker container ls
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>remove all docker images:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker rmi $(docker images)
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>run docker image:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker run &lt;image-name&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>stop docker image:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker stop &lt;containenr-name&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>stop running container through SIGKILL:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker stop &lt;image-name&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>list conntainer networks:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker network ls
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>pull docker image from docker-hub repository:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker pull kalilinux/kali
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Remove unused data:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>docker system prune
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="reference-cheatsheets">Reference Cheatsheets</h1>
+<ul>
+  <li><a href="https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf">https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf</a></li>
+  <li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a></li>
+  <li><a href="https://morioh.com/p/b1b47d94f1de">docker-compose reference</a></li>
+  <li><a href="https://winsmarts.com/snapshot-a-docker-container-20df59bbd473">Snapshoht a docker container</a></li>
+</ul>
+
+:ET
