@@ -1,7 +1,7 @@
 ---
 title: Reversing Challenge - Hack The Box - Impossible Password
 author: Cihat Yildiz
-date: 2021-07-25 20:55:00 +0800
+date: 2021-07-25 20:55:00 +0000
 categories: [hackthebox]
 tags: [ctf]
 pin: false
