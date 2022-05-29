@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cheatsheet on Cihat Yildiz</title>
+    <link>https://www.cihatyildiz.com/categories/cheatsheet/</link>
+    <description>Cihat Yildiz (cheatsheet)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Oct 2020 20:55:00 +0800</lastBuildDate>
+    
+    <atom:link href="https://www.cihatyildiz.com/categories/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Cheatsheet for Docker</title>
+      <link>https://www.cihatyildiz.com/post/2020-10-01-a-cheatsheet-for-docker/</link>
+      <pubDate>Thu, 01 Oct 2020 20:55:00 +0800</pubDate>
+      
+      <guid>https://www.cihatyildiz.com/post/2020-10-01-a-cheatsheet-for-docker/</guid>
+      <description>&lt;p&gt;if you are using Docker in your local or remote ennvironment, sometimes you might have trouble to manage Docker images and containers. I want to share a small cheatsheet that I used. I think this is very short and usefull cheatsheet.&lt;/p&gt;
+&lt;h1 id=&#34;exportimport&#34; &gt;Export/Import
+&lt;span&gt;
+    &lt;a href=&#34;#exportimport&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;Export docker image to tar file:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker export &amp;lt;container-name&amp;gt; &amp;gt; latest.tar
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker export --output=&amp;#34;latest.tar&amp;#34; &amp;lt;container-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Import docker image via stdin:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat image.tgz | docker import - imagelocal:new
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Import with a commit message&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat image.tgz | docker import --message &amp;#34;New image imported from tarball&amp;#34; - imagelocal:new
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Import to docker from a local archive:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker import /path/to/image.tgz
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;image-snapshots&#34; &gt;Image Snapshots!
+&lt;span&gt;
+    &lt;a href=&#34;#image-snapshots&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;Basiscally commit commad shohuld be used for snnapshot operations. That snapshot is an image, which you can put on a (private) repository to be able to pull it on another host.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker commit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Downnload image from private registery.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker login myrepo.com
+docker pull myrepo.com/myimage
+docker pull myrepo.com/myimage:mytag
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you dont specify a private repo, docker will try to download thhe image from docker-hub&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker pull debian
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;other-docker-commands&#34; &gt;Other Docker Commands
+&lt;span&gt;
+    &lt;a href=&#34;#other-docker-commands&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;Manage the Docker serivice:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;service docker start/stop/status/restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;list running docker containers:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker ps
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Open a shell in a container:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker exec -it &amp;lt;container-name&amp;gt; /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;run a command innside docker:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker exec &amp;lt;container-name&amp;gt; &amp;lt;command&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;list docker images:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker image ls
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker images
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;list docker cotainers:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker container ls
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;remove all docker images:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker rmi $(docker images)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;run docker image:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run &amp;lt;image-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stop docker image:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker stop &amp;lt;containenr-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stop running container through SIGKILL:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker stop &amp;lt;image-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;list conntainer networks:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker network ls
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;pull docker image from docker-hub repository:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker pull kalilinux/kali
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Remove unused data:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker system prune
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;reference-cheatsheets&#34; &gt;Reference Cheatsheets
+&lt;span&gt;
+    &lt;a href=&#34;#reference-cheatsheets&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf&#34;&gt;https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/engine/reference/builder/&#34;&gt;Dockerfile reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://morioh.com/p/b1b47d94f1de&#34;&gt;docker-compose reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://winsmarts.com/snapshot-a-docker-container-20df59bbd473&#34;&gt;Snapshoht a docker container&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Win32 System Programming - Part 4 - Cihat Yildiz</title>
+
+<meta name="description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder.">
+
+
+
+<link rel="icon" type="image/x-icon" href="https://www.cihatyildiz.com/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://www.cihatyildiz.com/favicon.png">
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://www.cihatyildiz.com/css/style.min.0a537f3bb0e983fac9fdd9ab89517b7c25e24c3e34d140b76e8ae7a11ab74cb1.css" integrity="sha256-ClN/O7Dpg/rJ/dmriVF7fCXiTD400UC3bornoRq3TLE=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Win32 System Programming - Part 4" />
+<meta property="og:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.cihatyildiz.com/post/2014-09-22-win32-system-prog-part4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-09-22T20:55:00+08:00" />
+<meta property="article:modified_time" content="2014-09-22T20:55:00+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Win32 System Programming - Part 4"/>
+<meta name="twitter:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder."/>
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+        <a href="/"><strong>Cihat Yildiz</strong></a>
+    </h1>
+    <ul class="social-icons">
+
+
+    
+        <li>
+            <a href="https://twitter.com/cihatix" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://www.linkedin.com/in/cihatyildiz/" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://github.com/mitrichius/hugo-theme-anubis" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    
+    <li>
+        <a href="/index.xml" title="RSS" rel="me">
+        <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+        </a>
+    </li>
+
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://www.cihatyildiz.com/about/" title="">About</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/projects/" title="">Projects</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/trainings/" title="">Trainings</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/posts/" title="">Archive</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/tags/" title="">Tags</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Win32 System Programming - Part 4</h1>
+
+                
+            </header>
+        </div>
+        <div class="content e-content">
+            <h2 id="proseslerin-komut-satiri-argumanlari-command-line-arguments-of-a-process" >Proseslerin komut satiri argumanlari (Command line arguments of a process)
+<span>
+    <a href="#proseslerin-komut-satiri-argumanlari-command-line-arguments-of-a-process">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><ul>
+<li>Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir.</li>
+<li>windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir.</li>
+<li>Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir.</li>
+<li>Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder. Sonra onu boskuk karakterlerinden parse ederek ayirir ve main fonksiyonuna gecirir.</li>
+<li>UNIX / Linux sistemlerin komut satiri argumanlari tek tek exec fonksiyonlarinda verilmektedir.</li>
+<li>komut satiri argumanlari process kontrol blogunda saklanmaktadir.</li>
+</ul>
+<h3 id="gnu-stili-komut-satiri-argumanlari" >GNU Stili komut satiri argumanlari
+<span>
+    <a href="#gnu-stili-komut-satiri-argumanlari">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Klasik GNU sisteminde komut satiri argumanalari 3 bicimde olabilir.</p>
+<p>1.seceneksiz arguman 2.yalnizca secenek 3.secenekli arguman</p>
+<ul>
+<li>secenek bir tire ve tek bir karakterden olusur. (orn, ls -l -a)</li>
+<li>secenekler birlestirilebilir. (orn. ls -la)</li>
+<li>Eger secenek birden fazla karakterden olusuyor ise secenek karakteri (–) ile belirtilir.(ornegin –login gibi )</li>
+</ul>
+<p>Unix/ Lionux sistemlerinde komut satiri argumanlarini parse etmek icin getopt ve getopt_long isimli fonksiyonlar vardir. <a href="http://www.csystem.org/makaleler/programlar%C4%B1n-komut-sat%C4%B1r%C4%B1-arg%C3%BCmanlar%C4%B1">http://www.csystem.org/makaleler/programlar%C4%B1n-komut-sat%C4%B1r%C4%B1-arg%C3%BCmanlar%C4%B1</a> makalesini oku.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*----------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Proseslerin komut satırı argümanları 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    (Parse işlemi düzeltilmiş versiyon)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ctype.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;tchar.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Psapi.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Symbolic Constants */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define MAX_CMD_LINE                1024
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define MAX_CMD_PARAMS                32
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Type Declarations */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> tagCMD {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>Proc)(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span>} CMD;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Function Prototypes */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Parse</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">GetEnvProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetEnvProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RunProcess</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">TrimCmd</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>trimmed);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Global Data Definitions */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> g_cmd[MAX_CMD_LINE];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>g_params[MAX_CMD_PARAMS];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> g_nparams;
+</span></span><span style="display:flex;"><span>CMD g_cmds[] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;dir&#34;</span>, DirProc},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;cls&#34;</span>, ClsProc},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;cd&#34;</span>, ChDirProc},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;getenv&#34;</span>, GetEnvProc},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;setenv&#34;</span>, SetEnvProc},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;exit&#34;</span>, ExitProc},
+</span></span><span style="display:flex;"><span>    {NULL, NULL},
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Function Definitions */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        gets(g_cmd);
+</span></span><span style="display:flex;"><span>        Parse();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; g_cmds[i].name <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
+</span></span><span style="display:flex;"><span>                g_cmds[i].Proc();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_cmds[i].name <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            RunProcess();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Parse</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str, <span style="color:#f92672">*</span>beg;
+</span></span><span style="display:flex;"><span>    str <span style="color:#f92672">=</span> g_cmd;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (g_nparams <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;; <span style="color:#f92672">++</span>g_nparams) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str))
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">++</span>str;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        beg <span style="color:#f92672">=</span> str;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>isspace(<span style="color:#f92672">*</span>str) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\&#34;&#39;</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">++</span>str;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\&#34;&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">++</span>str;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\&#34;&#39;</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">++</span>beg;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">*</span>str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">++</span>str;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        g_params[g_nparams] <span style="color:#f92672">=</span> beg;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>str<span style="color:#f92672">++</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">++</span>g_nparams;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;cls&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(g_params[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">GetEnvProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>envs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> GetEnvironmentStrings()) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>envs <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>            puts(envs);
+</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> strlen(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
+</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetEnvProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
+</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RunProcess</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    STARTUPINFO si <span style="color:#f92672">=</span> {<span style="color:#66d9ef">sizeof</span>(STARTUPINFO)};
+</span></span><span style="display:flex;"><span>    PROCESS_INFORMATION pi;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cmdLine[MAX_CMD_LINE];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    TrimCmd(cmdLine);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;:%s:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, cmdLine);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>CreateProcess(NULL, cmdLine, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, <span style="color:#f92672">&amp;</span>si, <span style="color:#f92672">&amp;</span>pi)) {
+</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    CloseHandle(pi.hProcess);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    exit(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">TrimCmd</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>trimmed)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str1 <span style="color:#f92672">=</span> g_cmd;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str2 <span style="color:#f92672">=</span> g_cmd <span style="color:#f92672">+</span> strlen(g_cmd) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str1))
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">++</span>str1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>trimmed <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str2))
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">--</span>str2;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>trimmed<span style="color:#f92672">++</span> <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>str1<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (str1 <span style="color:#f92672">&lt;=</span> str2);
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span>trimmed <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="unix-linux-sistemlerinin-tarihsel-gelisimi" >UNIX /Linux Sistemlerinin Tarihsel Gelisimi
+<span>
+    <a href="#unix-linux-sistemlerinin-tarihsel-gelisimi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Ken Thomson ile roportaj</p>
+<ul>
+<li>Unix isletim sistemi 1969 1970 yillarindan AT&amp;T bell labs da Ken thomson, Brian Kernigan ve Dennis Ricchi tarafondan dec makinalari icin yazilmistir.</li>
+<li>Deniss R. bu gruptan bagimsiz olarak unix yaziminda kullanilan Ken Thaomson’in B programlama dilinden hareketle C yi gelistirmistir.</li>
+<li>Unix 1973 yilinda yeniden C ile yazildi. Bundan sonra Unix in kaynak kodlari pekcok universite ve arastirma kurumlarina dagitildi. Onlar da C ogrenerek UNIX varyantlari olusturmaya basladilar.</li>
+<li>1970 li yillarin ortalarinda berkeley deki kaliforniya universitesi Orjinal UNIX kodlarini degistirerek BSD sistemlerini cikartti.</li>
+<li>Soket sistemi, sanal bellek, tcpip hep ilk olarak bsd de deneniyor.</li>
+<li>zamanla pekcok unix turevi sistem olusturuldu.</li>
+<li>80 li yillarin ortalarinda R Stallman ponerisi ile farkli unix turevi sistemler POSIX ismi ile standardize edilmistir.</li>
+<li>POSIX standartlari birkac bolumden olusmaktadir. Bolumlerden biri Shell komutlarini aciklari.</li>
+</ul>
+<p>Digeri C den kullanabilecegimiz api fonksiyonunu aciklar.</p>
+<ul>
+<li>Bugun LINUX, BSD, SOLARIS gibi sistemlerin hepsi POSIX uyumludur.</li>
+<li>PCBSD bsd surumu olarak kullanilabilir.</li>
+<li>WMS ve openWMS</li>
+<li>opengroup dernegi</li>
+<li>80 li yillarin basindan Sichard S FSF isminde bir xx kurdu. ve Free software akimini kurdu.</li>
+<li>FSF ayni zamanda GNU projesini baslatti, Bu projenin amaci acik bir isletim sistemi ve gelistirme araclarini yazmakti.</li>
+<li>Ozgur yazilimi temsil eden lisansn GPL lisansidir. Bu lisansa copyright yerine copyleft denilmektedir.</li>
+<li>90 li yillarin basinda Linus torvalds linux u gelistirmeye basladi.</li>
+<li>Linux sistemleri bugn icin acik kaynak kodlu posix uyumlu unix turevi sistemlerdir.</li>
+</ul>
+<h2 id="standart-c-fonksiyonlari-posix-fonksiyonlari-ve-sistem-fonksiyonlari" >Standart C Fonksiyonlari, POSIX Fonksiyonlari ve SIstem Fonksiyonlari
+<span>
+    <a href="#standart-c-fonksiyonlari-posix-fonksiyonlari-ve-sistem-fonksiyonlari">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><ul>
+<li>Standar C fonksiyonlari C derleyicisinin bulundugu her yerde olan fonksiyonlardir. Microcontroller olsa bile bu fonksiyonlar bulunmaktadirlar</li>
+<li>POSIX Fonksiyonlari POSIX Standartlarina uyan UNIX turevi sistemlerde var olan fonksiyonlardir.</li>
+<li>Sistem fonksiyonlari ise i isletim sistemine ozgu fonksiyonlardir.
+<ul>
+<li>Windows dunyasinda standard C fonksiyonlari ve windows api fonksiyonlari vardir.</li>
+<li>LINUX
+<ul>
+<li>fopen —&gt; open —&gt; sys_open</li>
+<li>cdeki fopen fonksiyonu POSIX fonksiyonu olan open fonksiyonunu cagirir. Bu da sistem fonksiyonu olan sys_open fonksiyonunu cagirir.</li>
+</ul>
+</li>
+<li>Windows
+<ul>
+<li>fopen —&gt; CreateFile Windows daki c fonksiyonu olan fopen cagirildigi zaman, API fonsiyonu olan createFile fonksiyonu cagirilir,</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="windows-dosya-sistemi" >Windows Dosya Sistemi
+<span>
+    <a href="#windows-dosya-sistemi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><ul>
+<li>DIsk organizasyon tarafi</li>
+<li>Bellek organizasyon tarafi bulunmaktafir.</li>
+<li>Bir isletim sisteminin dosya sisteminin iki yonu vardir. Disk tarafi ve bellek tarafi.</li>
+<li>Sistemin disk tarafi, Yapilan disk organizasyonuna iliskindir. Yani sektorlerin dosyalari tutacak bicimde nasil organize olacagi ile ilgilidir.</li>
+<li>Bellek tarafi denilince diskteki bu dosyalarin idare edilmedi icin olusturulan veri yapilari akla gelmetedir.</li>
+<li>isletim sisteminin dosya sistemi diskteki sektorleri bize bagimsiz dosyalarmis gibi gosterir.</li>
+<li>Biz de dosya islemlerini api fonksiyonleri ile yapariz.</li>
+<li>BIrcok sistemdi device driver ler dosya olarak tanimlanir ve sistem bu dosyalara okuma yazma yaparak bu driverlari kullanirlar.</li>
+<li>Windows sistemlerinde temel dosya apileri sunlardir.
+<ul>
+<li>CreateFile : help dosyası ıcerısınde ıncele</li>
+<li>ReadFile :</li>
+<li>WriteFile :</li>
+<li>SetFilePointer : Dosya kullnici icin bytelerdan olusan brttopluluk. Bir de file pointer diye bir sayi. O anda hagi dosya ile ilgili islem yapilacgini anlatiyor.http://www.kaanaslan.com/resource/article/display_article.php?id=64 makalesini oku</li>
+<li>CloseHandle :</li>
+</ul>
+</li>
+</ul>
+<p>CreateFile fonksıyonu basarısız olursa invalid handle value isimliozel bir isme geri doner read file fonksiyonunu kullanirken sunlara dikkat etmek gerekmektedir.</p>
+<ul>
+<li>Dosya gostericisiinin bulundu yerden itibaren kalan byte miktarindan daha fazla miktarda okuma yapmak normak bir durumdur. BU durumda fonksiyon basarisiz olmaz. Okunabilen byte okunur. ve kac byte okundugu bize verilir.</li>
+<li>ReadFile IO hatasi olustugunda yada gecersiz parametre girildiginde basarisiz olur.</li>
+<li>EOF durumunda okuma yapmaya calisirsak 0 byte okuruz ancak fonksiyon basarisiz olmaz. UNIX Linux dunyasinda IO hatasinda -1 ve EOF durumunda 0 dinus yapar. WriteFile Fonksiyonu</li>
+<li>dosyalarin handle degerleri process kontrol blogunda da bulunmaktadir. biz bir disyayi papatmamasak bile process sonlandiginda isletim sistemi butun dosalari bizim icin kapatir. (Terminate process dahil olmak uzere) . Fakat bir dosya ile isimizi bitirmissek onu mumkun oldugunca kapatmak iyi bir tekniktir. Set file pointer — <a href="http://www.kaanaslan.com/resource/article/display">http://www.kaanaslan.com/resource/article/display</a>_article.php?id=64</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*--------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    CreateFile, ReadFile, WriteFile örneği
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">----------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HANDLE hFile;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>    DWORD dwRead, dwWritten;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> CreateFile(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
+</span></span><span style="display:flex;"><span>                        FILE_ATTRIBUTE_NORMAL, NULL)) <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>ReadFile(hFile, buf, <span style="color:#ae81ff">1024</span>, <span style="color:#f92672">&amp;</span>dwRead, NULL))
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;ReadFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    buf[dwRead] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>    puts(buf);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    strcpy(buf, <span style="color:#e6db74">&#34;xxxxx&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>WriteFile(hFile, buf, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL))
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    CloseHandle(hFile);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="yardimci-dosya-fonksiyonlari" >Yardimci Dosya fonksiyonlari
+<span>
+    <a href="#yardimci-dosya-fonksiyonlari">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>read wite yapmayan ancak dosya sistemi ile ilgili islemler yapam fonksiyonlar</p>
+<ul>
+<li>CopyFile ve CopyFileEx fonksiyonlari dosya kopyalamakta kopyalanir.</li>
+</ul>
+<p>DeleteFile Fonksiyonu dosya silmekte kullnilir.</p>
+<ul>
+<li>GetFileAttribule fonksiyonu ile bir dosyanin ozellik bilgisi elde edilebilir.</li>
+<li>GetFileSize ve GetFileSizeEx fonksiyonu dosya uzunlugunu elde etmekte kullanilir.</li>
+<li>MoveFile ve MoveFileEx dosyayi tasimakta gullanilir.</li>
+<li>CreateDirectory ve CreateDirectoryEx fonksiyonlari yeni bir dizin yaratmak icin kullanilir</li>
+<li>RemoveDirectory Fonksiyonu bos bor klasoru silebilir.</li>
+<li>Ici dolu kladoru tek hamlede silen bir API fonsiyonu yoktur ancak shell fonksiyonu vardir.</li>
+</ul>
+<h3 id="dizin-iceriginin-elde-edilmesi" >Dizin Iceriginin elde edilmesi
+<span>
+    <a href="#dizin-iceriginin-elde-edilmesi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><ul>
+<li>Windows da bir dizin icerigini elde etmek icin 3 API fonksiyonu kullanilir.</li>
+<li>Bunlar FindFirsFile, FindNextFile ve FileClose fonksiyonlaridir.</li>
+<li>fonksiyonlar su sekilde kullanilirlar.
+<ul>
+<li>Once bir kes findfirstfile kullanilir. birden fazla dosyanin elde edilmesi hedeflenmisse bu fonksiyon bize ilk dosyanin bilerini verir.</li>
+<li>Bundan sonra bir dongu icerisinde find next file cagirilarak diger dosyalarin bilgileri elde edilebilir.</li>
+<li>En sonunda da FindClose cagirilarak islem sonlandirilir.</li>
+<li>Bı fonksıyonlarda tum dızın ıcerıgını elde ederız. Her dizinin icerisinde nokta ve cift nokta dizinleri bulunur. Bular dizin yaratilirken olusur ve bunlar istense de silinemezler.</li>
+<li>Dizinler de dosya gibi islem gorurler. Yani biz bu fonksiyonlarla dizinleri de bulabiliriz.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Dosyanın sonuna ekleme yapmak
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HANDLE hFile;
+</span></span><span style="display:flex;"><span>    DWORD dwWritten;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> CreateFile(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
+</span></span><span style="display:flex;"><span>                        FILE_ATTRIBUTE_NORMAL, NULL)) <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    SetFilePointer(hFile, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, FILE_END);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>WriteFile(hFile, <span style="color:#e6db74">&#34;ankara&#34;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL) )
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    CloseHandle(hFile);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>Oz yinelemeli olarak dizin agacini dolasasn bir fonksiyon yazilacak\
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Dizin içerğinin elde edilmesi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-----------------------------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitSys(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HANDLE hFind;
+</span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    gets(path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(path,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;FindFirstFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*----------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Dizin ağacının dolaşılması
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDir</span>(LPCTSTR path);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDirRecur</span>(LPCTSTR path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    gets(path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    WalkDir(path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDir</span>(LPCTSTR path)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd))
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    WalkDirRecur(path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(cwd))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDirRecur</span>(LPCTSTR path)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HANDLE hFind;
+</span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(path))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (fd.dwFileAttributes <span style="color:#f92672">&amp;</span> FILE_ATTRIBUTE_DIRECTORY) {
+</span></span><span style="display:flex;"><span>            WalkDirRecur(fd.cFileName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(<span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Dizin ağacının ağaç biçiminde yazdırılması
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDir</span>(LPCTSTR path);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDirRecur</span>(LPCTSTR path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    gets(path);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    WalkDir(path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDir</span>(LPCTSTR path)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd))
+</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    WalkDirRecur(path, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(cwd))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">WalkDirRecur</span>(LPCTSTR path, <span style="color:#66d9ef">int</span> space)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HANDLE hFind;
+</span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(path))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (fd.dwFileAttributes <span style="color:#f92672">&amp;</span> FILE_ATTRIBUTE_DIRECTORY) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> space; <span style="color:#f92672">++</span>i)
+</span></span><span style="display:flex;"><span>                putchar(<span style="color:#e6db74">&#39; &#39;</span>);
+</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName);
+</span></span><span style="display:flex;"><span>            space <span style="color:#f92672">+=</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>            WalkDirRecur(fd.cFileName, space);
+</span></span><span style="display:flex;"><span>            space <span style="color:#f92672">-=</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(<span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-09-22</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-09-22-win32-system-prog-part4/">https://www.cihatyildiz.com/post/2014-09-22-win32-system-prog-part4/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+    </article>
+
+    
+        
+    <div class="pagination post-pagination">
+        <div class="left pagination-item ">
+            
+                <a href="/post/2014-09-22-win32-system-prog-part5/">Win32 System Programming - Part 5</a>
+            
+        </div>
+        <div class="right pagination-item ">
+            
+                <a href="/post/2014-09-15-win32-system-prog-part3/">Win32 System Programming - Part 3</a>
+            
+        </div>
+    </div>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Cihat Yildiz, 2022<br>
+            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+    <script>
+    const STORAGE_KEY = 'user-color-scheme'
+    const defaultTheme = "auto"
+
+    let currentTheme
+    let switchButton
+    let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    const autoChangeScheme = e => {
+        currentTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', currentTheme)
+        changeButtonText()
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        switchButton = document.querySelector('.theme-switcher')
+        currentTheme = detectCurrentScheme()
+        if (currentTheme == 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }
+        if (currentTheme == 'auto') {
+            autoChangeScheme(autoDefinedScheme);
+            autoDefinedScheme.addListener(autoChangeScheme);
+        }
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    })
+
+    function detectCurrentScheme() {
+        if (localStorage.getItem(STORAGE_KEY)) {
+            return localStorage.getItem(STORAGE_KEY)
+        } 
+        if (defaultTheme) {
+            return defaultTheme
+        } 
+        if (!window.matchMedia) {
+            return 'light'
+        } 
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark'
+        }
+        return 'light'
+    }
+
+    function changeButtonText()
+    {   
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+
+    function switchTheme(e) {
+        if (currentTheme == 'dark') {
+            localStorage.setItem(STORAGE_KEY, 'light')
+            document.documentElement.setAttribute('data-theme', 'light')
+            currentTheme = 'light'
+        } else {
+            localStorage.setItem(STORAGE_KEY, 'dark')
+            document.documentElement.setAttribute('data-theme', 'dark')
+            currentTheme = 'dark'
+        }
+        changeButtonText()
+    }
+    </script>
+   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://www.cihatyildiz.com class="p-name u-url url fn" rel="me">Cihat Yildiz</a> 
+
+    
+
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Linux System Programming - Part 6 - Cihat Yildiz</title>
+
+<meta name="description" content="Prosesler Arası Haberleşme (Interprocess Communication)     Bir prosesin başka bir prosese bilgi gönderip almasına prosesler arası haberleşme denilmektedir. Prosesler arası haberleşme ikiye ayrılmaktadır.
+ Aynı PC’de prosesler arası haberleşme Network altında birbirine bağlı farklı makinaların prosesler arası haberleşme. Aynı makinanın prosesleri arasında haberleşömelerde işletim sistemine özgü çeşitli sistemler kullanılmaktadır. Her nekadar sistemden sisteme değişse de pekcok sistem benzer yöntemleri kullanmaktadır. Farklı makinaların prosesleri arasındaki haberleşmelerde belirlenmiş bir takım kurallara uyulması gerekmektedir.">
+
+
+
+<link rel="icon" type="image/x-icon" href="https://www.cihatyildiz.com/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://www.cihatyildiz.com/favicon.png">
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://www.cihatyildiz.com/css/style.min.0a537f3bb0e983fac9fdd9ab89517b7c25e24c3e34d140b76e8ae7a11ab74cb1.css" integrity="sha256-ClN/O7Dpg/rJ/dmriVF7fCXiTD400UC3bornoRq3TLE=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Linux System Programming - Part 6" />
+<meta property="og:description" content="Prosesler Arası Haberleşme (Interprocess Communication)     Bir prosesin başka bir prosese bilgi gönderip almasına prosesler arası haberleşme denilmektedir. Prosesler arası haberleşme ikiye ayrılmaktadır.
+ Aynı PC’de prosesler arası haberleşme Network altında birbirine bağlı farklı makinaların prosesler arası haberleşme. Aynı makinanın prosesleri arasında haberleşömelerde işletim sistemine özgü çeşitli sistemler kullanılmaktadır. Her nekadar sistemden sisteme değişse de pekcok sistem benzer yöntemleri kullanmaktadır. Farklı makinaların prosesleri arasındaki haberleşmelerde belirlenmiş bir takım kurallara uyulması gerekmektedir." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.cihatyildiz.com/post/2014-11-17-linux-system-prog-part6/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-11-17T20:55:00+08:00" />
+<meta property="article:modified_time" content="2014-11-17T20:55:00+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux System Programming - Part 6"/>
+<meta name="twitter:description" content="Prosesler Arası Haberleşme (Interprocess Communication)     Bir prosesin başka bir prosese bilgi gönderip almasına prosesler arası haberleşme denilmektedir. Prosesler arası haberleşme ikiye ayrılmaktadır.
+ Aynı PC’de prosesler arası haberleşme Network altında birbirine bağlı farklı makinaların prosesler arası haberleşme. Aynı makinanın prosesleri arasında haberleşömelerde işletim sistemine özgü çeşitli sistemler kullanılmaktadır. Her nekadar sistemden sisteme değişse de pekcok sistem benzer yöntemleri kullanmaktadır. Farklı makinaların prosesleri arasındaki haberleşmelerde belirlenmiş bir takım kurallara uyulması gerekmektedir."/>
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+        <a href="/"><strong>Cihat Yildiz</strong></a>
+    </h1>
+    <ul class="social-icons">
+
+
+    
+        <li>
+            <a href="https://twitter.com/cihatix" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://www.linkedin.com/in/cihatyildiz/" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://github.com/mitrichius/hugo-theme-anubis" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    
+    <li>
+        <a href="/index.xml" title="RSS" rel="me">
+        <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+        </a>
+    </li>
+
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://www.cihatyildiz.com/about/" title="">About</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/projects/" title="">Projects</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/trainings/" title="">Trainings</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/posts/" title="">Archive</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/tags/" title="">Tags</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Linux System Programming - Part 6</h1>
+
+                
+            </header>
+        </div>
+        <div class="content e-content">
+            <h2 id="prosesler-arası-haberleşme-interprocess-communication" >Prosesler Arası Haberleşme (Interprocess Communication)
+<span>
+    <a href="#prosesler-aras%c4%b1-haberle%c5%9fme-interprocess-communication">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Bir prosesin başka bir prosese bilgi gönderip almasına prosesler arası haberleşme denilmektedir. Prosesler arası haberleşme ikiye ayrılmaktadır.</p>
+<ul>
+<li>Aynı PC’de prosesler arası haberleşme</li>
+<li>Network altında birbirine bağlı farklı makinaların prosesler arası haberleşme. Aynı makinanın prosesleri arasında haberleşömelerde işletim sistemine özgü çeşitli sistemler kullanılmaktadır. Her nekadar sistemden sisteme değişse de pekcok sistem benzer yöntemleri kullanmaktadır. Farklı makinaların prosesleri arasındaki haberleşmelerde belirlenmiş bir takım kurallara uyulması gerekmektedir. Bunun için pekçok protokol ailesi varsa da en yaygın kullanılan IP ailesidir.</li>
+</ul>
+<h4 id="aynı-makinanın-prosesleri-arasında-haberleşme" >Aynı Makinanın Prosesleri Arasında Haberleşme
+<span>
+    <a href="#ayn%c4%b1-makinan%c4%b1n-prosesleri-aras%c4%b1nda-haberle%c5%9fme">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><h5 id="boru-haberleşmeleri" >Boru Haberleşmeleri
+<span>
+    <a href="#boru-haberle%c5%9fmeleri">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h5><p>Boru haberlesmesinde tipik olarak iki proses vardir. Bir proses boruya yazma yapar, digeri de borudan okuma yapar. Eger yazma yapan proses hizli davranir digeri yavas kalirsa boru dolar. Dolu bir boruya yazmak istendiginde write() fonksiyonu bloke olur. Karsi taraf borudan okuma yaptiginda boruda yer acilir ve yazan taraf yazmaya devam eder. Benzer bicimde yazan taraf geri kalmis ise okuyan taraf borunun bos oldugunu gordugunda read fonksiyonunda bloke olusur. Taki diger taraf birseyler yazana kadar. Bu haberlesme once yazan tarafin sonlanmasi ile sonlanmalidir. Bu durumda okuyan taraf once boruda kalanlari okur sonra yazantarafin boruyu kapattigini anlar. O da boruyu kapatir. Borular tamamen dosya mekanizmasi ile iliskilendirilmistir. Yani borular icin birer betimleyici ve dosya nesneleri olusturulur. Dosya fonksiyonlari ile onlar uzerinde islem yapilir. Borular iki gruba ayrilmaktadir.</p>
+<ul>
+<li>isimsiz yada anonim borular. Bunlar yalnizca ust ve alt proses arasinda kullanilabilirler.</li>
+<li>Isimli borular, Bunlar ayni makinadaki herhangi iki makina arasinda kullanilabilirler. Unix/Linux sistemlerde isimli borulara FIFO’da denilmektedir.</li>
+</ul>
+<h3 id="isimsiz-boruların-kullanılması" >İsimsiz Boruların Kullanılması
+<span>
+    <a href="#isimsiz-borular%c4%b1n-kullan%c4%b1lmas%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>isimsiz boruların kullanıması sırasıyla şu işlemleri gerçekleştirir.</p>
+<ul>
+<li>Üst proses pipe fonksiyonu ile boruyu yaratır ve buradan iki betimleyici elde eder.<code>**#include &lt;unistd.h&gt;** **int** pipe(**int** pipefd[2]);</code></li>
+</ul>
+<blockquote>
+<p>Bu prototip gösteriminde köşeli parantez içindeki 2 değerinin C açısından hiçbir önemi yoktur. Ancak programcı buraya iki elemanlı bir dizinin adresini vermesi gerektiğini bildirmektedir. Aşağıdaki göterim fonksiyon parametresi olarak birbirine eşdeğerdir.</p>
+</blockquote>
+<pre tabindex="0"><code>void Foo(int pi[2])
+void Foo(int pi[])
+void Foo(int *pi)
+</code></pre><p>Fonsiyon bizden 2 elemanlı bir int dizisinin adresini ister. iki betimleyici oluşturarak bu dizinin içerisine yerleştirir. Fonksiyon başarı durumunda 0 başarısızlık durumunda -1 değerine geri döner. Dizinin sıfıncı indexli elemanında bulunan betimleyici borudan okuma yapma amacıyla 1 numaralı indexinde bulunan betimleyici boruya yazma yapmak için kullanılır.</p>
+<ul>
+<li>Bu noktada senaryonun belirlenmesi gerekir. proseslerden biri okuma diğeri yazma yapacaktır. Fork işlemi ile alt proses yaratılır. Boru yazma yapacak taraf okuma betimleyicisini okuma yapacak taraf yazma betimleyicisini kapatmalıdır. Yani boruya okuma ve yazma yapacak tek bir betimleyicini bulunması gerekir.</li>
+<li>Artık herşey hazırdır. Yazma taraf yazan wite fonksiyonunu, okuma yapan taraf da read fonksiyonunu kullanır.</li>
+<li>Yazan taraf boru tamamen dolu ise okuayan taraf da boru tamamen boş ise bloke olur. Önce yazma yapan tarafın boruyu kapatması gerekir. bu durumda okyan taraf borudakileri okur. En sonunda boruda hiçbirşey kalmadığı zaman read fonksiyonu 0 ile geri döner. Artık okuyan taraf da boruyu kapatır.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Üst ve alt prosesler arasında isimsiz boru haberleşmes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_parent</span>(<span style="color:#66d9ef">int</span> fd);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child</span>(<span style="color:#66d9ef">int</span> fd);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> fds[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>    pid_t pid;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pipe(fds) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;pipe&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pid <span style="color:#f92672">=</span> fork()) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pid <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {            <span style="color:#75715e">/* parent yazma yapacak */</span>
+</span></span><span style="display:flex;"><span>        close(fds[<span style="color:#ae81ff">0</span>]);        
+</span></span><span style="display:flex;"><span>        do_parent(fds[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>        close(fds[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (wait(NULL) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            exitsys(<span style="color:#e6db74">&#34;wait&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {                    <span style="color:#75715e">/* child okuma yapacak */</span>
+</span></span><span style="display:flex;"><span>        close(fds[<span style="color:#ae81ff">1</span>]);        
+</span></span><span style="display:flex;"><span>        do_child(fds[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>        close(fds[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_parent</span>(<span style="color:#66d9ef">int</span> fd)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>; <span style="color:#f92672">++</span>i)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (write(fd, <span style="color:#f92672">&amp;</span>i, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            exitsys(<span style="color:#e6db74">&#34;write&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child</span>(<span style="color:#66d9ef">int</span> fd)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ssize_t n;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> val;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ((n <span style="color:#f92672">=</span> read(fd, <span style="color:#f92672">&amp;</span>val, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>))) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%d &#34;</span>, val);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;read&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="shell-üzerinde-boru-işlemleri" >Shell Üzerinde Boru işlemleri
+<span>
+    <a href="#shell-%c3%bczerinde-boru-i%c5%9flemleri">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Komut satırında a ve b birer program olmak üzere a | b işleminde şunlar olmaktadır; Şhell programı bir boru yaratır. Sonra a ve b programlarını çalıştırır. a programının stdout dosyasını boruya, b programının da stdin dosyasını boruya yönlendirir. Böylece a programın kendisini ekrana yazdığını sanırken aslında boruya yazmaktadır. b programı da kendisini klavyeden okuduğunu sanırken aslında borudan okumaktadır. Böylece a nın ekrana yazdıklarını b klavyeden okuyormuş gibi alır.</p>
+<blockquote>
+<p>CTRL+D stdin içerisinde EOF manasına gelmektedir.</p>
+</blockquote>
+<p>Komut satırında kullanılan pekçok komutta eğer komut bir dosya argümanı almaz ise varsayılan olarak stdin dosyasından girişi bekler. Böylece biz bu tür komutları borular ile kullanabiliriz.</p>
+<pre tabindex="0"><code>root@kali:~# ls -l | wc
+     11      92     510
+root@kali:~#
+</code></pre><p>yada örneğin</p>
+<pre tabindex="0"><code>root@kali:~# ps -e | grep tty
+ 2600 tty7     00:00:02 Xorg
+ 2957 tty1     00:00:00 getty
+ 2958 tty2     00:00:00 getty
+ 2959 tty3     00:00:00 getty
+ 2960 tty4     00:00:00 getty
+ 2961 tty5     00:00:00 getty
+ 2962 tty6     00:00:00 getty
+root@kali:~# 
+</code></pre><p>Komut satırında borulama birden fazla kez yapılabilir. Örneğin;</p>
+<pre tabindex="0"><code>root@kali:~# ps -e | grep ssh | awk &#39;{print $1}&#39;
+3280
+3544
+3562
+</code></pre><p>Boru işlemi yapan shell kodlarını biz yazacak olsaydık bununasıl yapardık? Bunun birkaç yöntemi olabilir. Tipik yöntem şudur.</p>
+<ol>
+<li>Önce bir boru yaratılır ve iki betimleyici elde edilir.</li>
+<li>Her iki program için de fork yapılır.</li>
+<li>Bu noktada borudan okuma yazma potansiyeline sahip 3’er betimleyici olur. o halde üst prosesin iki boru betimleyicisini de kapatması gerekir. ve aynı zamanda yine yazacak taraf okuma betimleyicisini okyacak taraf da yazma betimleyicisini kapatır.</li>
+<li>Artık dup2 fonksiyonu ile her iki alt proses için de boru yönlendirmesi yapılır.</li>
+<li>Artık exec uygulanarak her iki program da çalıştırılır.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    exec&#39;li boru iþlemi (shell boru iþlemlerini nasil yapmaktadir?)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">---------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child1</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">int</span> fd);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child2</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">int</span> fd);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* usage cpipe &lt;prog1&gt; &lt;prog2&gt; */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> fds[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>    pid_t pidChild1, pidChild2;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;wrong number of arguments!..</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pipe(fds) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;pipe&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pidChild1 <span style="color:#f92672">=</span> fork()) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pidChild1 <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((pidChild2 <span style="color:#f92672">=</span> fork()) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            exitsys(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (pidChild2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {        <span style="color:#75715e">/* second child */</span>
+</span></span><span style="display:flex;"><span>            close(fds[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>            do_child2(argv[<span style="color:#ae81ff">2</span>], fds[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">/* unreachable code */</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {        <span style="color:#75715e">/* first child */</span>
+</span></span><span style="display:flex;"><span>        close(fds[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>        do_child1(argv[<span style="color:#ae81ff">1</span>], fds[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/* unreachable code */</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    close(fds[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>    close(fds[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (waitpid(pidChild1, NULL, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;waitpid&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (waitpid(pidChild2, NULL, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;waitpid&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child1</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">int</span> fd)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (dup2(fd, STDOUT_FILENO) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;dup2&#34;</span>);
+</span></span><span style="display:flex;"><span>    close(fd);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (execlp(path, path, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;execlp&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_child2</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">int</span> fd)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (dup2(fd, STDIN_FILENO) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;dup2&#34;</span>);
+</span></span><span style="display:flex;"><span>    close(fd);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (execlp(path, path, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;execlp&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><pre tabindex="0"><code>root@kali:~# gcc sample.c -o sample
+root@kali:~# ./sample ls wc
+     10      10      91
+root@kali:~#
+</code></pre><h3 id="isimli-boru-haberleşmesi" >İsimli Boru Haberleşmesi
+<span>
+    <a href="#isimli-boru-haberle%c5%9fmesi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>İsimli boru işlemlerinde şu aşamalar gerçekleştirilir..</p>
+<ul>
+<li>isimli boru, mkfifo isimli fonksiyonla yaratılır. Prototipi şu şekildedir.<code>#include &lt;sys/stat.h&gt; int mkfifo(const char *pathname, mode_t mode);</code></li>
+<li>Haberlesecek iki proseste isimli boruyu sanki bir dosya gibi open fonksiyonu ile açar. Yine proselerden birinin yazma rolunde diğerinin de okuma rolunde olması gerekir. Yazma rolünde olan proses boruyu O_WRONLY modunda okuma yapmak isteyen proses ise O_RDONLY modunda açmalıdır.</li>
+<li>Blokeli modda read ve write fonksiyonlarının yanısıra open fonksiyonunun kendisinde de bloke oluşur. Örneğin, proseslerden önce yazma yapan çaıştırılmış olsun. Bu durumda open fonksiyonubaşka bir proses boruyu okuma modunda açana kadar blokede bekler. Benzer biçimce önce okuyan prosesi çalıştırırsak bu kez de okuyan proses open fonksiyonunda başka bir proses boruyu yazma modunda açana kadar beklemektedir.</li>
+<li>Okuma yazma işlemi yine read ve write fonksiyonları ile isimsiz boruda olduğu gibi yapılır. Yine önce yazan taraf boruyu kapatır. Okuyan taraf boruyu okuduktan sonra o da boruyu kapatır.</li>
+<li>Borunun yaratılması ve yok edilmesini proseslerden birisi yapabilir. Yada tamamen bu işlemler komut satırından yapılabilir. Haberleşme bittikten sonra da boru dosyası silinmez ise dosya sisteminde kalmaya devam eder.</li>
+</ul>
+<p>Birinci Konsol</p>
+<pre tabindex="0"><code>root@kali:~# mkfifo sallama
+root@kali:~# ls -la sallama
+prw-r--r-- 1 root root 0 Mar 11 07:47 sallama
+root@kali:~# ls -la &gt; sallama
+</code></pre><p>Ikinci Konsol</p>
+<pre tabindex="0"><code>root@kali:~# cat &lt; sallama
+total 176
+drwxr-xr-x 18 root root 4096 Mar 11 07:46 .
+drwxr-xr-x 22 root root 4096 Jan  8 21:30 ..
+drwx------  2 root root 4096 Mar  3 06:50 .aptitude
+-rw-------  1 root root 6349 Mar 11 05:55 .bash_history
+-rw-r--r--  1 root root 3391 Jan  1 20:28 .bashrc
+drwx------  8 root root 4096 Mar 11 05:56 .cache
+drwx------  9 root root 4096 Mar  6 01:40 .config
+drwx------  3 root root 4096 Jan  8 21:41 .dbus
+drwxr-xr-x  2 root root 4096 Mar  6 01:40 Desktop
+drwx------  3 root root 4096 Mar 11 05:56 .gconf
+-rw-------  1 root root 1322 Mar  6 10:07 .gdb_history
+</code></pre><h4 id="read-ve-write-fonksiyonlarının-borudaki-davranışları" >Read ve Write Fonksiyonlarının Borudaki Davranışları
+<span>
+    <a href="#read-ve-write-fonksiyonlar%c4%b1n%c4%b1n-borudaki-davran%c4%b1%c5%9flar%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><p>Read ve write fonksiyonları boru sözkonusu olduğunda blokeli (blocking) ve blokesiz (nonblockking) olmak üzere iki modda çalışabilmektedir. Varsayılan mod blokeli moddur. Blokesiz modda işlem yapabilmek için open fonksiyonuna O_NONBLOCK bayrağının eklenmesi gerekmektedir.</p>
+<ul>
+<li>Read fonksiyonunun blokeli moddaki davranışı şu şekildedir:</li>
+<li>Read fonksiyonu eğer boruda hibir byte yok ise blokede bekler fakat boruda en az 1 byte var ise talep edilen miktarda okumak için beklemez.</li>
+<li>Olan okur ve olanı bayte sayısına geri döner. Fakat boruda hiçbir bilgi yoksa ve karşı taraf boruyu kapatmış ise 0 ile geri döner.</li>
+<li>Write fonksiyonunun blokeli moddaki davranışı şöyledir:</li>
+<li>Eğer boru tüm bilgiyi yazamayacak kadar dolu ise bu durumda write fonksiyonu tüm bilgiyi yazana kadar blokede bekler.</li>
+<li>Eğer yazılacak miktar borunun toplam uzunluğundan büyük ise bu durumda write bloke olmaz.</li>
+<li>Boru uzunluğu kadar bilgiyi yazar ve yazdığı byte sayısı ile geri döner. Başka bir deyişle boru uzunluğundan büyük m,ktarda boruya bilgi yazmak istersek bu tek hamlede yapılmaz.</li>
+<li>Dolayısı ile başka bir proseste boruya yazma yapıyorsa araya girme olabilir.</li>
+<li>Borunun uzunluğu ilgili sistemde PIPE_BUF sembolik sabiti ile belirtilmiş durumdadır.</li>
+<li>Eğer write fonksiyonu ile borunun uzunluğundan daha fazla bilgi yazmak istersek write yine tüm bilgiler boruya aktarılana kadar bekler.</li>
+<li>Ancak başka proseslerde boruya yazma yapıyor ise araya girme olabilir.</li>
+<li>Read fonksiyonunun blokesiz moddaki davranışı şöyledir:</li>
+<li>Bu modda read yine boruda en az 1 bye var ise okyabileceği kadarını okur ve okyabildiği byte sayısı ile geri döner.</li>
+<li>Fakat boruda hiç bilgi yok ise -1 değeri ile geri döner ve errno EAGAIN deği ile set edilir.</li>
+<li>Write Fonksiyonunun blokesiz moddaki davranışı şu şekildedir:</li>
+<li>Bu modda write tüm bilgi yazılana kadar blokede beklemez.</li>
+<li>Eğer tüm bilginin yazılacağı kadar boruda boş yer var ise tüm bigiyi yazar ve yazdığı byte sayısı ile geri döner.</li>
+<li>Eğer tüm bilgiyi yazacak kadar boruda yer yoksa -1 değeri ile geri döner ve boruya hiçbir bilgi yazmaz. Bu durumda errno EAGAIN değeri ile set edilir.</li>
+<li>Eğer write ile biz boru büyüklüğünden daha fazla sayısa byte’ı boruya yazmaya çalışırsak bu durumda write boruya yazabildiği kadar değeri boruya yazar ve yazdığı byte sayısı ile geri döner.</li>
+<li>Fakat boruda hiç yer yoksa -1 değeri ile geri döner ve errno EAGAIN değeri ile set edilir.</li>
+</ul>
+<p>Örnek:</p>
+<p>Öncelikle kendi pipe dosyamızı oluşturalım</p>
+<pre tabindex="0"><code>root@kali:~# mkfifo sallama
+</code></pre><p>Haberleşen iki uygulamanı kodları şu şekildedir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*--------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    isimli boru işlemleri
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">---------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* writefifo.c */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    if (mkfifo(&#34;testfifo&#34;, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH) &lt; 0)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        exitsys(&#34;mkfifo&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;testfifo&#34;</span>, O_WRONLY)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;testfifo&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;text:&#34;</span>);
+</span></span><span style="display:flex;"><span>        fflush(stdout);
+</span></span><span style="display:flex;"><span>        gets(buf);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (write(fd, buf, strlen(buf)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            exitsys(<span style="color:#e6db74">&#34;write&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(buf, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    close(fd);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    if (unlink(&#34;testfifo&#34;) &lt; 0)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        exitsys(&#34;testfifo&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* readfifo.c */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>    ssize_t n;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;testfifo&#34;</span>, O_RDONLY)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;testfifo&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ((n <span style="color:#f92672">=</span> read(fd, buf, <span style="color:#66d9ef">sizeof</span>(buf))) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        buf[n] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(buf, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        puts(buf);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;read&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    close(fd);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Yukarıdaki örnekde tek yönlü boru haberleşmesi yapılmıştır eğer iki yönlü haberleşme pşabilmesi için iki ayrı pipe oluşturmak gerekecektir.</p>
+<p>Mevcut linux sistemlerinde boru uzunluğu, yani PIPE_BUF değeri 4096’dır.</p>
+<h3 id="borularla-client--server-haberleşmesi" >Borularla Client – Server Haberleşmesi
+<span>
+    <a href="#borularla-client--server-haberle%c5%9fmesi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Client Server haberleşmesinde client ve server iki ayrı programdır. Asıl işi server yapar. Client yalnızca istekte bulunur. Server birden fazla client’e hizmet verebilmektedir. Böyle bir haberleşmenin faydaları şöyle özetlenebilir.</p>
+<ul>
+<li>Server güçlü bir makinada çalışıyor olabilir ve biz bu serverin gücünden faydalanabiliriz.</li>
+<li>Server bir aygıtı yada bir kaynağı kullanıyor olabilir ve onu paylaştırmak gerekebilir.</li>
+<li>Server tün client’lar arasında koordinasyon sağlanabilir. (chat programları)</li>
+<li>Server güvenli bir yerde ve güvenli bir biçinde kaynaklara erişiyor olabilir.</li>
+<li>Boru kullanılarak client server haberleşmede serverden client’a bilgi aktarımı için her client için boru açılması gerekir. Fakat clientlardan server’a istek belirtmek için tek bir boru yetrlidir.</li>
+</ul>
+<p><a href="http://codingfreak.blogspot.com/2008/09/client-server-example-with-pipes.html">http://codingfreak.blogspot.com/2008/09/client-server-example-with-pipes.html</a></p>
+<p>Yukarıdaki linkdeki örnek gayet uygun bir örnektir.</p>
+<h3 id="paylaşılan-bellek-alanları-yöntemi" >Paylaşılan Bellek Alanları Yöntemi
+<span>
+    <a href="#payla%c5%9f%c4%b1lan-bellek-alanlar%c4%b1-y%c3%b6ntemi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Paylaşılan bellek alanları (shared memory), hem Unix/Linux hemde windows sistemlerinde benzer sistemde kullanılmaktadır. Bu yöntemde proseslerin bellek alanları birbirinden ayrı olduğu halde ram’de iki prosesinde erişebileceği ortak bir bölge ayrılır. Proseslerden biri oraya yazma yapar, diğeri oradan okuma yapar. Ancak borulardaki gibi bir senkronizasyon mekanizmanın kendi içerisinde yoktur. Senkronizasyonu ayrıca uygulamak gerekmektedir. Paylaşılan bellek alanlarını oluşturmak için iki grup fonksiyon bulunur. Bir tanesi Klasik SystemIPC fonksiyonlarıdır. Bunlar pekçok unix tirevi sistemlerde vardır. İkincisi sonradan eklenmiş modern fonksiyonlardır.</p>
+<p>Bu iki grup fonksiyon da POSIX standartlarınca kabul edilmiş fonksiyonlardır. Ayrıca paylaşılan bellek alanları bellek tabanlı dosya oluşturmak için de kullanılmaktadır. Klasik System V Fonksiyonlarıyla Paylaşılan Bellek Alanları Paylaşılan bellek alanları şöyle oluşturulur;</p>
+<ul>
+<li>Öncelikle bir anahtar belirleyerek paylaşılan bellek alanı shmget fonksiyonu ile oluşturulur. Burada fonksiyonun birinci parametresi iki prosesin ortaklaşa belirleyeceği bir id değeri yada bir anahtar değerdir. Fonksiyonun ikinci parametresi oluşturulacak paylaşılan bellek alanının uzunluğunu belirtir. Buradaki değer PAGE_SIZE değerine yukarıya doğru yuvarlanmaktadır. Fonksiyonun son parametresi iki değerden bir yada ikisi olabilir.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/ipc.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/shm.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">shmget</span>(key_t key, size_t size, <span style="color:#66d9ef">int</span> shmflg);
+</span></span></code></pre></div><p>IPC_CREAT: yok ise yarat anlamına gelmektedir.</p>
+<p>IPC_EXCL : var ise oluşturmaz yok ise hata verir. IPC_CREAT ile kullanılır.<br>
+Nihayet bu parametreye aynı zamanda nesne erişim hakları içinS_IXXX biçimindeki sembolik sabitler de eklenebilir. Fonksiyon başarı durumunda paylaşılan bellek alanına ilişkin bir handle değerine başarısızlık durumunda -1 değerine geri döner.</p>
+<p>Fonksiyonun birinci parametresine anahtar girmek yerine IPC_PRIVATE girilebilir. Bu durumda sistem anahtar değeri kendisi üretip nesneyi yaratır.</p>
+<ul>
+<li>Şimdi yaratılan bellek alanı için ram’de bir alanın oluşturulmasına sıra gelmiştir. Bu işlem shmat fonksiyonu ile yapılır.<code>#include &lt;sys/types.h&gt; #include &lt;sys/shm.h&gt; void *shmat(int shmid, const void *shmaddr, int shmflg);</code> Fonksiyonun birinci parametresi shmget fonksiyonundan elde edilen id değeridir. ikinci parametre önerilen bellek adresini belirtir. Yani biz kendi prosesimizin bellek alanı içerisinde kendi belirlediğimiz bir alanı bu amaçla kullanabiliriz. Fakat bu parametre NULL geçilebilir. Bu durumda sisitem istediği adresi belirleyebilir (Genellikle bu yöntem uygulanır). Fonksiyonun üçüncü parametresi paylaşılan alanın kullanımını belirleyen bayrakları içerir. Bu parametre SHM_RND girilebilir. Bu değer ikinci parametredeki adresin aşağıya doğru sayfa sınırlarına yuvarlanacağını belirtir. Fonksiyonun geri dönüş değeri başarı durumunda oluşturulan bellek alanının adresine, başarısızlık durumunda NULL değere gerei döner. Üçüncü parametre 0 geçilebilir.</li>
+<li>Artık proseslerden biri paylaşılan bellek alanına yazma yapıp diğeri bunu okuyabilir. Yöntem çok hızlıdır. çünkü hiç aracılıksız erişim yapılmaktadır.</li>
+<li>İşlem bittikten sonra paylaşılan bellek alanı kalmaya devam eder. Onu yok etmek için, yani shmat ile yapılanları geri almak için shmdt fonksiyonunu çağırmak gerekir.<code>#include &lt;sys/types.h&gt; #include &lt;sys/shm.h&gt; int shmdt(const void *shmaddr);</code> Fonksiyon parametre olarak shmat fonksiyonundan elde edilen bellek adresini alır. Başarı durumunda 0 başarısızlık durumunda -1 değerine geri dönmektedir. Bir programın başka bir programa bilgi aktarabileceği en hızlı yöntem shared memory dir.</li>
+<li>işlemler bitince shmctl fonksiyonu ile tüm paylaşılan bellek alanı işlemleri geri alınmalıdır. Shmctl aynı zamanda başka amaçlar için de kullanılabilmektedir. fonksiyon prototipi şu şekildedir.<code>#include &lt;sys/ipc.h&gt; #include &lt;sys/shm.h&gt; int shmctl(int shmid, int cmd, struct shmid_ds *buf);</code> fonksiyonun birinci parametresi paylaşılan bellek alanının handle değeri, ikinci parametresi eğer nesne silinecek ise IPC_RMID biçininde girilir. Üçüncü parametre ikinci parametrenin durumuna göre anlam kazanır. Eğer ikinci parametre IPC_RMID giriliyorsa bu durumda üçüncü parametre NULL girilebilir. paylaşışlan bellek alanının silinmesi ve yaratılması yine başka bir program yoluı ile yapılabilir. SystemV in klasik IPC nesneleri reboot işlemi yapılana kadar kalıcı olmaktadır. Yani onları yaratan programlar sonlansa bile onlar kalmaya devam eder.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*---------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Paylaşılan bellek alanı uygulaması    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">---------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* shmproc1.c  - Yazma yapan uygulama*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/ipc.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/shm.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define SHMKEY        0x12345678
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> shmid;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((shmid <span style="color:#f92672">=</span> shmget(SHMKEY, <span style="color:#ae81ff">4096</span>, S_IRUSR<span style="color:#f92672">|</span>S_IWUSR<span style="color:#f92672">|</span>S_IRGRP<span style="color:#f92672">|</span>S_IWGRP<span style="color:#f92672">|</span>IPC_CREAT)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;shmget&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((buf <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) shmat(shmid, NULL, <span style="color:#ae81ff">0</span>)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;shmat&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    strcpy(buf, <span style="color:#e6db74">&#34;This is a test&#34;</span>);
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;press ENTER to key to continue...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    getchar();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    shmdt(buf);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (shmctl(shmid, IPC_RMID, NULL) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;shmctl&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* shmproc2.c - Okuma yapan uygulama */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/ipc.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/shm.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define SHMKEY        0x12345678
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> shmid;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((shmid <span style="color:#f92672">=</span> shmget(SHMKEY, <span style="color:#ae81ff">4096</span>, S_IRUSR<span style="color:#f92672">|</span>S_IWUSR<span style="color:#f92672">|</span>S_IRGRP<span style="color:#f92672">|</span>S_IWGRP<span style="color:#f92672">|</span>IPC_CREAT)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;shmget&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((buf <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) shmat(shmid, NULL, <span style="color:#ae81ff">0</span>)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        exitsys(<span style="color:#e6db74">&#34;shmat&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Press ENTER to continue...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    getchar();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    puts(buf);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    shmdt(buf);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    perror(msg);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><pre tabindex="0"><code>root@kali:~# ./shmproc1
+press ENTER to key to continue...
+</code></pre><p>yukarıdaki işlemde bellek alanına yazma yapar ve bekler. Aşağıdaki komut ile de bellek alanına yazılan bilgi ekrana basılmaktadır.</p>
+<pre tabindex="0"><code>root@kali:~# ./shmproc2
+Press ENTER to continue...
+
+This is a test
+root@kali:~#
+</code></pre><p>O anda sistemde yaratılmış bütün IPC nesneleri, ipcs komutu ile görülebilmektedir. bir ipc nesnesi anahtar veya handle değeri ile ipcrm shell komutu ile silinebilir.</p>
+
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-11-17</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-11-17-linux-system-prog-part6/">https://www.cihatyildiz.com/post/2014-11-17-linux-system-prog-part6/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+    </article>
+
+    
+        
+    <div class="pagination post-pagination">
+        <div class="left pagination-item ">
+            
+                <a href="/post/2014-12-01-linux-system-prog-part7/">Linux System Programming - Part 7</a>
+            
+        </div>
+        <div class="right pagination-item ">
+            
+                <a href="/post/2014-11-03-linux-system-prog-part5/">Linux System Programming - Part 5</a>
+            
+        </div>
+    </div>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Cihat Yildiz, 2022<br>
+            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+    <script>
+    const STORAGE_KEY = 'user-color-scheme'
+    const defaultTheme = "auto"
+
+    let currentTheme
+    let switchButton
+    let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    const autoChangeScheme = e => {
+        currentTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', currentTheme)
+        changeButtonText()
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        switchButton = document.querySelector('.theme-switcher')
+        currentTheme = detectCurrentScheme()
+        if (currentTheme == 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }
+        if (currentTheme == 'auto') {
+            autoChangeScheme(autoDefinedScheme);
+            autoDefinedScheme.addListener(autoChangeScheme);
+        }
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    })
+
+    function detectCurrentScheme() {
+        if (localStorage.getItem(STORAGE_KEY)) {
+            return localStorage.getItem(STORAGE_KEY)
+        } 
+        if (defaultTheme) {
+            return defaultTheme
+        } 
+        if (!window.matchMedia) {
+            return 'light'
+        } 
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark'
+        }
+        return 'light'
+    }
+
+    function changeButtonText()
+    {   
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+
+    function switchTheme(e) {
+        if (currentTheme == 'dark') {
+            localStorage.setItem(STORAGE_KEY, 'light')
+            document.documentElement.setAttribute('data-theme', 'light')
+            currentTheme = 'light'
+        } else {
+            localStorage.setItem(STORAGE_KEY, 'dark')
+            document.documentElement.setAttribute('data-theme', 'dark')
+            currentTheme = 'dark'
+        }
+        changeButtonText()
+    }
+    </script>
+   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://www.cihatyildiz.com class="p-name u-url url fn" rel="me">Cihat Yildiz</a> 
+
+    
+
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>

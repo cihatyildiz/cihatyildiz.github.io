@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Linux System Programming - Part 1 - Cihat Yildiz</title>
+
+<meta name="description" content="This notes has been created in “Linux System Programming” course that taken from “C and System programmers Accosiaion” in early 2014. Kaan Arslan was the lecturer in this course.
+Bu yazida, daha once yayinlamis oldugum linux sistem programlama kursunda almis oldugum kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili nosan ayinda alinisti.
+Unix/Linux Sistemlerinin Tarihsel Gelisimi     Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir.">
+
+
+
+<link rel="icon" type="image/x-icon" href="https://www.cihatyildiz.com/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://www.cihatyildiz.com/favicon.png">
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://www.cihatyildiz.com/css/style.min.0a537f3bb0e983fac9fdd9ab89517b7c25e24c3e34d140b76e8ae7a11ab74cb1.css" integrity="sha256-ClN/O7Dpg/rJ/dmriVF7fCXiTD400UC3bornoRq3TLE=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Linux System Programming - Part 1" />
+<meta property="og:description" content="This notes has been created in “Linux System Programming” course that taken from “C and System programmers Accosiaion” in early 2014. Kaan Arslan was the lecturer in this course.
+Bu yazida, daha once yayinlamis oldugum linux sistem programlama kursunda almis oldugum kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili nosan ayinda alinisti.
+Unix/Linux Sistemlerinin Tarihsel Gelisimi     Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.cihatyildiz.com/post/2014-10-06-linux-system-prog-part1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-10-06T20:55:00+08:00" />
+<meta property="article:modified_time" content="2014-10-06T20:55:00+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux System Programming - Part 1"/>
+<meta name="twitter:description" content="This notes has been created in “Linux System Programming” course that taken from “C and System programmers Accosiaion” in early 2014. Kaan Arslan was the lecturer in this course.
+Bu yazida, daha once yayinlamis oldugum linux sistem programlama kursunda almis oldugum kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili nosan ayinda alinisti.
+Unix/Linux Sistemlerinin Tarihsel Gelisimi     Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir."/>
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+        <a href="/"><strong>Cihat Yildiz</strong></a>
+    </h1>
+    <ul class="social-icons">
+
+
+    
+        <li>
+            <a href="https://twitter.com/cihatix" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://www.linkedin.com/in/cihatyildiz/" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://github.com/mitrichius/hugo-theme-anubis" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    
+    <li>
+        <a href="/index.xml" title="RSS" rel="me">
+        <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+        </a>
+    </li>
+
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://www.cihatyildiz.com/about/" title="">About</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/projects/" title="">Projects</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/trainings/" title="">Trainings</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/posts/" title="">Archive</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/tags/" title="">Tags</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Linux System Programming - Part 1</h1>
+
+                
+            </header>
+        </div>
+        <div class="content e-content">
+            <p>This notes has been created in “Linux System Programming” course that taken from “C and System programmers Accosiaion” in early 2014. Kaan Arslan was the lecturer in this course.</p>
+<p>Bu yazida, daha once yayinlamis oldugum linux sistem programlama kursunda almis oldugum kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili nosan ayinda alinisti.</p>
+<h2 id="unixlinux-sistemlerinin-tarihsel-gelisimi" >Unix/Linux Sistemlerinin Tarihsel Gelisimi
+<span>
+    <a href="#unixlinux-sistemlerinin-tarihsel-gelisimi">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir. Unix projesinden önce AT&amp;T MIT gibi üniversitelerle işbirliği yaparak MULTICS isimli bir işletim sistemi geliştirme projesinde çalışıyordu. Daha sonra grup çeşitli haklı gerekçelerle bu projeden çekilmiştir. Unix ismi B. Kernighan tarafından Multics sözcüğünden kelime oyunu yaparak uydurulmuştur. ilk Unix sistemi tamamen PDP makinalarının sembolik makine dilinde yazılmştı. Oyıllara kadar tüm işletim sistemleri zaten sembolik makine dilinde yazılıyordu. Unix işletim sistemi geliştirilirken Ken Thompson bir işletim sisteminin ciddi bir sistem olabilmesi için yüksek seviyeli bir derleyiciye sahip olması gerektiğini düşünüyordu.</p>
+<p>Thompson, önceleri Fortran üzerinde durduysa da daha sonra BCPL gibi bir sistemin daha uygun olduğuna karar vermiştir. Bundan sonra Thompson BCPL’nin benzeri olan B dilinin tasarımında da çalşmştır. B bir yorumlayıcı sistemdi ve yavaş çalışıyordu. B programlama dili proje grubu tarafından yerel bir biçimde ve bazı sistem programlarında kullanılmştır. Proje grubu K.Thompson, D.Ritche, B.Kernighan gibi önemli kişilerden oluşuyordu. Grubun asıl amaçlarından biri Unix sistemini yüksek seviyeli bir dille yeniden yazmaktı. D.Ritche, B programlama dilini geliştirerek ilk kez 1971 yılında C programlama dilini tanımlamştir. 1973 yılında Unix işletim sistemi DEC-PDP 11 için çok büyük oranda C ile yeniden yazılmştır. Unix yüksek seviyeli bir programlama diliyle yazılmş olan ilk işletim sistemidir. Bu durum Unix işletim sisteminin farklı platfromlarda yazılmasını çok kolaylaştırmştır. AT&amp;T Unix işletim sisteminin kaynak kodlarını pekçok araştırma grubu ve üniversitelere dağıtmştır. Bu durum C programlama dilinin tanınmasına yol açarken Unix sistemlerinin taşınabilirliğinin bozulması sonucunu da doğurmuştur. Çünkü kaynak kodları ele geçiren kurumlar orijinal Unix sistemlerinde değişiklikler yaparak farklı Unix sistemleri oluşturmuşlardır. Bu sistemlerin en önemlilerinden biri Berkeley Sistemleridir, bu sistemler BSD (Berkeley software distrubition) olarak bilinmektedir. BSD’nin FreeBSD, NetBSD ve OpenBSD biçiminde versiyonları vardır. AT&amp;T kendi Unix sistemlerine de numara vermiştir. Örneğin, system III, systemV gibi…</p>
+<p>Bugün Unix sistemlerinin en temel biçimi SVR4 (system 5 release 4 ) sürümüdür. Bundan sonra AT&amp;T’nin çeşitli Unix sistemleri çıktıysa da, SVR4 bir standart anlatan özellik olmuştur. 80’li yıllarda pekçok özel firmada kendi Unix sistemlerini yazmaya başlamştır. Örneğin; Sun firmasının Solaris, HP firmasının HP-UX, SCO firmasının SCO_UNIX, IBM firmasının AIX örnek olarak verilebilir.</p>
+<p>AT&amp;T 80 liyıllarının başında Unix sistemlerine telif uygulamaya başlamştır. Bu durumdan tedirgin olan üniversiteler ve araştırıcılar bedava Unix sistemleri geliştirme yönünde motive olmuşlardır. Bunun üzerine Hollandali profesor A. Tanenbaum işletim sistemi derslerinde kullanmak üzere MINIX isminde mini bir Unix sistemi yazmştır. MINIX ticari amaçla çeşitli kesimler tarafından kullanılmş olsa da ciddi bir yaygınlık kazanmamştir. Fakat kaynak kodları pekçok geliştiriciye ilham vermiştir. 1985 yılında Richard Stallman FSF (Free Software Foundation) isimli bir kurum altında serbest yazılım fikrini atmştır. Serbest yazılım bedava yazılımdan daha çok geliştirmede özgürlüğü belirtmektedir. Yani , programcı yazdığı programı kaynak koduyla birlikte verir, kaynak kodu sahiplenip değişti rilmesini engelleyemez. Kaynak kodu elde eden programcı orijinal yazardan alıntı yaptığını belirterek kodu değiştirebilir. Serbest yazılım bedava olabilirde olmayabilir de, fakat serbest yazılım parayla satılsa bile kaynak kodu verilmek zorundadır. Richard Stallman FSF kurumunu oluşturduktan sonra GNU isimli bir proje oluşturmuştur. GNU (GNU’ not UNIX) bir işletim sistemi ve yardımcı ek programlar oluşturmayı hedefleyen bir projedir. Bu proje hala devam etmektedir (<a href="https://www.fsf.org">www.fsf.org</a>). GNU projesi kapsamında pek çok yararlı programlar yazılmştır (gcc derleyicisi ). Ancak maalesef işletim sisteminin kendisi yazılamamştır. 1990 yılında Linus Torvalds GNU lisansı altında MINIX ve UNIX sistemlerinden alıntılarla serbest bir Unix sistemi oluşturmuştur. Bugün Linux sistemlerindeki yazılımlar GNU lisanslı yazılımlardır. Yani, Linux sistemleri çekirdeği Linus Torvalds tarafından tasarlanmş olan yaralı programları GNU projesi kapsamıyla elde edilmiş olan bir sistemdir. Pekçok kişi bugün kullanılan bu sisteme Linux yerine GNU/Linux denmesinin daha uygun olacağını düşünmektedir. 1980’li yılların sonlarına doğru UNIX sistemleri standart hale getirilmeye çalışılmştır. Bunun için IEEE bünyesinde stadardizasyon ekibi kurulmuş ve POSIX standartları diye bilinen standartlar oluşturulmuştur. POSIX bir grup standartlardan oluşan bir standartlar topluluğudur. Bu grup içerisindeki herbir standart POSIX 1003.X biçiminde isimlendirilmiştir. Örneğin, 1003.1 POSIX uyumlu UNIX sistemlerinin C’de bulundurması gereken sistem fonksiyonlarına ayrılmştır. 1003.2 Shell programlarının kullandığı standart komutları tanımlamaktadır.</p>
+<p>(Bu yazının tarihsel gelişim bölümü C ve sistem programcıları derneğinin Unix/Linux sistem programlama dökümanının giriş ksımından aynen kopyalanmıştır. Dökümana buradan erişim sağlayabilirsiniz.)</p>
+<h2 id="giriş" >Giriş
+<span>
+    <a href="#giri%c5%9f">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Sistem fonksiyonları user mod’da uygulamayı donanıma en yakın yapan fonksiyonlardır. Sistem çekirdeği içerisinde 2 türlü programlama yapilir. Kernel modülü yazmak Kernel yapısını degiştirerek yeniden kerneli derlemek Standat C fonksiyonlari, POSIX fonksiyonlari, Sistem fonksiyonları Standat C fonksiyonları bütün C derleyicilerinde olmasi gereken fonksiyonlardır ve bu fonksiyonlar en alt seviyeli fonksiyonlardir. POSIX fonksiyonlarıda butun POSIX sistemlerde var olan fonksiyonlardır ve bütün Unix/Linux sistemler icin kullanilabilir fonksiyonlardır. Sistem fonksiyonlari da biraz daha sisteme ozellestirilmis fonksiyonlardir. Yazılımda genel olarak kod tekrarı istenmez. Cünkü kod tekrarı hem fazla yer kaplar hemde bakımı zordur. Bu nedenle yazılım sistemleri katman katman oluşturulur. Yani yeni bir katman başka bir katmanın var olduğu fikriyle oradaki fonksiyonlari cağırarak yapılır. Yazılımsal olarak en asağı katman işletim sisteminin dış dünyaya sunduğu aşagi seviyeli sistem fonksiyonlaridır.</p>
+<p>Örnek bir C kodu:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span>(a, b)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> a<span style="color:#f92672">+</span>b;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, b<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, c;
+</span></span><span style="display:flex;"><span>    c <span style="color:#f92672">=</span> add(a,b);
+</span></span><span style="display:flex;"><span>    ...    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Bu C kodunun Assembler karşılığı;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>main proc near:
+</span></span><span style="display:flex;"><span>    push ebp
+</span></span><span style="display:flex;"><span>    mov ebp, esp
+</span></span><span style="display:flex;"><span>    sub ebp,<span style="color:#ae81ff">12</span>
+</span></span><span style="display:flex;"><span>    mov [ebp<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    mov [ebp<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>    mov eax,[ebp<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>    push ecx
+</span></span><span style="display:flex;"><span>    mov
+</span></span></code></pre></div><p>Fakat sistem fonksiyonları isim ve parametrik yapı bakımından sistemden sisteme değisir. Hatta versiyondan versiyona bile değisir. Bunun yerine sistem fonksiyonalrını cağiran daha taşınabilir fonksiyon katmanı bulunmaktadır. Buna windows dünyasinda Windows API fonksiyonları, Unix/Linux dunyasinda POSIX fonksiyonları denilmektedir. POSIX fonksiyonları yalnızca linux sistemlerinde bulunmaktadir. Windows sistemlerde bulunmamaktadır. Standart C fonksiyonları ise tum C derleyicilerinde bulunmaktadır. Java gibi .NET gibi QT gibi pekcok platfrom ve kütüphane kendi dünyasinda daha yüksek seviyeli ve taşınabilir fonksiyonlar ve sınıflar bulundurmaktadırlar. Bazı POSIX fonksiyonları doğrudan bir sistem fonksiyonunu cağırmaktadir. Bazıları ise birden fazla sistem fonksiyonunu cagirir, bazıları ise hiçbir sistem fonksiyonunu cağırmayabilir. Bu durum Windows API fonksiyonları için de geçerlidir.</p>
+<p>Linux sistemlerde trapgate mekaniması için aşağıdaki link bağlantıları faydalı olabilir.</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/15168822/intel-x86-vs-x64-interrupt-call">Intel x86 vs x64 interrupt call</a></li>
+<li><a href="http://stackoverflow.com/questions/9111039/for-signal-in-linux-who-calls-int-0x80">For signal in linux who calls int 0x80</a></li>
+</ul>
+<h2 id="işlemcilerin-sunduğu-koruma-mekanizması" >İşlemcilerin Sunduğu Koruma Mekanizması
+<span>
+    <a href="#i%c5%9flemcilerin-sundu%c4%9fu-koruma-mekanizmas%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Koruma mekanizması bir processin zararli etkilerinden diğer procesleri ve isletim sistemini korumak icin olusturulmus bir mekanizmadır. Birinci elden işlemci tarafından uygulanır. Koruma mekanizmasının iki yönü vardır; bellek korumasi komut korumasi Bellek koruması; bir processin kendi sınırlarının dışına erişip erişmediğini denetler. Komut koruması ise sistemi çökertecek komutların kullanılmasını yasaklamaktadir. Bu koruma mekanizmaları işletim sisteminin kullanıcı moduna (user modda) geçerli korumalardır. Prosesler kernel ve user mod olmak üzere iki moddan birinde çalışır. Normal programlar user modda çalıştırılırlar. İşletim sisteminin kodlari ve aygıt sürücüler kernel modda çalışırlar. Kernel modda ise koruma mekanizmasi uygulanmaz. Hersey yapilabilmektedir.</p>
+<p>Bir proses sürekli user modda kalmayabilir. Bir sistem fonksiyonu cağırıldığında proses user moddan gecici olarak kernel moda gecer. Sistem fonksiyonu kernel modda çalıştırılır. Sonra yeniden user moda geri dönülür.</p>
+<h2 id="unixlinux-sistemlerde-prosesler" >Unix/Linux Sistemlerde Prosesler
+<span>
+    <a href="#unixlinux-sistemlerde-prosesler">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Çalışmakta olan programlara proses denir. Her prosesin kernel alanı içerisinde oluşturulmuş olan bir process kontrol bloğu vardır. Tipik olarak process kontrol bloğu’nun icinde şu bilgiler bulunur.</p>
+<ul>
+<li>Processin yetkilendirme bilgileri</li>
+<li>Processin ID’si</li>
+<li>Processin bellek alanının nerede olduğu</li>
+<li>Processin erişim hakları</li>
+<li>Processin çalisma dizini</li>
+<li>Processin açmis olduğu dosyalar</li>
+<li>Processin istatistiksel bilgileri (örneğin process yaşamının ne kadarını kernel, ne kadarını user modda geçirmiştir)</li>
+<li>Processin kesilme sırasındaki yazmaç (register) bilgileri</li>
+<li>Processin Thread’leri hakkında bilgiler</li>
+</ul>
+<hr>
+<p>Bir process oluşturulurken, user modda oluşturulan hafıza alanının yanısıra bir de kernel alanı icerisinde (kernel stack) de bir alan ayırılır. lxr.linux.no : linux kaynak kodlarını görebilecegimiz bir navigator. Versiyonlar arasında karşılaştırma da yapabilmektedir. Linux sistemlerde kullanılan sistem çağrılarını <a href="http://docs.cs.up.ac.za/programming/asm/derick">http://docs.cs.up.ac.za/programming/asm/derick</a>_tut/syscalls.html linkinden görebiliriz.</p>
+<p>Linux sistemlerde proses kontrol bloğu task_struct ile temsil edilmektdir. Proses kontrol bloğu dallı budaklı bir yapı biçiminde olabilir. Yani, bazı büyük bilgiler ayrı veri yapılarındadırlar. Proses konrtol bloğundan oralar (büyük veri alanları) göstericiler ile gösterilmektedir. Bir bilginin process kontrol blogunda olmasi demek ona proses kontrol blığu ile erişilebiliyor demekdir.</p>
+<p>Not : proc dosya sisteminde procese ait bilgi silinir ise processi ps komutundan gizleyebiliriz Not : Windows ile ilgili dokümante edilmemiş bazı yapıları reactos.org adresinden görebilir ve inceleyebiliriz. Windows’da EPROCESS yapısı ile process kontrol blok tanımlanabilir. Bu yapı içerisinde PEB tanımlanmıştır.</p>
+<p>Linux’da threadler’i processler gibi yapmislar. Kendi proses kontrol bloğu bulunmaktadır. Unix/Linux sistemlerinde her prosesin sistem genelinde tek olan bir ID değeri vardır. Prosesler arasıda altlık/üstlük (parent/child) ilişkisi söz konusudur. Her proses başka bir proses tarafından yaratılır. Örneğin UNIX/Linux sistemlerindeki komut satırı da aslında bir programdır. Yani bir processdir (/bin/bash). Sistem Boot Edildiğinde Proseslerin Durumu Nedir? Bootdan gelen akış ilk prosesi oluşturur. Buna swapper yada pager denilmektedir ve bu prosesin ID degeri 0’dir. Bu proses init denilen prosesi yaratır ve artık swapper birşey yapmadan arka planda bekler. Sonra bir dizi olaylar sırasında akış shell’e kadar gelir.</p>
+<p>Kernel kendini yükledikten sonra try_to_run_init_process fonksiyonu ile baslangıç prosesini çalıştırır.İşletim sistemi aslında bir kod yığınının hazırda beklemesidir.</p>
+<h3 id="prosesin-userid-ve-groupid-değerleri" >Proses’in UserID ve GroupID Değerleri
+<span>
+    <a href="#prosesin-userid-ve-groupid-de%c4%9ferleri">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Her prosesin proses kontrol bloğunda saklanan UserId ve GroupID degerleri vardır. UserId ve GroupId değerleri birer sayı olmasına karşın bunlara birer yazı da karşılık düşürülmüştür. Kernel işlemlerini bu isimlerin sayısal değerleri ile gerçeklestirmektedir. Ancak kullanıcı ve grup isimleri daha akılda kalıcıdır. Geleneksel olarak UserID’nin isimsel karşılığı /etc/passwd dosyasında GroupID’nin ise isimsel karşılığı /etc/group dosyasında tutulmalıdır. Aynı zamanda her prosesin effective UserID (etkin kullanici id’si) ve effective GrupID değeri de vardır. Normalde UserID ile etkin UserID, GrupID ile etkin GroupID aynı değerdedir. Fakat bazı seyrek durumlarda bunlar farklılaşabilmektedir. Fakat test işlemini her zaman etkin UserID ve etkin GrupID sokulur. Processin UserID, GrupID,etkin UserID,etkin GrupID değerleri proses yaratılırken üst prosesden aktarılır. Biz shell’den bir program çalıştırdığımızda shell’de bir process olduğuna gore çalıştırdığımız prosesin UserID ve GroupID değerleri shell’inki ile aynı olur.</p>
+<p>Shell üzerinden “id” isimli komut o anda shell processinin etkin UserID ve etkin GroupID değerlerini bize verir. Biz xWindow sistemi veya terminal yolu ile sisteme giriş yaptığımızda ilk UserID ve GroupID nasıl oluşturulmaktadır? Işte bize, sisteme login olunurken bir kullanıcı ve parola sorulur. Dogrulama yapılır ve /etc/passwd’de gösterilen bir program bu user ve group id ile calistirilir.</p>
+<p>Uygulamanin calisma sirasi su sekilde</p>
+<ol>
+<li>boot</li>
+<li>Kernel</li>
+<li>init</li>
+<li>tty</li>
+<li>login</li>
+</ol>
+<p>0 numarali user id değerine sahip prosese süper proses yada root prosesi denilmektedir. Pekcok linux dağıtımında işin başında ismi root olan ve userId değeri 0 olan bir kullanıcı da /etc/passwd dosyasında yaratılmıştır. Aslında /etc/passwd dosyasının kendisi, init programı ve login programı kernel kodlarına dahil değildir. Fakat kernel kodları prosesin etkin kullanıcı ve grup id’lerine bakacak şekilde yazılmıştır. Biz /etc/passwd dosyasını silersek login programı calıştığında bu dosyanın ici boş olduğu icin giriş işlemi yapılamayacaktır. Prosesin UserID ve GroupId Değerlerinin Anlamı Processin UserId ve GrupId’si buyuk ölçüde dosya sistemlerine ilişkin teste sokulurlar. Unix/Linux sistemlerinde bir dosyanın açılması ve yaratılması işlemleri yalnızca open isimli POSIX fonksiyonu ile yapılmaktadır. Bu fonksiyon linuxda sys_open fonksiyonunu cağırmaktadır.<br>
+Glibc kütüphanesinin kaynak kodu içerisinde POSIX fonksiyonlarının kaynak kodları bulunmaktadır.</p>
+<p>Unix/Linux sistemlerinde her dosyanın user/group id değerleri vardir. Bir dosyanın userId’si o dosyayi yaratan prosesin yani open fonksiyonunu cağıran processin etkin user id’si olarak alınır. Dosyanın grup id değeri ise sistemden sisteme değişebilecek biçimde iki seçenekten birisi olabilir.</p>
+<ul>
+<li>Dosyayı yaratan prosesin etkin GrupID’si olarak</li>
+<li>Dosyanın içinde yaratıldığı dizinin etkin GrorpID’si olarak</li>
+</ul>
+<p>Linux’da default durum dosyanın group id’sinin onu yaratan processin etkin group idsi biçiminde alınmasıdır. Fakat bu durum çesitli koşullarda değiştirilebilmektedir.</p>
+<p>Dosya erişim kontrolü şöyle yapılır.</p>
+<ul>
+<li>Önce Open fonksiyonunu çağıran prosesin root olup olmadığına bakılır. root ise hiçbir kontrol yapılmaz. Erişim kabul edilir.</li>
+<li>Değil ise ikinci erişim istenen processin etkin UserID’sinin dosyanın UserID’si ile ayni olup olmadığına bakılır. Eğer aynı ise erişim haklarından owner kısmı dikkate alınır. Değil ise 3. maddeye geçilir.</li>
+<li>Erişmek isteyen prosesin etkin grupid’sinin dosyanın grupid’si ile aynı olup olmadığına bakılır. Aynı ise grup haklar dikkate alınır. Değil ise 4. maddeye geçilir.</li>
+<li>Bu durumda dosyanın other bilgileri dikkate alınır.</li>
+</ul>
+<p>Belirli bir yıldan sonra bir prosesin tek bir gruba ait olması yetersiz görülmüştür. Çünkü bir kişi birden fazla projede çalışabilmektedir. işte bu durumda ek grupid kavramı ortaya çıkmıştır. Bugünkü sistemde bir prosesin bir tane gerçek grupid’si ve etkin grupid’si vardır. Fakat birden fazla ek gruba da sahiptir.</p>
+<p>Ek gruplar tamamen yukarıdaki 3. madde sırasında prosesin etkin grupid ile dosyanın grupid’si karşılaştırılırken etkin grupid ile ayni değerde karşılaştırılmaktadır. Kullanıcının ek gruplari /etc/group dosyasında belirtilmektedir.</p>
+<h2 id="posix-programlamada-kullanılan-önemli-bazı-bilgiler" >POSIX Programlamada Kullanılan Önemli Bazı Bilgiler
+<span>
+    <a href="#posix-programlamada-kullan%c4%b1lan-%c3%b6nemli-baz%c4%b1-bilgiler">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>POSIX fonksiyonları standart C fonksiyonları ile birlikte glibc/libc diye bilinen kütüphanenin içerisindedir ve GCC sistemi bu kütüphaneye bakmaktadır. Fakat fonksiyonların prototipleri çeşitli baslık dosyası içinde olabilir. Bunların ayrıca include edilmedi gerekmektedir.</p>
+<p>POSIX Fonksiyonlarının çok büyük bolumu basari durumunda 0 başarısızlık durumunda -1 değerine geri dönerler. Programcı programın başarısızlığını test etmelidir. Tabi başarısızlığın da bir sebebi vardır. iste başarısızlığın nedeni int türden global errno isimli bir değişkene yerleştirilmiştir. Fonksiyon basarisiz olduğunda bu değişkenin içine bakarsak neden basarisiz olduğunu anlayabiliriz. Tüm başarısızlık değerleri errno.h dosyası içinde EXXX bicimde sembolik sabitlerle define edilmiştir. Programı isterse doğrudan bu sembolik sabitleri kullanabilir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span>( open(.........) ){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(errno <span style="color:#f92672">==</span> ENOENT)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>         ......
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>POSIX Standartlarında her posix fonksiyonu için başarısızlık durumunda her fonksiyon için errno değişkeninin alabileceği tüm değerler listelenmiştir.</p>
+<p>Fonksiyon basarisiz olduğunda uygun mesajın verilmesi zahmetli olabilir. Bunun için perror ve strerror fonksiyonları bulunmaktadır. perror bizden bir yazı alır önce o yazıyı yazdırır. Sonra bir iki nokta üst üste karakteri yazdırır sonra da o anki errno değerine bakarak ona karsı gelen yazıyı yazdırır (stderr dosyasina). stderror fonksiyonu ise bizden bir hata kodunu alarak. Ona karşı gelen yazıyı verir. Bu durumda tipik kontrol su şekilde yapılabilir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(open(...) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>    perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>    exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="dosya-işlemleri-yapan-temel-posix-fonksiyonları" >Dosya İşlemleri Yapan Temel POSIX Fonksiyonları
+<span>
+    <a href="#dosya-i%c5%9flemleri-yapan-temel-posix-fonksiyonlar%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><h4 id="open-fonksiyonu" >Open Fonksiyonu
+<span>
+    <a href="#open-fonksiyonu">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">open</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">int</span> oflags, ...);
+</span></span></code></pre></div><p>Fonksiyonun birinci parametresi açılacak olan dosyanın yolunu alır. İkinci parametresi açış modunu belirtir. Açış modu fcntl.h içerisinde tanımlanmış olan O_XXXX biçimindeki sabitlerin bit OR işlemi ile birleştirilmesi ile olur. Açış modu şunlardan yalnızca birini içermek zorundadır.</p>
+<ul>
+<li>O_RDONLY</li>
+<li>O_WRONLY</li>
+<li>O_RDWR</li>
+<li>O_CREAT dosya yok ise yarat, var ise bir şey yapma anlamına gelmektedir.</li>
+</ul>
+<p>O_TRUNC, O_RDONLY ya da O_RDWR ile birlikte kullanılmak zorundadır. Bu durumda dosya varsa sıfırlanır ve açılır. O_EXCL, O_CREAT ile birlikte kullanılmak zorundadır. Bu birlikte kullanım sadece yeni bir dosya yaratmak ve açmak için kullanılır. Dosya var ise open fonksiyonu başarısız olur. O_APPEND, Tüm yapılan yazma işlemlerinin dosyanın sonuna eklenmesi gerektiği anlamına gelmektedir. Bu durumda dosyanın herhangi bir yerinden okuma yapılabilir. Fakat herhangi bir yerine yazılamaz. Her yazılan sonuna eklenir. Open fonksiyonunda ikici parametrede O_CREAT kullanılmışsa bu durumda dosyanın yaratılması gibi bir durum oluşur. Artık programcının da dosyanın erişim haklarını üçüncü parametresi belirtmesi gerekir. Fonksiyonun 3. parametresinde belirtilecek erişim hakları sys/stat.h dosyasında belirtilen sembolik sabitlerin bit OR işlemi ile birleştirilmesi ile oluşturulur. Bu sembolik sabitlerin isimleri su şekilde oluşturulmuştur.</p>
+<p>|   | R | USR |
+| S_I | W | GRP |
+|   | X | OTH |</p>
+<p>Bu gösterimin kombinasyonları olacak şekilde olur. Örnegin;</p>
+<ul>
+<li>S_IRUSR -&gt; User’a read hakki verir</li>
+<li>S_IXGRP -&gt; Gruba calistirma haki verir</li>
+</ul>
+<p>Örnek bir uygulama:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> open fonksiyonunun kullanýmý
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;a.dat&#34;</span>, O_RDWR<span style="color:#f92672">|</span>O_CREAT, S_IRUSR<span style="color:#f92672">|</span>S_IWUSR<span style="color:#f92672">|</span>S_IRGRP<span style="color:#f92672">|</span>S_IROTH)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;success...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Open fonksiyonu basari durumunda dosya betimleyicisi (file descriptor) denilen bir handle değerine geri döner. Bu handle değeri diğer fonksiyonlarda parametre olarak kullanılacaktır. Başarısızlık durumunda fonksiyon -1 değerine geri döner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcnlt.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;a.dat&#34;</span>, O_RDWR)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;Error &#34;</span>)       
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="close-fonksiyonu" >Close Fonksiyonu
+<span>
+    <a href="#close-fonksiyonu">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">close</span>(<span style="color:#66d9ef">int</span> fd);
+</span></span></code></pre></div><p>Açılan her dosya bir biçim de kapatılmalıdır. Çünkü açım sırasında bir takım kaynaklar tahsis edilmiş olur. Kapatma sırasında bu kaynaklar geri bırakılır. Ancak dosyayı biz hiç kapatmasak bile process kapandığında bile dosya kesinlikle kapatılmalıdır. Fakat artık kullanılmayacak olan bir dosyanın kapatılması iyi bir tekniktir.</p>
+<p>posix fonksiyonlarının bir çoğu unistd.h dosyası içerisinde tanımlanmıştır.</p>
+<p>Fonksiyon parametre olarak open fonksiyonu ile dosyanın betimleyicisini alır. Başarılı ise 0 değil ise -1 ile geri dönüş yapar.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> close fonksiyonu
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;a.dat&#34;</span>, O_RDWR)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> close(fd);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="dosya-göstericisi-kavramı" >Dosya Göstericisi Kavramı
+<span>
+    <a href="#dosya-g%c3%b6stericisi-kavram%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><p>Dosyadaki her bir byte’in bir ofset numarası vardır. Dosya göstericisi imleç görevindedir. Bir ofset belirtir. Okuma ve yazma işleminin dosyanın hangi noktasından itibaren yapılacağını belirtir. Dosya açıldığında dosya göstericisi 0. ofsettedir. Okunan ya da yazılan miktar kadar otomatik ilerletilir. Dosya göstericisinin dosyanın son byte’indan sonraki byte’ı gösterme durumuna EOF durumu denir. Bu durumda okuma yapılamaz ancak yazma yapılabilir. Bu dosyaya ekleme anlamına gelir.</p>
+<h3 id="read-ve-write-fonksiyonları" >Read ve Write Fonksiyonları
+<span>
+    <a href="#read-ve-write-fonksiyonlar%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Read fonksiyonunun prototipi şu şekildedir</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ssize_t <span style="color:#a6e22e">read</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, size_t count);
+</span></span></code></pre></div><p>Fonksiyonun birinci parametresi dosya betimleyicisini, ikinci parametresi okunan bilgilerin yerleştirileceği adresi, üçüncü parametresi ise okunacak byte sayısını belirtir. Read fonksiyonu ile olandan daha fazla okunmak istenebilir bu durumda fonksiyon okuyabildiği kadar byte’i okur okuyabildiği byte sayısına geri döner. read IO hatası dolaysı ile hiç okuma yapamaz ise -1 değerine EOF’dan dolayı hiçbir şey okuyamaz ise 0 değerine geri döner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> read fonksiyonunun kullanim ornegi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span> ssize_t n;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fd <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;sample.c&#34;</span>, O_RDONLY)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((n <span style="color:#f92672">=</span> read(fd, buf, <span style="color:#ae81ff">30</span>)) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;read&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> buf[n] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span> puts(buf);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> close(fd);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Write fonksiyonunun prototipi şu şekildedir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ssize_t <span style="color:#a6e22e">write</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, size_t count);
+</span></span></code></pre></div><p>Fonksiyonun birinci parametresi dosya betimleyicisini, ikinci parametresi dosyaya yazılacak bilgilerin bulunduğu bellek adresini, üçüncü parametresi ise yazılacak byte miktarını belirtir. Fonksiyon başarılı ise yazılabilen byte sayısına basarisiz ise -1 değerine geri döner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> Dosya kopyalama
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define BUFSIZE  8192
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> fds, fdd;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> buf[BUFSIZE];
+</span></span><span style="display:flex;"><span> ssize_t n;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;wrong number of argument!..</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;usage: mycp &lt;source fie&gt; &lt;dest file&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fds <span style="color:#f92672">=</span> open(argv[<span style="color:#ae81ff">1</span>], O_RDONLY)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fdd <span style="color:#f92672">=</span> open(argv[<span style="color:#ae81ff">2</span>], O_WRONLY<span style="color:#f92672">|</span>O_CREAT<span style="color:#f92672">|</span>O_TRUNC,
+</span></span><span style="display:flex;"><span>                 S_IRUSR<span style="color:#f92672">|</span>S_IWUSR<span style="color:#f92672">|</span>S_IRGRP<span style="color:#f92672">|</span>S_IROTH)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;open&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">while</span> ((n <span style="color:#f92672">=</span> read(fds, buf, BUFSIZE)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (write(fdd, buf, n) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>   perror(<span style="color:#e6db74">&#34;write&#34;</span>);
+</span></span><span style="display:flex;"><span>   exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>  perror(<span style="color:#e6db74">&#34;read&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;1 file copied...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> close(fds);
+</span></span><span style="display:flex;"><span> close(fdd);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Bu örnekte okuma yaptigimiz konksiyonun yetkilerini alip hedef dosyaya eklemek icin stat fonksiyonunu kullanmak gerekiyor.</p>
+<h3 id="lseek-fonksiyonu" >lseek fonksiyonu
+<span>
+    <a href="#lseek-fonksiyonu">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>lseek fonksiyonunun prototipi su sekildedir</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt; // bu dosya include edilmek zorunda deiliz. Edilirse guzel olur.</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>off_t <span style="color:#a6e22e">lseek</span>(<span style="color:#66d9ef">int</span> fd, off_t offset, <span style="color:#66d9ef">int</span> whence);
+</span></span></code></pre></div><p>Fonksiyonun birinci parametresi dosya betimleyicisi ikinci parametresi konumlandırma ofseti, üçüncü parametresi konumlandırma orijinini belirtir. Üçüncü parametre 3 değerden birini alabilir. SEEK_SET (0) konumlandırmanın baştan itibaren yapılacağını belirtir. Bu durumda ofset parametresi &gt;= 0 olmak zorundadır. SEEK_CUR (1) konumlandırmanın dosyanın göstericisinin konumu nerede ise ona göre yapılacağı anlamına gelir. Bu durumda ikinci parametre pozitif, negatif ya da 0 olabilir. Nihayet SEEK_END (2) konumlandırmanın EOF pozisyonuna göre yapılacağı anlamına gelmektedir. Bu durumda ikinci parametre =&lt; 0 olmak zorundadır. Fonksiyon basari durumunda dosya göstericisinin yeni konumuna başarısızlık durumunda -1 değerine geri döner.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fcntl.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> file<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>((file<span style="color:#f92672">=</span>open(<span style="color:#e6db74">&#34;testfile.txt&#34;</span>,O_RDONLY)) <span style="color:#f92672">&lt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">19</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(read(file,buffer,<span style="color:#ae81ff">19</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">19</span>)  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,buffer);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(lseek(file,<span style="color:#ae81ff">10</span>,SEEK_SET) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(read(file,buffer,<span style="color:#ae81ff">19</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">19</span>)  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,buffer);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Bu örnekde exitsys fonksiyonunu kendi yazdığımız uygulamalarda direk kullanabiliriz. lseek komutu ile örneğin 5 bayt uzunluğunda bir dosya 15. bayttan itibaren veri yazabiliyoruz. Buna dosya deliği denilmektedir. (File hole) Bu konu ile ilgili <a href="http://www.kaanaslan.com/resource/article/display">http://www.kaanaslan.com/resource/article/display</a>_article.php?id=64 adresinden ayrıntılı bilgi elde edilebilir.</p>
+<p>Dosya baytlardan oluşmaktadır. Fakat halk arasında içinde yalnızca yazı olan dosyalara text dosyalar, içinde yazının dışında başka şeyler de olabilen dosyalara binary dosyalar denilmektedir. Ayrıca test dosyalarda her bir karakterin hangi tablo ile kodlandığını bilmek gerekir. Buna karakter kodlaması denilmektedir.</p>
+<p>| Unix / Linux | Windows |
+| a\nb | a\r\nb |
+| LF | CR/LF |</p>
+<p>Windows da test editörler aşağı satıra geçiş için CR ve LF karakterlerini (0D ve 0A) kullanır. Fakat Unix/Linux’ta yalnızca LF karakteri kullanılmaktadır. Bu da uyumsuzluğa yol açmaktadır. Bu karışıklığı çözmek için ve özellikle text okuma ve yazmaları kolaylaştırmak için C ve bazı başka dillerde dosyayı açarken text mode ve binari mode seklinde yapay seçenekler oluşturulmuştur. Bir dosyayı text modda açtığımız zaman şunlar olur;</p>
+<ul>
+<li>Dosyadan 1 bayt okurken eğer dosya göstericisi Windows da CR karakterinin üzerinde ise CR ve LF karakterlerinin ikisini de okur fakat bize fonksiyon LF karakteri okumuş gibi geri döner.</li>
+<li>Biz dosyaya text modda açılmışsa \n karakterini yazdırdığımızda aslında Windows da aslında CR/LF biçiminde 2 byte yazılmaktadır. Biz dosyayı binary modda açtığımız zaman hangi karakteri yazdırırsak yalnızca onu yazar. Görüldüğü gibi Unix/Linux sistemlerinde dosyanın text mode veya binary modda açılması arastanda hiçbir fark yoktur.</li>
+</ul>
+<p>Text Mode / Binary Mode Örnekleri</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                C&#39;de text mode / binary mode&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define _CRT_SECURE_NO_WARNINGS
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>                FILE <span style="color:#f92672">*</span>f;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> ((f <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;a.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>)) <span style="color:#f92672">==</span> NULL) {
+</span></span><span style="display:flex;"><span>                               fprintf(stderr, <span style="color:#e6db74">&#34;cannot open file!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>                               exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                fprintf(f, <span style="color:#e6db74">&#34;a</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">b&#34;</span>);                           <span style="color:#75715e">/* Windows&#39;ta 4 byte UNIX/Linux&#39;ta 3 byte */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                fclose(f);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                C&#39;de text mode / binary mode&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define _CRT_SECURE_NO_WARNINGS
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>                FILE <span style="color:#f92672">*</span>f;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> ((f <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;a.txt&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>)) <span style="color:#f92672">==</span> NULL) {
+</span></span><span style="display:flex;"><span>                               fprintf(stderr, <span style="color:#e6db74">&#34;cannot open file!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>                               exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                fprintf(f, <span style="color:#e6db74">&#34;a</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">b&#34;</span>);                           <span style="color:#75715e">/* Windows&#39;ta 3 byte UNIX/Linux&#39;ta 3 byte */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                fclose(f);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-10-06</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-10-06-linux-system-prog-part1/">https://www.cihatyildiz.com/post/2014-10-06-linux-system-prog-part1/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+    </article>
+
+    
+        
+    <div class="pagination post-pagination">
+        <div class="left pagination-item ">
+            
+                <a href="/post/2014-10-13-linux-system-prog-part2/">Linux System Programming - Part 2</a>
+            
+        </div>
+        <div class="right pagination-item ">
+            
+                <a href="/post/2014-09-22-win32-system-prog-part5/">Win32 System Programming - Part 5</a>
+            
+        </div>
+    </div>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Cihat Yildiz, 2022<br>
+            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+    <script>
+    const STORAGE_KEY = 'user-color-scheme'
+    const defaultTheme = "auto"
+
+    let currentTheme
+    let switchButton
+    let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    const autoChangeScheme = e => {
+        currentTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', currentTheme)
+        changeButtonText()
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        switchButton = document.querySelector('.theme-switcher')
+        currentTheme = detectCurrentScheme()
+        if (currentTheme == 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }
+        if (currentTheme == 'auto') {
+            autoChangeScheme(autoDefinedScheme);
+            autoDefinedScheme.addListener(autoChangeScheme);
+        }
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    })
+
+    function detectCurrentScheme() {
+        if (localStorage.getItem(STORAGE_KEY)) {
+            return localStorage.getItem(STORAGE_KEY)
+        } 
+        if (defaultTheme) {
+            return defaultTheme
+        } 
+        if (!window.matchMedia) {
+            return 'light'
+        } 
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark'
+        }
+        return 'light'
+    }
+
+    function changeButtonText()
+    {   
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+
+    function switchTheme(e) {
+        if (currentTheme == 'dark') {
+            localStorage.setItem(STORAGE_KEY, 'light')
+            document.documentElement.setAttribute('data-theme', 'light')
+            currentTheme = 'light'
+        } else {
+            localStorage.setItem(STORAGE_KEY, 'dark')
+            document.documentElement.setAttribute('data-theme', 'dark')
+            currentTheme = 'dark'
+        }
+        changeButtonText()
+    }
+    </script>
+   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://www.cihatyildiz.com class="p-name u-url url fn" rel="me">Cihat Yildiz</a> 
+
+    
+
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>

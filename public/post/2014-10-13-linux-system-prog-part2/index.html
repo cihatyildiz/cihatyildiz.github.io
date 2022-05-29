@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Linux System Programming - Part 2 - Cihat Yildiz</title>
+
+<meta name="description" content="Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları     chmod ve fchmod fonksiyonları     #include &lt;sys/stat.h&gt;int chmod(const char *path, mode_t mode); int fchmod(int fd, mode_t mode); Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir.">
+
+
+
+<link rel="icon" type="image/x-icon" href="https://www.cihatyildiz.com/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://www.cihatyildiz.com/favicon.png">
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://www.cihatyildiz.com/css/style.min.0a537f3bb0e983fac9fdd9ab89517b7c25e24c3e34d140b76e8ae7a11ab74cb1.css" integrity="sha256-ClN/O7Dpg/rJ/dmriVF7fCXiTD400UC3bornoRq3TLE=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Linux System Programming - Part 2" />
+<meta property="og:description" content="Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları     chmod ve fchmod fonksiyonları     #include &lt;sys/stat.h&gt;int chmod(const char *path, mode_t mode); int fchmod(int fd, mode_t mode); Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.cihatyildiz.com/post/2014-10-13-linux-system-prog-part2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-10-13T20:55:00+08:00" />
+<meta property="article:modified_time" content="2014-10-13T20:55:00+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux System Programming - Part 2"/>
+<meta name="twitter:description" content="Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları     chmod ve fchmod fonksiyonları     #include &lt;sys/stat.h&gt;int chmod(const char *path, mode_t mode); int fchmod(int fd, mode_t mode); Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir."/>
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+        <a href="/"><strong>Cihat Yildiz</strong></a>
+    </h1>
+    <ul class="social-icons">
+
+
+    
+        <li>
+            <a href="https://twitter.com/cihatix" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://www.linkedin.com/in/cihatyildiz/" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://github.com/mitrichius/hugo-theme-anubis" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    
+    <li>
+        <a href="/index.xml" title="RSS" rel="me">
+        <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+        </a>
+    </li>
+
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://www.cihatyildiz.com/about/" title="">About</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/projects/" title="">Projects</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/trainings/" title="">Trainings</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/posts/" title="">Archive</a>
+        
+        <a class="" href="https://www.cihatyildiz.com/tags/" title="">Tags</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Linux System Programming - Part 2</h1>
+
+                
+            </header>
+        </div>
+        <div class="content e-content">
+            <h2 id="dosya-sistemine-ilişkin-yardımcı-posix-fonksiyonları" >Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları
+<span>
+    <a href="#dosya-sistemine-ili%c5%9fkin-yard%c4%b1mc%c4%b1-posix-fonksiyonlar%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><h3 id="chmod-ve-fchmod-fonksiyonları" >chmod ve fchmod fonksiyonları
+<span>
+    <a href="#chmod-ve-fchmod-fonksiyonlar%c4%b1">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">chmod</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, mode_t mode);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fchmod</span>(<span style="color:#66d9ef">int</span> fd, mode_t mode);
+</span></span></code></pre></div><p>Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir.</p>
+<p>root hakkı, ya hep ya hiç biçiminde bir haktır. Yani root proses her şeyi yapabilir. Diğerleri sadece kendilerine yönelik şeyleri yapabilir. Bu nedenle bazı sistemlerde proses root olmadığı halde bazı işlemleri yapabilecek durum oluşturulmuştur. Prosesin bu yetkilendirme bilgisi ilgili sistemlerde proses kontrol bloğunda saklanır. Fakat her sistem bunu desteklememektedir.</p>
+<p>Ayrıca komut satırında chmod isimli bir komutta vardır.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*--------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> chmod örneği
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> arights;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> i, k;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> aflags[] <span style="color:#f92672">=</span> {S_IXOTH, S_IWOTH, S_IROTH, S_IXGRP, S_IWGRP,
+</span></span><span style="display:flex;"><span>                     S_IRGRP, S_IXUSR, S_IWUSR, S_IRUSR};
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> mflag;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;wrong number of arguments!..</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;usage: mychmod &lt;access rights&gt; &lt;file&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> sscanf(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;%o&#34;</span>, <span style="color:#f92672">&amp;</span>arights);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; i <span style="color:#f92672">&lt;</span> argc; <span style="color:#f92672">++</span>i) {
+</span></span><span style="display:flex;"><span>  mflag <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">9</span>; <span style="color:#f92672">++</span>k)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> (arights <span style="color:#f92672">&amp;</span> aflags[k])
+</span></span><span style="display:flex;"><span>    mflag <span style="color:#f92672">|=</span> aflags[k];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (chmod(argv[i], mflag) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>   exitsys(<span style="color:#e6db74">&#34;chmod&#34;</span>);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> perror(msg);
+</span></span><span style="display:flex;"><span> exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="chown-ve-fchown-fonksiyonu" >chown ve fchown Fonksiyonu
+<span>
+    <a href="#chown-ve-fchown-fonksiyonu">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">chown</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, uid_t owner, gid_t group);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fchown</span>(<span style="color:#66d9ef">int</span> fd, uid_t owner, gid_t group);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lchown</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, uid_t owner, gid_t group);
+</span></span></code></pre></div><p>Chown fonksiyonu bir dosyanin sahiplik bilgilerini degistirir. Fonksiyonun prototipi yukaridaki gibidir. Fonksiyonunlarin birinci parametresi ilfili dosyanin yol ifadesi yada dosya betimleyicisidir. Ikinci parametresi dosyanin yeni sahibinin id’sini, ucuncu parametre de dosyanin yeni grubunun id’sini alir. Ancak root processi bis dosyanin sahiplik bilgisini degistirebilir. Dosyanin sahibinin sahiplik bilgisini yada grup bilgisini degistirebilmesi bazi unix turevi sistemlede mumkundur. Bazilarinda ise degildir. POSIX bunu isletim sisteminin istegine birakmistir. Linux’da default durumda dosyanin sahibi sahipligini baska birisine devredemez. Fakat genel olarak dosyanin sahibi dosyanin grubunu degistirmektedir. Ancak dosyanin sahibi dosyanin grubunu POSIX standartlarina gore herhangi bir grup olarak degistiremez. Kendi etkin grupid’si olarak yada ek gruplarindan biri olarak degistirebilir.</p>
+<p>POSIX Standartlarinda degisik baslik dosyalarinda xxx_t biciminde typedef edilmis bazi tur isimleri vardir. BU turlerin gercekte hangi tur olarak typedef edilecegibazi kosullar altinda isletim sistemini yazanlara birakilmistir. Bunlarin hepsi ayrica bir grup olarak /sys/types.h dosyasi icinde tanimlanmistir. Tipik xxx_t turleri sunlardir: -&gt; mode_t, nlink_t, uid_t, gid_t, id_t bir tamsayi olarak typedef edilmek zorundadir. -&gt; blksize_t, pid_t, ssize_t, blkcnt_t ve off_t isaretli tamsayi olacak bicimde typedef edilmek zorundadir. -&gt; size_t isaretsiz bir tamsayi turu olarak typedef edilmek zorundadir. -&gt; time_t ve clock_t tam sayi yada gercek sayio turunden typedef edilmek zorundadir.</p>
+<h3 id="stat-ve-fstat-fonksiyonlari" >stat ve fstat fonksiyonlari
+<span>
+    <a href="#stat-ve-fstat-fonksiyonlari">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Fonksiyonun prototipi su sekildedir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">stat</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>buf);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fstat</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>buf);
+</span></span></code></pre></div><p>Fonksiyonlarin birinci parametreleri bilgisi elde edilecek olan dosyani yol ifadesini yada betimleyicisini almaktadir. ikinci parametre sys/types.h dosyasinda bildirilmis olan stat isimli bir yapi turunden nesnenin adresini alir. Fonksiyon basari durumunda 0 basarisizlik durumunda -1 degerine geri doner.</p>
+<p>Stat yapisinin icerisinde su bilgiler vardir.</p>
+<ul>
+<li>Dosyanin icinde bulundugu aygitin aygit numarasi.</li>
+<li>Dosyanin inode numarasi</li>
+<li>Dosyanin erisim bilgileri</li>
+<li>Dosyanin userid ve groupid bilgileri</li>
+<li>Dosyanin uzunlugu</li>
+<li>Dosyani son erisim, son degistirilme, son statu degisimine iliskin tarih ve zaman bilgisi</li>
+<li>Kopyalama gibi islemlerdeki etkin tampon buyuklugu</li>
+<li>Bu dosya icin kac disk blogu tahsis edildigi</li>
+</ul>
+<p>Bir dosyanin kac bloktan olustugu bilgisi belirtilirken bir blogun kac byte uzunlugunda oldugu sistemden sisteme degisebilmektedir. Block kavrami Linux sistemlerde biraz lastik hale getirilmistir. Stat fonksiyonunda ise block 512 byei temsil eder,. Halbulki baska yarlerde de bloack terimi kullanilmaktadir ve baska uzunlugu gostermektedir. Sonuc olarak linux sistemiinde block terinide karsilasildiginda, o baglamda blogun kac byte dan olustugu bilgisini de edinmek gerekmektedir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> stat fonksiyonu
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;pwd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;grp.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> stat finfo;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> passwd <span style="color:#f92672">*</span>pwd;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> group <span style="color:#f92672">*</span>grp;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> tm <span style="color:#f92672">*</span>ftime;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;cannot get stat info</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (stat(argv[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>finfo) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  exitsys(<span style="color:#e6db74">&#34;stat&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((pwd <span style="color:#f92672">=</span> getpwuid(finfo.st_uid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  exitsys(<span style="color:#e6db74">&#34;getpwuid&#34;</span>);
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((grp <span style="color:#f92672">=</span> getgrgid(finfo.st_gid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  exitsys(<span style="color:#e6db74">&#34;getgrgid&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, argv[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;User: %s(%lu)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, pwd<span style="color:#f92672">-&gt;</span>pw_name, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_uid);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;Group: %s(%lu)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, grp<span style="color:#f92672">-&gt;</span>gr_name, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_gid);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;Length: %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_size);
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span> ftime <span style="color:#f92672">=</span> localtime(<span style="color:#f92672">&amp;</span>finfo.st_atime);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;Access time: %02d/%02d/%04d %02d:%02d:%02d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ftime<span style="color:#f92672">-&gt;</span>tm_mday,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_mon <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, ftime<span style="color:#f92672">-&gt;</span>tm_year <span style="color:#f92672">+</span> <span style="color:#ae81ff">1900</span>,ftime<span style="color:#f92672">-&gt;</span>tm_hour,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_min, ftime<span style="color:#f92672">-&gt;</span>tm_sec);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ftime <span style="color:#f92672">=</span> localtime(<span style="color:#f92672">&amp;</span>finfo.st_mtime);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;Modification time: %02d/%02d/%04d %02d:%02d:%02d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ftime<span style="color:#f92672">-&gt;</span>tm_mday,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_mon <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, ftime<span style="color:#f92672">-&gt;</span>tm_year <span style="color:#f92672">+</span> <span style="color:#ae81ff">1900</span>,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_hour, ftime<span style="color:#f92672">-&gt;</span>tm_min, ftime<span style="color:#f92672">-&gt;</span>tm_sec);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ftime <span style="color:#f92672">=</span> localtime(<span style="color:#f92672">&amp;</span>finfo.st_ctime);
+</span></span><span style="display:flex;"><span> printf(<span style="color:#e6db74">&#34;Status time: %02d/%02d/%04d %02d:%02d:%02d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ftime<span style="color:#f92672">-&gt;</span>tm_mday,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_mon <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, ftime<span style="color:#f92672">-&gt;</span>tm_year <span style="color:#f92672">+</span> <span style="color:#ae81ff">1900</span>,
+</span></span><span style="display:flex;"><span>         ftime<span style="color:#f92672">-&gt;</span>tm_hour, ftime<span style="color:#f92672">-&gt;</span>tm_min, ftime<span style="color:#f92672">-&gt;</span>tm_sec);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> perror(msg);
+</span></span><span style="display:flex;"><span> exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>/etc/passwd ve /etc/group dosyalarinin formatlari sistemden sisteme farkli olacilir/ Bilindigi gibi sistemler icsel olarak hep sayilarla calisirlar. Ornegin stat fonksiyonundan elde etmis oldugumuz userid ve groupid degerleri sayisal degerlerdir. Bunlari ancak biz /etc/passwd ve /etc/group dosyalarina bakarak isme donusturebiliriz. Iste bu isi yapan birkac posix fonksiyonu bulundurulmustur. getpwuid ve getgrgid fonksiyonlari parametre olarak bizden userid ve groupid degerini alir. ve bize passwd ve group isimli yapi adresi ile geri doner. Bu yapilar, /tec/passwd ve /etc/group dosyalarindaki satirlari temsil etmektedir. tipik olarak bu fonksiyonlar sayisal userid ve gruopid degerlerini user ve group isimlerine donusturmek icin kullanilir. Bu islemin tersini yapan yani isimlerden sayi elde edilmesini saglayan getpwnam ve getgrnam fonksiyonlari vardi</p>
+<p>Geri donus degeri pointer olan fonksiyonlarda hata durrumunda geri donus -1 degil NULL pointerdir. Fonksiyon geri donusunu kontrol etmek icin NULL olup olmadigina bakmamiz omenlidir.</p>
+<p>Stat fonksiyonu ile verilen tarihler bize 1.1.1970 tarihinden gecen saniye sayisi olarak verilmektedir. Stat yapisinin icerisinde erisim haklari st_mode icerisine bit bit kodlanmistir. Buradan dosyanin turunu almak icin s_isxxx biciminde makrolar bulundurulmustur. ayrica ilgili hakkin olup olmadigini anlamak icin daha once gorulmus olan S_IXXXX sembolik sabitleri ile bit end islem olusturmak gerekir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> dosya bilgilerinin ls -l tarzýnda elde edilmesi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;pwd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;grp.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">getls</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>finfo);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> stat finfo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;cannot get stat info</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (stat(argv[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>finfo) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  exitsys(<span style="color:#e6db74">&#34;stat&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> puts(getls(argv[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>finfo));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">getls</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>finfo)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">static</span> buf[<span style="color:#ae81ff">4096</span>];
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> index;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> aflags[] <span style="color:#f92672">=</span> {S_IRUSR, S_IWUSR, S_IXUSR, S_IRGRP, S_IWGRP, S_IXGRP,
+</span></span><span style="display:flex;"><span>                     S_IROTH, S_IWOTH, S_IXOTH};
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>rights <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rwx&#34;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> passwd <span style="color:#f92672">*</span>pwd;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> group <span style="color:#f92672">*</span>grp;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>months[] <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Oca&#34;</span>, <span style="color:#e6db74">&#34;Þub&#34;</span>, <span style="color:#e6db74">&#34;Mar&#34;</span>, <span style="color:#e6db74">&#34;Nis&#34;</span>, <span style="color:#e6db74">&#34;May&#34;</span>, <span style="color:#e6db74">&#34;Haz&#34;</span>, <span style="color:#e6db74">&#34;Tem&#34;</span>, <span style="color:#e6db74">&#34;Aðu&#34;</span>, <span style="color:#e6db74">&#34;Eyl&#34;</span>, <span style="color:#e6db74">&#34;Eki&#34;</span>,
+</span></span><span style="display:flex;"><span>                     <span style="color:#e6db74">&#34;Kas&#34;</span>, <span style="color:#e6db74">&#34;Ara&#34;</span>};
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> tm <span style="color:#f92672">*</span>ftime;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (S_ISREG(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;-&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISDIR(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;d&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISCHR(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;c&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISBLK(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;b&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISFIFO(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;p&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISLNK(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;l&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISSOCK(finfo<span style="color:#f92672">-&gt;</span>st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;s&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">++</span>index;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">9</span>; <span style="color:#f92672">++</span>i)
+</span></span><span style="display:flex;"><span>  buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> (finfo<span style="color:#f92672">-&gt;</span>st_mode <span style="color:#f92672">&amp;</span> aflags[i]) <span style="color:#f92672">?</span> rights[i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span>;
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo<span style="color:#f92672">-&gt;</span>st_nlink);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((pwd <span style="color:#f92672">=</span> getpwuid(finfo<span style="color:#f92672">-&gt;</span>st_uid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo<span style="color:#f92672">-&gt;</span>st_uid);
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s&#34;</span>, pwd<span style="color:#f92672">-&gt;</span>pw_name);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((grp <span style="color:#f92672">=</span> getgrgid(finfo<span style="color:#f92672">-&gt;</span>st_gid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo<span style="color:#f92672">-&gt;</span>st_gid);
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s&#34;</span>, grp<span style="color:#f92672">-&gt;</span>gr_name);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%ld&#34;</span>, (<span style="color:#66d9ef">long</span>) finfo<span style="color:#f92672">-&gt;</span>st_size);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ftime <span style="color:#f92672">=</span> localtime(<span style="color:#f92672">&amp;</span>finfo<span style="color:#f92672">-&gt;</span>st_mtime);
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s %d %02d:%02d %s&#34;</span>, months[ftime<span style="color:#f92672">-&gt;</span>tm_mon],
+</span></span><span style="display:flex;"><span>             ftime<span style="color:#f92672">-&gt;</span>tm_mday,ftime<span style="color:#f92672">-&gt;</span>tm_hour, ftime<span style="color:#f92672">-&gt;</span>tm_min, path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> buf;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> perror(msg);
+</span></span><span style="display:flex;"><span> exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Dizin icindeki dosyalarin ele gecirilmesi
+Bir dizin icerisindeki dosyalarin elde edilmesi su sekilde yapilir.
+Dizin opendir fonksiyonu ile acilir. Fonksiyon basari durumunda DIR isimli bir yapi turunden handle gorevi yapa bir adres verir.basarisizlik durumunde NULL adres verir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dirent.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>DIR <span style="color:#f92672">*</span><span style="color:#a6e22e">opendir</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name);
+</span></span><span style="display:flex;"><span>DIR <span style="color:#f92672">*</span><span style="color:#a6e22e">fdopendir</span>(<span style="color:#66d9ef">int</span> fd);
+</span></span></code></pre></div><p>Readdir isimli fonksiyon her cagirildiginda bize siradaki dosyanin isminin ve inode numarasinin bulundugu dirent isimli bir yapinn adresini verir. Dizinin sonuna gelindiginde fonksiyon NULL adres verir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dirent.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> dirent <span style="color:#f92672">*</span><span style="color:#a6e22e">readdir</span>(DIR <span style="color:#f92672">*</span>dirp);
+</span></span></code></pre></div><p>Nihayet acilmis olan dizin closedir fonksiyonu ile kapatilir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dirent.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">closedir</span>(DIR <span style="color:#f92672">*</span>dirp);
+</span></span></code></pre></div><p>bir onceki konuda yapilan ls komutu ornegini dizindeki dosyalar icin yapilandiralim</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*---------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> Dizin içerisindeki dosyalarýn elde edilmesi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">----------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;time.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;pwd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;grp.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dirent.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">getls</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> stat finfo;
+</span></span><span style="display:flex;"><span> DIR <span style="color:#f92672">*</span>dir;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> dirent <span style="color:#f92672">*</span>dire;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> path[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>  fprintf(stderr, <span style="color:#e6db74">&#34;wrong number of arguments</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((dir <span style="color:#f92672">=</span> opendir(argv[<span style="color:#ae81ff">1</span>])) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  exitsys(<span style="color:#e6db74">&#34;opendir&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">while</span> ((dire <span style="color:#f92672">=</span> readdir(dir)) <span style="color:#f92672">!=</span> NULL) {
+</span></span><span style="display:flex;"><span>  sprintf(path, <span style="color:#e6db74">&#34;%s/%s&#34;</span>, argv[<span style="color:#ae81ff">1</span>], dire<span style="color:#f92672">-&gt;</span>d_name);
+</span></span><span style="display:flex;"><span>  printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, getls(path));
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span> closedir(dir);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">getls</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">static</span> buf[<span style="color:#ae81ff">4096</span>];
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> stat finfo;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> index;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">int</span> aflags[] <span style="color:#f92672">=</span> {S_IRUSR, S_IWUSR, S_IXUSR, S_IRGRP, S_IWGRP,
+</span></span><span style="display:flex;"><span>                     S_IXGRP, S_IROTH, S_IWOTH, S_IXOTH};
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>rights <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rwx&#34;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> passwd <span style="color:#f92672">*</span>pwd;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> group <span style="color:#f92672">*</span>grp;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>months[] <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Oca&#34;</span>, <span style="color:#e6db74">&#34;Þub&#34;</span>, <span style="color:#e6db74">&#34;Mar&#34;</span>, <span style="color:#e6db74">&#34;Nis&#34;</span>, <span style="color:#e6db74">&#34;May&#34;</span>, <span style="color:#e6db74">&#34;Haz&#34;</span>,
+</span></span><span style="display:flex;"><span>                     <span style="color:#e6db74">&#34;Tem&#34;</span>, <span style="color:#e6db74">&#34;Aðu&#34;</span>, <span style="color:#e6db74">&#34;Eyl&#34;</span>, <span style="color:#e6db74">&#34;Eki&#34;</span>, <span style="color:#e6db74">&#34;Kas&#34;</span>, <span style="color:#e6db74">&#34;Ara&#34;</span>};
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">struct</span> tm <span style="color:#f92672">*</span>ftime;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fname;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (stat(path, <span style="color:#f92672">&amp;</span>finfo) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((fname <span style="color:#f92672">=</span> strrchr(path, <span style="color:#e6db74">&#39;/&#39;</span>)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> (S_ISREG(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;-&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISDIR(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;d&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISCHR(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;c&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISBLK(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;b&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISFIFO(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;p&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISLNK(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;l&#39;</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (S_ISSOCK(finfo.st_mode))
+</span></span><span style="display:flex;"><span>  buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;s&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">++</span>index;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">9</span>; <span style="color:#f92672">++</span>i)
+</span></span><span style="display:flex;"><span>  buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> (finfo.st_mode <span style="color:#f92672">&amp;</span> aflags[i]) <span style="color:#f92672">?</span> rights[i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span>;
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_nlink);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((pwd <span style="color:#f92672">=</span> getpwuid(finfo.st_uid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_uid);
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s&#34;</span>, pwd<span style="color:#f92672">-&gt;</span>pw_name);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ((grp <span style="color:#f92672">=</span> getgrgid(finfo.st_gid)) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%lu&#34;</span>, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) finfo.st_gid);
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s&#34;</span>, grp<span style="color:#f92672">-&gt;</span>gr_name);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%ld&#34;</span>, (<span style="color:#66d9ef">long</span>) finfo.st_size);
+</span></span><span style="display:flex;"><span> buf[index<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; &#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ftime <span style="color:#f92672">=</span> localtime(<span style="color:#f92672">&amp;</span>finfo.st_mtime);
+</span></span><span style="display:flex;"><span> index <span style="color:#f92672">+=</span> sprintf(<span style="color:#f92672">&amp;</span>buf[index], <span style="color:#e6db74">&#34;%s %d %02d:%02d %s&#34;</span>, months[ftime<span style="color:#f92672">-&gt;</span>tm_mon],
+</span></span><span style="display:flex;"><span>                     ftime<span style="color:#f92672">-&gt;</span>tm_mday,
+</span></span><span style="display:flex;"><span>      ftime<span style="color:#f92672">-&gt;</span>tm_hour, ftime<span style="color:#f92672">-&gt;</span>tm_min, fname <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> buf[index] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> buf;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> perror(msg);
+</span></span><span style="display:flex;"><span> exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Recursive olarak bir dizin icindeki bilgilerin elde edilmesi</p>
+<p>Dizin agacini dolasabilmek icin ozyinelemeli (recursive) bir dolasim gerekmektedir. Tipik islem su sekilde yapilir.Kok dizinden dosyalar bulunarak ilerlenir. Bulunan dosyanin normal bir dosya mi yoksa bir dizin dosyasi mi olduguna bakilir. Eger Bir dosya dizin dosyasi ise chdir fonksiyonu ile prosesin calisma dizini degistirilip fonksiyonun kendisini cagirmasi saglanir. Dizin bittiginde yine chdir fonksiyonu ile ust dizine gecilir. Her alt dizin icerisinde nokta (.) ve nokta nokta (..) isimli iki dizin otomatik olarak olusturulur. bunlarin dikkate alinmamasi gerekir.</p>
+<p>C Programlama icerisinde yer alan recursive algoritmalar konusuna goz alilmasi gerekmektedir. sdasd</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*-------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                Dizin agacinin dolasilmasi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-------------------------------------------------------------------------------------*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/stat.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dirent.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">walktree</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>                               fprintf(stderr, <span style="color:#e6db74">&#34;wrong number of arguments</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>                               exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>               
+</span></span><span style="display:flex;"><span>                walktree(argv[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>               
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">walktree</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dirpath)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">struct</span> stat finfo;
+</span></span><span style="display:flex;"><span>                DIR <span style="color:#f92672">*</span>dir;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">struct</span> dirent <span style="color:#f92672">*</span>dire;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">char</span> filepath[<span style="color:#ae81ff">1024</span>];
+</span></span><span style="display:flex;"><span>                              
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> ((dir <span style="color:#f92672">=</span> opendir(dirpath)) <span style="color:#f92672">==</span> NULL) {
+</span></span><span style="display:flex;"><span>                               perror(<span style="color:#e6db74">&#34;opendir&#34;</span>);
+</span></span><span style="display:flex;"><span>                               <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>               
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">while</span> ((dire <span style="color:#f92672">=</span> readdir(dir)) <span style="color:#f92672">!=</span> NULL) {
+</span></span><span style="display:flex;"><span>                               <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(dire<span style="color:#f92672">-&gt;</span>d_name, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>strcmp(dire<span style="color:#f92672">-&gt;</span>d_name, <span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>                                               <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>                               sprintf(filepath, <span style="color:#e6db74">&#34;%s/%s&#34;</span>, dirpath, dire<span style="color:#f92672">-&gt;</span>d_name);
+</span></span><span style="display:flex;"><span>                               <span style="color:#66d9ef">if</span> (lstat(filepath, <span style="color:#f92672">&amp;</span>finfo) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>                                               perror(<span style="color:#e6db74">&#34;stat&#34;</span>);
+</span></span><span style="display:flex;"><span>                                               <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>                               }
+</span></span><span style="display:flex;"><span>                               printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, filepath);
+</span></span><span style="display:flex;"><span>                              
+</span></span><span style="display:flex;"><span>                               <span style="color:#66d9ef">if</span> (S_ISDIR(finfo.st_mode))
+</span></span><span style="display:flex;"><span>                                               walktree(filepath);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                                              
+</span></span><span style="display:flex;"><span>                closedir(dir);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exitsys</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>msg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>                perror(msg);
+</span></span><span style="display:flex;"><span>                exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-10-13</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-10-13-linux-system-prog-part2/">https://www.cihatyildiz.com/post/2014-10-13-linux-system-prog-part2/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+    </article>
+
+    
+        
+    <div class="pagination post-pagination">
+        <div class="left pagination-item ">
+            
+                <a href="/post/2014-10-20-linux-system-prog-part3/">Linux System Programming - Part 3</a>
+            
+        </div>
+        <div class="right pagination-item ">
+            
+                <a href="/post/2014-10-06-linux-system-prog-part1/">Linux System Programming - Part 1</a>
+            
+        </div>
+    </div>
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Cihat Yildiz, 2022<br>
+            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+    <script>
+    const STORAGE_KEY = 'user-color-scheme'
+    const defaultTheme = "auto"
+
+    let currentTheme
+    let switchButton
+    let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    const autoChangeScheme = e => {
+        currentTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', currentTheme)
+        changeButtonText()
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        switchButton = document.querySelector('.theme-switcher')
+        currentTheme = detectCurrentScheme()
+        if (currentTheme == 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }
+        if (currentTheme == 'auto') {
+            autoChangeScheme(autoDefinedScheme);
+            autoDefinedScheme.addListener(autoChangeScheme);
+        }
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    })
+
+    function detectCurrentScheme() {
+        if (localStorage.getItem(STORAGE_KEY)) {
+            return localStorage.getItem(STORAGE_KEY)
+        } 
+        if (defaultTheme) {
+            return defaultTheme
+        } 
+        if (!window.matchMedia) {
+            return 'light'
+        } 
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark'
+        }
+        return 'light'
+    }
+
+    function changeButtonText()
+    {   
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+
+    function switchTheme(e) {
+        if (currentTheme == 'dark') {
+            localStorage.setItem(STORAGE_KEY, 'light')
+            document.documentElement.setAttribute('data-theme', 'light')
+            currentTheme = 'light'
+        } else {
+            localStorage.setItem(STORAGE_KEY, 'dark')
+            document.documentElement.setAttribute('data-theme', 'dark')
+            currentTheme = 'dark'
+        }
+        changeButtonText()
+    }
+    </script>
+   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://www.cihatyildiz.com class="p-name u-url url fn" rel="me">Cihat Yildiz</a> 
+
+    
+
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>
