@@ -1,9 +1,5 @@
-
-COMMIT_MESSAGE="Commit $(date "+%Y-%m-%d %H:%M")"
-
-commit:
-	git add . 
-	git commit -am $(COMMIT_MESSAGE)
+DATE=$(date "+%Y-%m-%d %H:%M")
+COMMIT_MESSAGE=""
 
 build:
 	hugo -d ./docs
@@ -15,3 +11,7 @@ package:
 	docker build .
 
 publish:
+	hugo -d ./docs
+	git pull
+	git push
+
