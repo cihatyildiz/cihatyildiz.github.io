@@ -3,7 +3,7 @@ COMMIT_MESSAGE="Commit $(date "+%Y-%m-%d %H:%M")"
 
 commit:
 	git add . 
-	git commit -am $COMMIT_MESSAGE
+	git commit -am $(COMMIT_MESSAGE)
 
 build:
 	hugo -d ./docs
