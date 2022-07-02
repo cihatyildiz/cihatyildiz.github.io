@@ -5,3 +5,5 @@ build:
 run-local:
 	hugo server
 
+package:
+	docker-compose up -d
