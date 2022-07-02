@@ -1,0 +1,78 @@
+baseURL = "https://www.cihatyildiz.com"
+languageCode = "en-us"
+title = "Cihat Yildiz"
+theme = "anubis"
+paginate = 8
+
+disqusShortname = ""
+googleAnalytics = ""
+
+[author]
+name = "Cihat Yildiz"
+
+[params]
+author = "Cihat Yildiz"
+description = "Cybersecurity, etc."
+dateFormat = "2006-01-02"
+paginationSinglePost = true
+style = "auto"
+readMore = false
+copyCodeButton = true
+rssAsSocialIcon = true
+
+# utteranc.es support
+utterancesRepo = ""  # mandatory
+utterancesTheme = "" # optional
+utterancesIssue = "" # optional
+utterancesLabel = "" # optional
+
+[[params.social]]
+id = "twitter"
+url = "https://twitter.com/cihatix"
+
+[[params.social]]
+id = "linkedin"
+url = "https://www.linkedin.com/in/cihatyildiz/"
+
+[[params.social]]
+id = "github"
+url = "https://github.com/mitrichius/hugo-theme-anubis"
+
+[menu]
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 1
+
+[[menu.main]]
+name = "Projects"
+identifier = "projects"
+url = "/projects/"
+weight = 3
+
+[[menu.main]]
+name = "Trainings"
+identifier = "trainings"
+url = "/trainings/"
+weight = 4
+
+[[menu.main]]
+name = "Archive"
+identifier = "archive"
+url = "/posts/"
+weight = 5
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 6
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[markup.goldmark.renderer]
+unsafe = true

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dba on Cihat Yildiz</title>
+    <link>https://www.cihatyildiz.com/tags/dba/</link>
+    <description>Cihat Yildiz (dba)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Aug 2020 20:55:00 +0800</lastBuildDate>
+    
+    <atom:link href="https://www.cihatyildiz.com/tags/dba/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Database Security Notes</title>
+      <link>https://www.cihatyildiz.com/post/2020-08-01-database-security-basics/</link>
+      <pubDate>Sat, 01 Aug 2020 20:55:00 +0800</pubDate>
+      
+      <guid>https://www.cihatyildiz.com/post/2020-08-01-database-security-basics/</guid>
+      <description>&lt;p&gt;Database security is the relevant topic that has been in discussion on security personnel. The increasing number of incidents dictates that it should be noticed immediately. Database security should offer a protected and controlled access to the users and should maintain the overall data quality.&lt;/p&gt;
+&lt;p&gt;s
+We must know the risks and challenges related to database security and should stand to give the solutions. The database threats depend on the various factors like physical security, authentication, encryption and network security. The data vulnerabilities vary from organization to organization. The data may be financial accounts, customer data and other important information within the database.it is essential to know the database structure and recognize potential risks at the initial stage. The three important factors should be taken into account when protecting a database are the following :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Securing data from unauthorized access&lt;/li&gt;
+&lt;li&gt;Preventing disclosure of unauthorized access&lt;/li&gt;
+&lt;li&gt;Restoring from software or hardware sources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;authentication&#34; &gt;Authentication
+&lt;span&gt;
+    &lt;a href=&#34;#authentication&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The primary step after the authentication is logging into the database server in accessing a database. If authentication is failed to configure appropriate, it gets easy for hackers to gain access into the database. Multiple level high authentications should be applied to maximize the level of security if the database includes high-priority data. To implement high authentication, the strength of the password should be high. Use upper lower and special characters to make a high strength password.&lt;/p&gt;
+&lt;h2 id=&#34;control-to-access&#34; &gt;Control to access
+&lt;span&gt;
+    &lt;a href=&#34;#control-to-access&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The most effective way to protect the data is by restricting its access. Authentication and authorization should be implemented for every user accessing the data. The best way is to assign passwords and usernames to all the user for the database login. The privileges should be given to different users of the database depending on the demands of the sensitive data classification. For example, students of the college will be providing personal database accounts where they will be able to get access to course materials. The teacher will have separate portals where they will e allowed to write database when in need. This is the primary step if the attackers will be able to log in the student data, then he will only get limited access to data. To make this step appropriate, identify each user and assigning them, processing and access data will be restricted.&lt;/p&gt;
+&lt;h2 id=&#34;access-to-application&#34; &gt;Access to application
+&lt;span&gt;
+    &lt;a href=&#34;#access-to-application&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Users directly log into the database always. They use software or an application to get access to the database. We can resolve this issue by the help pf a security matrix. The security matrix tool will help in determining the application and provide the permission accordingly. This tools also enable you to have the visual details of the database management, the correlation between the detailed report and each class on the current status. The assigned permission is explained in the matrix which offers access according to the requirements of each program.&lt;/p&gt;
+&lt;h2 id=&#34;database-risks&#34; &gt;Database risks
+&lt;span&gt;
+    &lt;a href=&#34;#database-risks&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;As per the researches, databases are the most flexible resources.it is very important to secure the databases because they are the soul of any organization. When a hacker gets access to the data of an organization they can expose and damage it and can disturb the entire work of that organization&lt;/p&gt;
+&lt;h2 id=&#34;database-auditing&#34; &gt;Database Auditing
+&lt;span&gt;
+    &lt;a href=&#34;#database-auditing&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The attacks on the databases can be reduced by periodic monitoring support. Auditing enables an organization to find the vulnerabilities and flaws in the organizational structure and resolve them with an appropriate solution.&lt;/p&gt;
+&lt;h2 id=&#34;how-can-you-carry-out-the-database-monitoring&#34; &gt;How can you carry out the database monitoring?
+&lt;span&gt;
+    &lt;a href=&#34;#how-can-you-carry-out-the-database-monitoring&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;identifying-the-data-&#34; &gt;Identifying the data :
+&lt;span&gt;
+    &lt;a href=&#34;#identifying-the-data-&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;This is not as easy and simple it sounds. To recognize and to filter out the data that need to be protected is very important. There are many types of a database with different levels of priority. It may consist of data like public data that don&amp;rsquo;t need to be secured. Filtering these sort of data out would make the process easy and straightforward.&lt;/p&gt;
+&lt;h3 id=&#34;primary-auditing-with-inbuilt-functions&#34; &gt;Primary auditing with inbuilt functions
+&lt;span&gt;
+    &lt;a href=&#34;#primary-auditing-with-inbuilt-functions&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Every modern database server has inbuilt auditing features, and the basic step is to practice an audit with the help of tools. Their login has a default function in functions that monitor and control the details of login. This tool cannot implement complex custom audits. These complex tasks can be performed by third-party audit software.&lt;/p&gt;
+&lt;h3 id=&#34;use-of-third-party-network-devices-and-auditing-software&#34; &gt;Use of third party network devices and auditing software:
+&lt;span&gt;
+    &lt;a href=&#34;#use-of-third-party-network-devices-and-auditing-software&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;These are high-end auditing tools that help the user for their customized auditing.they have a lot of valuable tools that research a lot to make an excellent maximum output. There are many network devices in the industry, providing security and monitoring services.&lt;/p&gt;
+&lt;h3 id=&#34;protecting-a-database&#34; &gt;Protecting a database
+&lt;span&gt;
+    &lt;a href=&#34;#protecting-a-database&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;It is always an evolving procedure that consists of a set of step that should be taken smoothly to guarantee the maximum protection to the database.
+The initial step is to look for the data vase for the analysis and security.
+The second step is to classify the data or system according to the needs. A database depends on the data with varying priority level so, before starting the process, high priority level databases should be classified.
+Scanning and monitoring the database for sensitivities, changes, and misconfiguration is done in this phase — this aid in planning a strategy for protecting the database.
+Scanning the database for vulnerabilities, misconfigurations, and changes is done in this step. This helps to plan a strategy for securing the database.
+The following step would be to manage and priorities the data based on the initial steps. The vulnerabilities that require an immediate fix should be taken seriously
+Find an appropriate fix for the vulnerabilities, do patches to upgrade the existing system to manage the vulnerabilities.
+Once you have done the fix to confirm the process, auditing should be your next step. This will enable you to figure out anything that needs changes. Repeat the process every month to ensure the maximum database security.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34; &gt;Conclusion
+&lt;span&gt;
+    &lt;a href=&#34;#conclusion&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Protecting a database requires constant dedication, planning and most importantly, all of the steps mentioned above should be repeated periodically to ensure maximum security.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

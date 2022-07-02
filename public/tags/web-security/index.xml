@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web security on Cihat Yildiz</title>
+    <link>https://www.cihatyildiz.com/tags/web-security/</link>
+    <description>Cihat Yildiz (web security)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Dec 2019 20:55:00 +0800</lastBuildDate>
+    
+    <atom:link href="https://www.cihatyildiz.com/tags/web-security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Understanding HTTP Security Headers</title>
+      <link>https://www.cihatyildiz.com/post/2019-12-14-understanding-http-headers/</link>
+      <pubDate>Sat, 14 Dec 2019 20:55:00 +0800</pubDate>
+      
+      <guid>https://www.cihatyildiz.com/post/2019-12-14-understanding-http-headers/</guid>
+      <description>&lt;p&gt;HTTP Security headers are security mechanisms that you can use to protect your web application. Those headers provide extra protection layers. This is a fundamental part of web application security. You can easily configure your web application and implement required security header information for your application. After the implementation, these security headers protect your application against the type of attacks such as XSS, code injection, clickjacking, etc.&lt;/p&gt;
+&lt;p&gt;Basically, when a browser requests a URL from a web server, the server responds with the content along with HTTP headers. Security headers in this response tell the browser how to manage the content of the webpage content. We explored HTTP security headers below.&lt;/p&gt;
+&lt;h2 id=&#34;content-security-policy&#34; &gt;Content Security Policy
+&lt;span&gt;
+    &lt;a href=&#34;#content-security-policy&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;With this header configuration, you can specify which content should be loaded in your application. Basically, this is a whitelisting configuration for your web application.&lt;/p&gt;
+&lt;p&gt;If you are using a browser that supports Content Security Policy, such as Chrome or Firefox, your browser will read the CSP information from the response and know which sources are trusted or not.&lt;/p&gt;
+&lt;p&gt;Content-security-policy can prevent attacks such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;XSS – Cross-Site Scripting&lt;/li&gt;
+&lt;li&gt;Clickjacking&lt;/li&gt;
+&lt;li&gt;Protocol downgrading&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The below URLs shows more detailed information about CSP.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP&#34;&gt;https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://content-security-policy.com/&#34;&gt;https://content-security-policy.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=d0D3d0ZM-rI&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/d0D3d0ZM-rI/0.jpg&#34; alt=&#34;CSP&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;x-xss-protection&#34; &gt;X-XSS-Protection
+&lt;span&gt;
+    &lt;a href=&#34;#x-xss-protection&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;‘X-XSS-Protection’ header is a feature of modern browsers that allows websites to control for XSS attacks. This is a kind of audit process for your application.&lt;/p&gt;
+&lt;p&gt;If your application is not configured to return an ‘X-XSS-Protection’ header we can say that the pages on this website could be at risk of an XSS attack.&lt;/p&gt;
+&lt;p&gt;This header is enabled by default on the modern web browsers.&lt;/p&gt;
+&lt;h2 id=&#34;x-frame-options&#34; &gt;X-Frame-Options
+&lt;span&gt;
+    &lt;a href=&#34;#x-frame-options&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The X-Frame-Options HTTP header is a policy for modern browsers. With this security header, you can specify whether the browser will render the data in frame or iframe.&lt;/p&gt;
+&lt;p&gt;This security header helps to prevent clickjacking attacks, which ensures that their content is not embedded into other pages or frames.&lt;/p&gt;
+&lt;h2 id=&#34;x-content-type-options&#34; &gt;X-Content-Type-Options
+&lt;span&gt;
+    &lt;a href=&#34;#x-content-type-options&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;X-Content-Type-Options is a security header that protects MIME type sniffing vulnerabilities. When a website allows users to upload content, the user can hide a particular filetype as something else. The application would be vulnerable to an XSS attack if you don’t have this setting in your server.&lt;/p&gt;
+&lt;p&gt;With this security header, you can disable the MIME sniffing. This helps prevent those type of attacks&lt;/p&gt;
+&lt;h2 id=&#34;access-control-allow-origin&#34; &gt;Access-Control-Allow-Origin
+&lt;span&gt;
+    &lt;a href=&#34;#access-control-allow-origin&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Access-Control-Allow-Origin response header deals with resource sharing. The header will instruct the browser whether the response can be shared or not.&lt;/p&gt;
+&lt;h2 id=&#34;strict-transport-security&#34; &gt;Strict-Transport-Security
+&lt;span&gt;
+    &lt;a href=&#34;#strict-transport-security&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Strict-Transport-Security header prevents web browsers from accessing webs in stateless HTTP connections. The header will instruct the browser to access web pages using HTTPS, instead of using HTTP.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34; &gt;Conclusion
+&lt;span&gt;
+    &lt;a href=&#34;#conclusion&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;In this post, I have tried to point out some security headers that we need to implement on our web applications. These headers instruct your browsers on how to behave with a particular web application.&lt;/p&gt;
+&lt;p&gt;But, It doesn’t mean that those features will protect everything in your website. These are additional security layer on the client-side. Some headers not well designed protection mechanisms. There are also some attacks that try to bypass those features.&lt;/p&gt;
+&lt;p&gt;There is also an OWASP Project to describe HTTP response headers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.owasp.org/index.php/OWASP_Secure_Headers_Project&#34;&gt;OWASP Security Header Project&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=GUo82P52TA8&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/GUo82P52TA8/0.jpg&#34; alt=&#34;CSP&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;references&#34; &gt;References
+&lt;span&gt;
+    &lt;a href=&#34;#references&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.netsparker.com/whitepaper-http-security-headers/&#34;&gt;https://www.netsparker.com/whitepaper-http-security-headers/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/@Johne_Jacob/7-security-response-headers-every-security-tester-should-know-77576ffdfc0f&#34;&gt;https://medium.com/@Johne_Jacob/7-security-response-headers-every-security-tester-should-know-77576ffdfc0f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.thesslstore.com/blog/http-security-headers/&#34;&gt;https://www.thesslstore.com/blog/http-security-headers/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
