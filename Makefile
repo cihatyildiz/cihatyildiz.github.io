@@ -2,7 +2,7 @@
 build:
 	hugo -d ./docs
 
-run-local:
+local:
 	hugo server
 
 package:
