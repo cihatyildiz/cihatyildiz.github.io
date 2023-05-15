@@ -8,7 +8,7 @@ local:
 	hugo server
 
 package:
-	docker build .
+	docker build . 
 
 publish:
 	hugo -d ./docs
