@@ -7,7 +7,7 @@ tags: [linux]
 pin: false
 ---
 
-The art of cyber warfare is a constantly evolving domain, with new techniques and tools emerging every day. In the nefarious world of hacking and cybercrime, DLL Injection is one of the most prominent and widely used techniques. This blog post aims to dissect the nature of DLL (Dynamic Link Library) Injection Attacks and how they operate.
+The art of cyber warfare is a constantly evolving domain, with new techniques and tools emerging every day. In the nefarious world of hacking and cybercrime, DLL Injection is one of the most prominent and widely used techniques. This blog post aims to dissect the nature of DLL (Dynamic Link Library) Injection Attacks.
 <!--more-->
 Before we delve into the complexities of DLL Injection Attacks, let's take a moment to define what a DLL is. A DLL or Dynamic Link Library is a collection of small programs, which can be called upon when needed by the executable program (EXE) that is running in your computer. A DLL allows a program to divide its functionalities into modules which can be added or removed as necessary.
 
