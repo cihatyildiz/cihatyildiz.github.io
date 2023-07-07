@@ -4,7 +4,7 @@ description: "Projects that I created or participated"
 date: "2019-02-28"
 
 ---
-## DapperLink - Custom URL Shortener Chrome Extension
+## DapperLink - Custom URL Shortener Chrome
 
 DapperLink is a Google Chrome extension I developed to streamline web navigation by providing the functionality to create and manage personal URL shortcuts. With this tool, users can assign a short alias for a frequently visited website, and thereafter easily navigate to that site by simply typing `go/shortname` into the address bar.
 
