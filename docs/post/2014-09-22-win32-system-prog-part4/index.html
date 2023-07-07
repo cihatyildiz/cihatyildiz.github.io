@@ -12,7 +12,7 @@
 
 <title>Win32 System Programming - Part 4 - Cihat Yildiz</title>
 
-<meta name="description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder.">
+<meta name="description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process) Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder. Sonra onu boskuk karakterlerinden parse ederek ayirir ve main fonksiyonuna gecirir.">
 
 
 
@@ -56,7 +56,7 @@
     
 
     
-        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+        <script src="https://www.cihatyildiz.com/js/script.min.74bf1a3fcf1af396efa4acf3e660e876b61a2153ab9cbe1893ac24ea6d4f94ee.js" type="text/javascript" charset="utf-8" integrity="sha256-dL8aP88a85bvpKzz5mDodrYaIVOrnL4Yk6wk6m1PlO4="></script>
     
 
 
@@ -66,16 +66,15 @@
 
 
 <meta property="og:title" content="Win32 System Programming - Part 4" />
-<meta property="og:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder." />
+<meta property="og:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process) Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder. Sonra onu boskuk karakterlerinden parse ederek ayirir ve main fonksiyonuna gecirir." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.cihatyildiz.com/post/2014-09-22-win32-system-prog-part4/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2014-09-22T20:55:00+08:00" />
 <meta property="article:modified_time" content="2014-09-22T20:55:00+08:00" />
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Win32 System Programming - Part 4"/>
-<meta name="twitter:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder."/>
+<meta name="twitter:description" content="Proseslerin komut satiri argumanlari (Command line arguments of a process) Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder. Sonra onu boskuk karakterlerinden parse ederek ayirir ve main fonksiyonuna gecirir."/>
 
 
 
@@ -297,22 +296,22 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
-</span></span><span style="display:flex;"><span>        gets(g_cmd);
-</span></span><span style="display:flex;"><span>        Parse();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">gets</span>(g_cmd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Parse</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; g_cmds[i].name <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
-</span></span><span style="display:flex;"><span>                g_cmds[i].Proc();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
+</span></span><span style="display:flex;"><span>                g_cmds[i].<span style="color:#a6e22e">Proc</span>();
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_cmds[i].name <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            RunProcess();
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">RunProcess</span>();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>        
@@ -325,12 +324,12 @@
 </span></span><span style="display:flex;"><span>    str <span style="color:#f92672">=</span> g_cmd;
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (g_nparams <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;; <span style="color:#f92672">++</span>g_nparams) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">isspace</span>(<span style="color:#f92672">*</span>str))
 </span></span><span style="display:flex;"><span>            <span style="color:#f92672">++</span>str;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>        beg <span style="color:#f92672">=</span> str;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>isspace(<span style="color:#f92672">*</span>str) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isspace</span>(<span style="color:#f92672">*</span>str) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\&#34;&#39;</span>) {
 </span></span><span style="display:flex;"><span>                <span style="color:#f92672">++</span>str;
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\&#34;&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>str <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>)
@@ -354,16 +353,16 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;cls&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;cls&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>)
@@ -371,19 +370,19 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(g_params[<span style="color:#ae81ff">1</span>]))
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(g_params[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">GetEnvProc</span>(<span style="color:#66d9ef">void</span>)
@@ -392,44 +391,44 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>envs;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> GetEnvironmentStrings()) <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetEnvironmentStrings</span>()) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>envs <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
-</span></span><span style="display:flex;"><span>            puts(envs);
-</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> strlen(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">puts</span>(envs);
+</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> <span style="color:#a6e22e">strlen</span>(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">GetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetEnvProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
@@ -440,35 +439,35 @@
 </span></span><span style="display:flex;"><span>    PROCESS_INFORMATION pi;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cmdLine[MAX_CMD_LINE];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    TrimCmd(cmdLine);
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;:%s:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, cmdLine);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>CreateProcess(NULL, cmdLine, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, <span style="color:#f92672">&amp;</span>si, <span style="color:#f92672">&amp;</span>pi)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">TrimCmd</span>(cmdLine);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;:%s:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, cmdLine);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">CreateProcess</span>(NULL, cmdLine, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, <span style="color:#f92672">&amp;</span>si, <span style="color:#f92672">&amp;</span>pi)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    CloseHandle(pi.hProcess);
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">CloseHandle</span>(pi.hProcess);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    exit(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(EXIT_SUCCESS);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">TrimCmd</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>trimmed)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str1 <span style="color:#f92672">=</span> g_cmd;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str2 <span style="color:#f92672">=</span> g_cmd <span style="color:#f92672">+</span> strlen(g_cmd) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>str2 <span style="color:#f92672">=</span> g_cmd <span style="color:#f92672">+</span> <span style="color:#a6e22e">strlen</span>(g_cmd) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str1))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">isspace</span>(<span style="color:#f92672">*</span>str1))
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">++</span>str1;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>str1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>trimmed <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (isspace(<span style="color:#f92672">*</span>str2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">isspace</span>(<span style="color:#f92672">*</span>str2))
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">--</span>str2;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
@@ -479,27 +478,27 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="unix-linux-sistemlerinin-tarihsel-gelisimi" >UNIX /Linux Sistemlerinin Tarihsel Gelisimi
@@ -605,38 +604,38 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>];
 </span></span><span style="display:flex;"><span>    DWORD dwRead, dwWritten;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> CreateFile(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> <span style="color:#a6e22e">CreateFile</span>(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
 </span></span><span style="display:flex;"><span>                        FILE_ATTRIBUTE_NORMAL, NULL)) <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>ReadFile(hFile, buf, <span style="color:#ae81ff">1024</span>, <span style="color:#f92672">&amp;</span>dwRead, NULL))
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;ReadFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">ReadFile</span>(hFile, buf, <span style="color:#ae81ff">1024</span>, <span style="color:#f92672">&amp;</span>dwRead, NULL))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;ReadFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    buf[dwRead] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
-</span></span><span style="display:flex;"><span>    puts(buf);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(buf);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    strcpy(buf, <span style="color:#e6db74">&#34;xxxxx&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">strcpy</span>(buf, <span style="color:#e6db74">&#34;xxxxx&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>WriteFile(hFile, buf, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL))
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">WriteFile</span>(hFile, buf, <span style="color:#ae81ff">5</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    CloseHandle(hFile);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">CloseHandle</span>(hFile);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="yardimci-dosya-fonksiyonlari" >Yardimci Dosya fonksiyonlari
 <span>
@@ -691,32 +690,32 @@
 </span></span><span style="display:flex;"><span>    HANDLE hFile;
 </span></span><span style="display:flex;"><span>    DWORD dwWritten;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> CreateFile(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((hFile <span style="color:#f92672">=</span> <span style="color:#a6e22e">CreateFile</span>(<span style="color:#e6db74">&#34;test.dat&#34;</span>, GENERIC_READ<span style="color:#f92672">|</span>GENERIC_WRITE, <span style="color:#ae81ff">0</span>, NULL, OPEN_ALWAYS,
 </span></span><span style="display:flex;"><span>                        FILE_ATTRIBUTE_NORMAL, NULL)) <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;CreateFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    SetFilePointer(hFile, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, FILE_END);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SetFilePointer</span>(hFile, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, FILE_END);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>WriteFile(hFile, <span style="color:#e6db74">&#34;ankara&#34;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL) )
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">WriteFile</span>(hFile, <span style="color:#e6db74">&#34;ankara&#34;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#f92672">&amp;</span>dwWritten, NULL) )
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;WriteFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    CloseHandle(hFile);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">CloseHandle</span>(hFile);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>Oz yinelemeli olarak dizin agacini dolasasn bir fonksiyon yazilacak\
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/*-----------------------------------------------------------------------------------------------------------
@@ -727,7 +726,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Windows.h&gt;</span><span style="color:#75715e">
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitSys(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
@@ -735,34 +734,34 @@
 </span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
-</span></span><span style="display:flex;"><span>    gets(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">gets</span>(path);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(path,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> <span style="color:#a6e22e">FindFirstFile</span>(path,  <span style="color:#f92672">&amp;</span>fd);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;FindFirstFile&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;FindFirstFile&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">FindNextFile</span>(hFind, <span style="color:#f92672">&amp;</span>fd));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FindClose</span>(hFind);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/*----------------------------------------------------------------
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Dizin ağacının dolaşılması
@@ -780,10 +779,10 @@
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
-</span></span><span style="display:flex;"><span>    gets(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">gets</span>(path);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    WalkDir(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">WalkDir</span>(path);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
@@ -793,12 +792,12 @@
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd))
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    WalkDirRecur(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">WalkDirRecur</span>(path);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(cwd))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(cwd))
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -807,40 +806,40 @@
 </span></span><span style="display:flex;"><span>    HANDLE hFind;
 </span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(path))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(path))
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> <span style="color:#a6e22e">FindFirstFile</span>(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (fd.dwFileAttributes <span style="color:#f92672">&amp;</span> FILE_ATTRIBUTE_DIRECTORY) {
-</span></span><span style="display:flex;"><span>            WalkDirRecur(fd.cFileName);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(<span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">WalkDirRecur</span>(fd.cFileName);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(<span style="color:#e6db74">&#34;..&#34;</span>))
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%-30s %lu</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName, fd.nFileSizeLow);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">FindNextFile</span>(hFind, <span style="color:#f92672">&amp;</span>fd));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FindClose</span>(hFind);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/*------------------------------------------------------------
@@ -859,11 +858,11 @@
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> path[MAX_PATH];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;Path:&#34;</span>);
-</span></span><span style="display:flex;"><span>    gets(path);
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">gets</span>(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    WalkDir(path);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">WalkDir</span>(path);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -872,12 +871,12 @@
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd))
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    WalkDirRecur(path, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">WalkDirRecur</span>(path, <span style="color:#ae81ff">0</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(cwd))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(cwd))
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -887,44 +886,44 @@
 </span></span><span style="display:flex;"><span>    WIN32_FIND_DATA fd;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(path))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(path))
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> FindFirstFile(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
+</span></span><span style="display:flex;"><span>    hFind <span style="color:#f92672">=</span> <span style="color:#a6e22e">FindFirstFile</span>(<span style="color:#e6db74">&#34;*.*&#34;</span>,  <span style="color:#f92672">&amp;</span>fd);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hFind <span style="color:#f92672">==</span> INVALID_HANDLE_VALUE)
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>strcmp(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(fd.cFileName, <span style="color:#e6db74">&#34;.&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(fd.cFileName, <span style="color:#e6db74">&#34;..&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (fd.dwFileAttributes <span style="color:#f92672">&amp;</span> FILE_ATTRIBUTE_DIRECTORY) {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> space; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>                putchar(<span style="color:#e6db74">&#39; &#39;</span>);
-</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName);
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">putchar</span>(<span style="color:#e6db74">&#39; &#39;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fd.cFileName);
 </span></span><span style="display:flex;"><span>            space <span style="color:#f92672">+=</span> <span style="color:#ae81ff">4</span>;
-</span></span><span style="display:flex;"><span>            WalkDirRecur(fd.cFileName, space);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">WalkDirRecur</span>(fd.cFileName, space);
 </span></span><span style="display:flex;"><span>            space <span style="color:#f92672">-=</span> <span style="color:#ae81ff">4</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(<span style="color:#e6db74">&#34;..&#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(<span style="color:#e6db74">&#34;..&#34;</span>))
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (FindNextFile(hFind, <span style="color:#f92672">&amp;</span>fd));
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">FindNextFile</span>(hFind, <span style="color:#f92672">&amp;</span>fd));
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    FindClose(hFind);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FindClose</span>(hFind);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
         </div>
@@ -1000,7 +999,7 @@
     <div class="common-footer-bottom">
         
         <div class="copyright">
-            <p>© Cihat Yildiz, 2022<br>
+            <p>© Cihat Yildiz, 2023<br>
             Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
             
             </p>  

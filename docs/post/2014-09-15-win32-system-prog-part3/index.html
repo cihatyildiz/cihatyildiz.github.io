@@ -13,7 +13,7 @@
 <title>Win32 System Programming - Part 3 - Cihat Yildiz</title>
 
 <meta name="description" content="VirtualBox da share mount etmek:
-sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar.">
+sudo mount -t vboxsf EDrive EDrive Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar.">
 
 
 
@@ -57,7 +57,7 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
     
 
     
-        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
+        <script src="https://www.cihatyildiz.com/js/script.min.74bf1a3fcf1af396efa4acf3e660e876b61a2153ab9cbe1893ac24ea6d4f94ee.js" type="text/javascript" charset="utf-8" integrity="sha256-dL8aP88a85bvpKzz5mDodrYaIVOrnL4Yk6wk6m1PlO4="></script>
     
 
 
@@ -68,17 +68,16 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 
 <meta property="og:title" content="Win32 System Programming - Part 3" />
 <meta property="og:description" content="VirtualBox da share mount etmek:
-sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar." />
+sudo mount -t vboxsf EDrive EDrive Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.cihatyildiz.com/post/2014-09-15-win32-system-prog-part3/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2014-09-15T20:55:00+08:00" />
 <meta property="article:modified_time" content="2014-09-15T20:55:00+08:00" />
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Win32 System Programming - Part 3"/>
 <meta name="twitter:description" content="VirtualBox da share mount etmek:
-sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar."/>
+sudo mount -t vboxsf EDrive EDrive Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar."/>
 
 
 
@@ -219,9 +218,9 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 <li><a href="http://linux.die.net/man/2/fork">http://linux.die.net/man/2/fork</a> Adresinden ayrintili bilgi edinilebilir.</li>
 <li>Fork fonksiyonundan ust process yaratmis oldugu alt processin ID degeri ile Alt process de 0 degeri ile cikar.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>pid_t pid; 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>((pid <span style="color:#f92672">=</span> fork())<span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
-</span></span><span style="display:flex;"><span>   perror(<span style="color:#e6db74">&#34;Fork&#34;</span>);   exit(EXIT_FAILURE)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">pid_t</span> pid; 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>((pid <span style="color:#f92672">=</span> <span style="color:#a6e22e">fork</span>())<span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;Fork&#34;</span>);   <span style="color:#a6e22e">exit</span>(EXIT_FAILURE)
 </span></span><span style="display:flex;"><span> } 
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(pid <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){ <span style="color:#75715e">// child   
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/// Your code will be here.... 
@@ -240,21 +239,21 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    pid_t pid;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pid_t</span> pid;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pid <span style="color:#f92672">=</span> fork()) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        perror(<span style="color:#e6db74">&#34;fork&#34;</span>);
-</span></span><span style="display:flex;"><span>        exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pid <span style="color:#f92672">=</span> <span style="color:#a6e22e">fork</span>()) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pid <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;child</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;child</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;parent</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;parent</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;ends..</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;ends..</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -268,12 +267,12 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (execl(<span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;-l&#34;</span>, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        perror(<span style="color:#e6db74">&#34;execl&#34;</span>);
-</span></span><span style="display:flex;"><span>        exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">execl</span>(<span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;-l&#34;</span>, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;execl&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;unreachable code!...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;unreachable code!...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -288,17 +287,17 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    pid_t pid;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pid_t</span> pid;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pid <span style="color:#f92672">=</span> fork()) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        perror(<span style="color:#e6db74">&#34;fork&#34;</span>);
-</span></span><span style="display:flex;"><span>        exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((pid <span style="color:#f92672">=</span> <span style="color:#a6e22e">fork</span>()) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pid <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (execl(<span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;-l&#34;</span>, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>            perror(<span style="color:#e6db74">&#34;execl&#34;</span>);
-</span></span><span style="display:flex;"><span>            exit(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">execl</span>(<span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;/bin/ls&#34;</span>, <span style="color:#e6db74">&#34;-l&#34;</span>, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) NULL) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;execl&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* only parent executes this code... */</span>
@@ -307,8 +306,8 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>        
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>; <span style="color:#f92672">++</span>i) {
-</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i);
-</span></span><span style="display:flex;"><span>            sleep(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">1</span>);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
@@ -371,43 +370,43 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> szProcessName[MAX_PATH] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;unknown&gt;&#34;</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>EnumProcesses(pids, <span style="color:#ae81ff">8192</span>, <span style="color:#f92672">&amp;</span>dwCount))
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;EnumProcesses&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">EnumProcesses</span>(pids, <span style="color:#ae81ff">8192</span>, <span style="color:#f92672">&amp;</span>dwCount))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;EnumProcesses&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> dwCount <span style="color:#f92672">/</span> <span style="color:#66d9ef">sizeof</span>(DWORD); <span style="color:#f92672">++</span>i) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((hProcess <span style="color:#f92672">=</span> OpenProcess(PROCESS_QUERY_INFORMATION<span style="color:#f92672">|</span>PROCESS_VM_READ, 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((hProcess <span style="color:#f92672">=</span> <span style="color:#a6e22e">OpenProcess</span>(PROCESS_QUERY_INFORMATION<span style="color:#f92672">|</span>PROCESS_VM_READ, 
 </span></span><span style="display:flex;"><span>                                            FALSE, pids[i])) <span style="color:#f92672">==</span> NULL)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (EnumProcessModules( hProcess, <span style="color:#f92672">&amp;</span>hMod, <span style="color:#66d9ef">sizeof</span>(hMod), <span style="color:#f92672">&amp;</span>cbNeeded))
-</span></span><span style="display:flex;"><span>            GetModuleBaseName( hProcess, hMod, szProcessName,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">EnumProcessModules</span>( hProcess, <span style="color:#f92672">&amp;</span>hMod, <span style="color:#66d9ef">sizeof</span>(hMod), <span style="color:#f92672">&amp;</span>cbNeeded))
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">GetModuleBaseName</span>( hProcess, hMod, szProcessName,
 </span></span><span style="display:flex;"><span>                               <span style="color:#66d9ef">sizeof</span>(szProcessName)<span style="color:#f92672">/</span><span style="color:#66d9ef">sizeof</span>(TCHAR) );
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, szProcessName);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, szProcessName);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="processlerin-calisma-dizinleri" >Processlerin calisma dizinleri
 <span>
@@ -452,32 +451,32 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, cwd);
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="bir-komut-yorumlayicisinin-catisi" >Bir komut yorumlayicisinin catisi
 <span>
@@ -539,111 +538,111 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
-</span></span><span style="display:flex;"><span>        gets(g_cmd);
-</span></span><span style="display:flex;"><span>        Parse();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">gets</span>(g_cmd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Parse</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; g_cmds[i].name <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
-</span></span><span style="display:flex;"><span>                g_cmds[i].Proc();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
+</span></span><span style="display:flex;"><span>                g_cmds[i].<span style="color:#a6e22e">Proc</span>();
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_cmds[i].name <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;&#39;%s&#39; is not recognized as an internal or external command, </span><span style="color:#ae81ff">\n</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;&#39;%s&#39; is not recognized as an internal or external command, </span><span style="color:#ae81ff">\n</span>
 </span></span><span style="display:flex;"><span>                        operable program or batch file.<span style="color:#960050;background-color:#1e0010">\</span>n<span style="color:#960050;background-color:#1e0010">\</span>n<span style="color:#e6db74">&#34;, g_params[0]);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>        
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Parse(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Parse</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>param;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    g_nparams <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> strtok(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> strtok(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
 </span></span><span style="display:flex;"><span>        g_params[g_nparams<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> param;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> DirProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ClsProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;cls&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;cls&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ChDirProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(g_params[<span style="color:#ae81ff">1</span>]))
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(g_params[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    exit(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(EXIT_SUCCESS);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitSys(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> PrintSysErr(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="processlerin-cevre-degiskenleri" >Processlerin Cevre Degiskenleri
@@ -735,160 +734,160 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
-</span></span><span style="display:flex;"><span>        gets(g_cmd);
-</span></span><span style="display:flex;"><span>        Parse();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">gets</span>(g_cmd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Parse</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; g_cmds[i].name <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
-</span></span><span style="display:flex;"><span>                g_cmds[i].Proc();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
+</span></span><span style="display:flex;"><span>                g_cmds[i].<span style="color:#a6e22e">Proc</span>();
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_cmds[i].name <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            printf(<span style="color:#e6db74">&#34;&#39;%s&#39; is not recognized as an internal or external command, </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;&#39;%s&#39; is not recognized as an internal or external command, </span>
 </span></span><span style="display:flex;"><span>                    operable program or batch file.<span style="color:#960050;background-color:#1e0010">\</span>n<span style="color:#960050;background-color:#1e0010">\</span>n<span style="color:#e6db74">&#34;, g_params[0]);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>        
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Parse(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Parse</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>param;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    g_nparams <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> strtok(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> strtok(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
 </span></span><span style="display:flex;"><span>        g_params[g_nparams<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> param;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> DirProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ClsProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;cls&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;cls&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ChDirProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(g_params[<span style="color:#ae81ff">1</span>]))
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(g_params[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> GetEnvProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">GetEnvProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>envs;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> GetEnvironmentStrings()) <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetEnvironmentStrings</span>()) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>envs <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
-</span></span><span style="display:flex;"><span>            puts(envs);
-</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> strlen(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">puts</span>(envs);
+</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> <span style="color:#a6e22e">strlen</span>(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">GetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SetEnvProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetEnvProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitProc(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    exit(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(EXIT_SUCCESS);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ExitSys(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> PrintSysErr(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(  FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, 
 </span></span><span style="display:flex;"><span>                        NULL, 
 </span></span><span style="display:flex;"><span>                        dwLastError,
-</span></span><span style="display:flex;"><span>                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+</span></span><span style="display:flex;"><span>                        <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), 
 </span></span><span style="display:flex;"><span>                        (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, 
 </span></span><span style="display:flex;"><span>                        <span style="color:#ae81ff">0</span>, 
 </span></span><span style="display:flex;"><span>                        NULL)) 
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/*------------------------------------------------------------------------------
@@ -905,7 +904,7 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; environ[i] <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>        puts(environ[i]);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">puts</span>(environ[i]);
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -972,24 +971,24 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
-</span></span><span style="display:flex;"><span>        gets(g_cmd);
-</span></span><span style="display:flex;"><span>        Parse();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s&gt;&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">gets</span>(g_cmd);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Parse</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; g_cmds[i].name <span style="color:#f92672">!=</span> NULL; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
-</span></span><span style="display:flex;"><span>                g_cmds[i].Proc();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmds[i].name, g_params[<span style="color:#ae81ff">0</span>])) {
+</span></span><span style="display:flex;"><span>                g_cmds[i].<span style="color:#a6e22e">Proc</span>();
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_cmds[i].name <span style="color:#f92672">==</span> NULL) {
-</span></span><span style="display:flex;"><span>            RunProcess();
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">RunProcess</span>();
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">//printf(&#34;&#39;%s&#39; is not recognized as an internal or external command, operable program or batch file.\n\n&#34;, g_params[0]);
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(g_cmd, <span style="color:#e6db74">&#34;quit&#34;</span>))
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>        
@@ -1001,22 +1000,22 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>param;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    g_nparams <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> strtok(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> strtok(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(g_cmd, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>); param <span style="color:#f92672">!=</span> NULL; param <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtok</span>(NULL, <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>))
 </span></span><span style="display:flex;"><span>        g_params[g_nparams<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> param;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DirProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;dir</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ClsProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;cls&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;cls&#34;</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChDirProc</span>(<span style="color:#66d9ef">void</span>)
@@ -1024,19 +1023,19 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> cwd[<span style="color:#ae81ff">1024</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GetCurrentDirectory(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">GetCurrentDirectory</span>(<span style="color:#ae81ff">1024</span>, cwd) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetCurrentDirectory&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, cwd);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetCurrentDirectory(g_params[<span style="color:#ae81ff">1</span>]))
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetCurrentDirectory</span>(g_params[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">GetEnvProc</span>(<span style="color:#66d9ef">void</span>)
@@ -1045,44 +1044,44 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>envs;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> GetEnvironmentStrings()) <span style="color:#f92672">==</span> NULL)
-</span></span><span style="display:flex;"><span>            ExitSys(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((envs <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetEnvironmentStrings</span>()) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ExitSys</span>(<span style="color:#e6db74">&#34;GetEnvironmentStrings&#34;</span>, EXIT_FAILURE);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">*</span>envs <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
-</span></span><span style="display:flex;"><span>            puts(envs);
-</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> strlen(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">puts</span>(envs);
+</span></span><span style="display:flex;"><span>            envs <span style="color:#f92672">+=</span> <span style="color:#a6e22e">strlen</span>(envs) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>GetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">GetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], buf, <span style="color:#ae81ff">1024</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>, buf);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SetEnvProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;argument missing...</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_nparams <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3</span>) {
-</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;too many arguments..</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SetEnvironmentVariable(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">SetEnvironmentVariable</span>(g_params[<span style="color:#ae81ff">1</span>], g_nparams <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> g_params[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">:</span> NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
@@ -1092,42 +1091,42 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
 </span></span><span style="display:flex;"><span>    STARTUPINFO si <span style="color:#f92672">=</span> {<span style="color:#66d9ef">sizeof</span>(STARTUPINFO)};
 </span></span><span style="display:flex;"><span>    PROCESS_INFORMATION pi;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>CreateProcess(NULL, g_params[<span style="color:#ae81ff">0</span>], NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, <span style="color:#f92672">&amp;</span>si, <span style="color:#f92672">&amp;</span>pi)) {
-</span></span><span style="display:flex;"><span>        PrintSysErr();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">CreateProcess</span>(NULL, g_params[<span style="color:#ae81ff">0</span>], NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, <span style="color:#f92672">&amp;</span>si, <span style="color:#f92672">&amp;</span>pi)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PrintSysErr</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    CloseHandle(pi.hProcess);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">CloseHandle</span>(pi.hProcess);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitProc</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    exit(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(EXIT_SUCCESS);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ExitSys</span>(LPCTSTR lpszMsg, <span style="color:#66d9ef">int</span> status)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s: %s&#34;</span>, lpszMsg, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    exit(status);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exit</span>(status);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintSysErr</span>(<span style="color:#66d9ef">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> GetLastError();
+</span></span><span style="display:flex;"><span>    DWORD dwLastError <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetLastError</span>();
 </span></span><span style="display:flex;"><span>    LPTSTR lpszErr;
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
-</span></span><span style="display:flex;"><span>                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
-</span></span><span style="display:flex;"><span>        fprintf(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
-</span></span><span style="display:flex;"><span>        LocalFree(lpszErr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">FormatMessage</span>(FORMAT_MESSAGE_ALLOCATE_BUFFER <span style="color:#f92672">|</span> FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwLastError,
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">MAKELANGID</span>(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) <span style="color:#f92672">&amp;</span>lpszErr, <span style="color:#ae81ff">0</span>, NULL)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, lpszErr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LocalFree</span>(lpszErr);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
@@ -1204,7 +1203,7 @@ sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan 
     <div class="common-footer-bottom">
         
         <div class="copyright">
-            <p>© Cihat Yildiz, 2022<br>
+            <p>© Cihat Yildiz, 2023<br>
             Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
             
             </p>  
