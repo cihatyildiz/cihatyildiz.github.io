@@ -3,7 +3,7 @@
 
 <html lang="en-us" data-theme="">
 <head>
-	<meta name="generator" content="Hugo 0.111.1">
+	<meta name="generator" content="Hugo 0.96.0" />
     
         
 <meta charset="utf-8">
@@ -58,7 +58,7 @@
     
 
     
-        <script src="https://www.cihatyildiz.com/js/script.min.74bf1a3fcf1af396efa4acf3e660e876b61a2153ab9cbe1893ac24ea6d4f94ee.js" type="text/javascript" charset="utf-8" integrity="sha256-dL8aP88a85bvpKzz5mDodrYaIVOrnL4Yk6wk6m1PlO4="></script>
+        <script src="https://www.cihatyildiz.com/js/script.min.a65afe903825231554d9b55b073eb144da4ccf2d2823b216dcbc6cc656c9de76.js" type="text/javascript" charset="utf-8" integrity="sha256-plr&#43;kDglIxVU2bVbBz6xRNpMzy0oI7IW3LxsxlbJ3nY="></script>
     
 
 
@@ -71,6 +71,7 @@
 <meta property="og:description" content="Cybersecurity, etc." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.cihatyildiz.com/" />
+
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -205,6 +206,108 @@
             <article class="post-list h-feed">
     <div class="post-header">
         <header>
+            <h1 class="p-name post-title"><a class="u-url" href="/post/2014-10-27-linux-system-prog-part4/">Linux System Programming - Part 4</a></h1>
+        </header>
+        
+    </div>
+
+    
+        <div class="content post-summary p-summary">
+            Unix/Linux Sistemlerde Proseslerle Islemler     Unix/Linux Sistemlerinde her prosesin sistem genelinde tek olan bir id degeri vardir. Bu sostemlerde proses yaratmak icin fork isimli proses kullanilir. vfork isimli bir program vardir. O da fork turevidir. Fork, bir prosesin ozdes bir kopyasindan olusturuluyor. Fork islemi yapildiginda yeni bir proses kontrol blogu yaratilir ve o ust prosesten kopyalanir. Ust prosesin de bellek alaninin bellek alaninin bir kopyasindan cikartilir. Boylece fork fonksiyonuna tek bir akis girer 2 akis cikar.
+        </div>
+    
+    
+    
+    
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-10-27</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-10-27-linux-system-prog-part4/">https://www.cihatyildiz.com/post/2014-10-27-linux-system-prog-part4/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+</article>
+        
+            <article class="post-list h-feed">
+    <div class="post-header">
+        <header>
+            <h1 class="p-name post-title"><a class="u-url" href="/post/2014-10-20-linux-system-prog-part3/">Linux System Programming - Part 3</a></h1>
+        </header>
+        
+    </div>
+
+    
+        <div class="content post-summary p-summary">
+            Dosya Baglari (linkleri)     Dosya baglari siki (hard) ve sembolik olmak uzere ikiye ayrilmaktadir. Hard link sisteminin anlasilabilmesi icin diskin metadata formatinin biliniyor olmasi gerekmektedir. Bir diskte okunabilecek veya yazilabilecek en kucu birim sektordur. Bir sektor varsayilan olarak 512 byte uzunlugundadir. Ancak isletim sistemleri diski sektpor temelinde organize etmek yerine block yada cluster denilen birimler ile organize etmektedir. Bir block yada Cluster ardisil n sektorden olusmaktadir. Bu sektorun sayisi formatlarken belirlenir.
+        </div>
+    
+    
+    
+    
+
+    
+
+
+<div class="post-info">
+    
+        <div class="post-date dt-published">2014-10-20</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-10-20-linux-system-prog-part3/">https://www.cihatyildiz.com/post/2014-10-20-linux-system-prog-part3/</a>
+    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
+                
+            </ul>
+            
+            
+                <ul class="post-tags">
+                    
+                        
+                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+</article>
+        
+            <article class="post-list h-feed">
+    <div class="post-header">
+        <header>
             <h1 class="p-name post-title"><a class="u-url" href="/post/2014-10-13-linux-system-prog-part2/">Linux System Programming - Part 2</a></h1>
         </header>
         
@@ -212,7 +315,7 @@
 
     
         <div class="content post-summary p-summary">
-            Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları chmod ve fchmod fonksiyonları #include &lt;sys/stat.h&gt; int chmod(const char *path, mode_t mode); int fchmod(int fd, mode_t mode); Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir.
+            Dosya Sistemine İlişkin Yardımcı POSIX Fonksiyonları     chmod ve fchmod fonksiyonları     #include &lt;sys/stat.h&gt;int chmod(const char *path, mode_t mode); int fchmod(int fd, mode_t mode); Yaratılmış bir dosyanın erişim hakları open fonksiyonunda ilk kez belirlenir. Ancak bu fonksiyonlarla daha sonra değiştirilebilir. chmod fonksiyonu yol ifadesinden hareketle fchmod fonksiyonu dosya betimleyicisinden hareketle modu değiştirir. Bir prosesin bir dosyanın erişim haklarını değiştirebilmesi için ya root olması ya da prosesin etkin userid’sinin dosyanın sahibi ile ayni olması gerekir.
         </div>
     
     
@@ -265,7 +368,7 @@
         <div class="content post-summary p-summary">
             This notes has been created in “Linux System Programming” course that taken from “C and System programmers Accosiaion” in early 2014. Kaan Arslan was the lecturer in this course.
 Bu yazida, daha once yayinlamis oldugum linux sistem programlama kursunda almis oldugum kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili nosan ayinda alinisti.
-Unix/Linux Sistemlerinin Tarihsel Gelisimi Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir.
+Unix/Linux Sistemlerinin Tarihsel Gelisimi     Unix 1969-1970 yıllarında AT&amp;T Bell Lab tarafından DEC-PDP 7 makinaları için üretilmiştir.
         </div>
     
     
@@ -316,7 +419,7 @@ Unix/Linux Sistemlerinin Tarihsel Gelisimi Unix 1969-1970 yıllarında AT&amp;T 
 
     
         <div class="content post-summary p-summary">
-            Islemcilerin Sayfalama Mekanizmasi Modern guclu masaustu islemcileri ve guclu mobil islemciler sayfalama (paging) mekanizmasina sahiptir. Bu sistemde fiziksel RAM sayfa denilen bloklara ayrilmistir. Sayfa uzunluklari sistemden sisteme degisebilir. INTEL de 4K (4096 Byte) tir. Bu durumda ornegin bellegin n numarali sayfasi n*4096 inci byte den baslan ve 4096 byte surer Islemci sayfa tablosu (page table) denilen bir tabloya bakarak calisir.. Program icerisinde kullandigimiz adresler gercek fiziksel ram de yer belirtmez. Bunlara sanal adres denir.
+            Islemcilerin Sayfalama Mekanizmasi      Modern guclu masaustu islemcileri ve guclu mobil islemciler sayfalama (paging) mekanizmasina sahiptir. Bu sistemde fiziksel RAM sayfa denilen bloklara ayrilmistir. Sayfa uzunluklari sistemden sisteme degisebilir. INTEL de 4K (4096 Byte) tir. Bu durumda ornegin bellegin n numarali sayfasi n*4096 inci byte den baslan ve 4096 byte surer Islemci sayfa tablosu (page table) denilen bir tabloya bakarak calisir.. Program icerisinde kullandigimiz adresler gercek fiziksel ram de yer belirtmez.
         </div>
     
     
@@ -367,7 +470,7 @@ Unix/Linux Sistemlerinin Tarihsel Gelisimi Unix 1969-1970 yıllarında AT&amp;T 
 
     
         <div class="content post-summary p-summary">
-            Proseslerin komut satiri argumanlari (Command line arguments of a process) Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder. Sonra onu boskuk karakterlerinden parse ederek ayirir ve main fonksiyonuna gecirir.
+            Proseslerin komut satiri argumanlari (Command line arguments of a process)      Programlari komut satirindan calistirirken program isminin yanina yazilan yazilara komut satiri argumanlari denir. Windows sistemlerinde komut satiri argumanlari createProcess fonksiyonunda parametre olarak girilmektedir. windows da komut satiri argumanlari createProcess in ikinci parametresi olarak girilir. ve tek bir yazi seklindedir. Processin komut satiri argumanlari GetCommandLine api fonksiyonu ile elde dilebilir. Derleyilerin baslangic kodlari bu api yi kullanarak komut satirini elde eder.
         </div>
     
     
@@ -419,7 +522,7 @@ Unix/Linux Sistemlerinin Tarihsel Gelisimi Unix 1969-1970 yıllarında AT&amp;T 
     
         <div class="content post-summary p-summary">
             VirtualBox da share mount etmek:
-sudo mount -t vboxsf EDrive EDrive Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar.
+sudo mount -t vboxsf EDrive EDrive  Unix ve linux sistemlerinde process yaratan tek bir fonksiyon vardir o da fork isimli fonksiyondur. pid_t fork(void) Fork processin ozdes kopyasindan cikartir. Fakat ust e alt processler arasinda artik bundan sonra hicbir iliski yoktur. Bunlarin gecmisleri aynidir. Ayni kod bolmune sahiptirler. Fakat artik bu kodun ayni bolumunu calistirmak zorunda degildirler. Yani fork fonksiyonuna tek bir proses akisi girer ancak iki process cikar.
         </div>
     
     
@@ -470,8 +573,8 @@ sudo mount -t vboxsf EDrive EDrive Unix ve linux sistemlerinde process yaratan t
 
     
         <div class="content post-summary p-summary">
-            Windows API Programlamaya İlişkin Temel Bilgiler Windows API programlama yaparken kaynak kodun içerisine windows.h dosyasi include edilmelidir. Bu dosya içerisinde içerisinde gereken pekçok bildirim vardir. Sistem programlamada yazim stili olarak macar notasyonu (hungarian notation) kullanilir. Macar notasyonuna göre;
-Fonksiyonlar pascal tarzı harflendirilir. Yani her sözcüğün ilk harfi büyüktür. (her sozcugun ilk harfi buyuktur. Fiiller ince kullanilir.) o GetWindowLong(), CreateProcess() Degiskenler genellikle onun turunu belirten bir önek ile başlatılır. Degişkenler deve notasyonu ile isimlendirilir.
+            Windows API Programlamaya İlişkin Temel Bilgiler     Windows API programlama yaparken kaynak kodun içerisine windows.h dosyasi include edilmelidir. Bu dosya içerisinde içerisinde gereken pekçok bildirim vardir. Sistem programlamada yazim stili olarak macar notasyonu (hungarian notation) kullanilir. Macar notasyonuna göre;
+ Fonksiyonlar pascal tarzı harflendirilir. Yani her sözcüğün ilk harfi büyüktür. (her sozcugun ilk harfi buyuktur. Fiiller ince kullanilir.) o GetWindowLong(), CreateProcess() Degiskenler genellikle onun turunu belirten bir önek ile başlatılır.
         </div>
     
     
@@ -512,59 +615,6 @@ Fonksiyonlar pascal tarzı harflendirilir. Yani her sözcüğün ilk harfi büy�
 
 </article>
         
-            <article class="post-list h-feed">
-    <div class="post-header">
-        <header>
-            <h1 class="p-name post-title"><a class="u-url" href="/post/2014-09-01-win32-system-prog-part1/">Win32 System Programming - Part 1</a></h1>
-        </header>
-        
-    </div>
-
-    
-        <div class="content post-summary p-summary">
-            This note has been created in the “Windows System Programming” course that taken from “C and System programmers Accosiaion” in 2014. Kaan Arslan was the lecturer in this course.
-Bu yazida, daha once yayinlamis oldugum C ve sistem prgramcilari derneginden almis oldugum windows sistem programlama kursu kurs notlarini tekrar bir araya getirdim. Bu kurs C ve System programcilari dernegi tarafindan 2014 yili eylul ayinda alinisti.
-Temel Kavramlar İşletim sistemi bilgisayar temel donanımını yöneten kullanıcı ile sistem arasında arayüz oluşturan bir sistem yazılımıdır.
-        </div>
-    
-    
-    
-    
-
-    
-
-
-<div class="post-info">
-    
-        <div class="post-date dt-published">2014-09-01</div>
-    
-
-    <a class="post-hidden-url u-url" href="https://www.cihatyildiz.com/post/2014-09-01-win32-system-prog-part1/">https://www.cihatyildiz.com/post/2014-09-01-win32-system-prog-part1/</a>
-    <a href="https://www.cihatyildiz.com" class="p-name p-author post-hidden-author h-card" rel="me">Cihat Yildiz</a>
-
-
-    <div class="post-taxonomies">
-        
-            <ul class="post-categories">
-                
-                    
-                    <li><a href="https://www.cihatyildiz.com/categories/notes/">Notes</a></li>
-                
-            </ul>
-            
-            
-                <ul class="post-tags">
-                    
-                        
-                        <li><a href="https://www.cihatyildiz.com/tags/writing/">#writing</a></li>
-                    
-                </ul>
-        
-    </div>
-</div>
-
-</article>
-        
         
     
     
@@ -574,7 +624,9 @@ Temel Kavramlar İşletim sistemi bilgisayar temel donanımını yöneten kullan
                 <a href="/page/3/">to new posts</a>
             
         </div>
-        <div class="right pagination-item disabled">
+        <div class="right pagination-item ">
+            
+                <a href="/page/5/">to old posts</a>
             
         </div>
     </div>

@@ -14,4 +14,3 @@ publish:
 	hugo -d ./docs
 	git pull
 	git push
-

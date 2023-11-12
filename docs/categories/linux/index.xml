@@ -6,7 +6,7 @@
     <description>Cihat Yildiz (linux)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2023 20:55:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Sep 2023 20:55:00 +0000</lastBuildDate>
     
     <atom:link href="https://www.cihatyildiz.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>What to Know About DLL Injection</title>
       <link>https://www.cihatyildiz.com/post/2023-09-01-what-is-dll-injection/</link>
-      <pubDate>Sat, 01 Jul 2023 20:55:00 +0000</pubDate>
+      <pubDate>Fri, 01 Sep 2023 20:55:00 +0000</pubDate>
       
       <guid>https://www.cihatyildiz.com/post/2023-09-01-what-is-dll-injection/</guid>
-      <description>&lt;p&gt;The art of cyber warfare is a constantly evolving domain, with new techniques and tools emerging every day. In the nefarious world of hacking and cybercrime, DLL Injection is one of the most prominent and widely used techniques. This blog post aims to dissect the nature of DLL (Dynamic Link Library) Injection Attacks and how they operate.&lt;/p&gt;
+      <description>&lt;p&gt;The art of cyber warfare is a constantly evolving domain, with new techniques and tools emerging every day. In the nefarious world of hacking and cybercrime, DLL Injection is one of the most prominent and widely used techniques. This blog post aims to dissect the nature of DLL (Dynamic Link Library) Injection Attacks.&lt;/p&gt;
 &lt;p&gt;Before we delve into the complexities of DLL Injection Attacks, let&amp;rsquo;s take a moment to define what a DLL is. A DLL or Dynamic Link Library is a collection of small programs, which can be called upon when needed by the executable program (EXE) that is running in your computer. A DLL allows a program to divide its functionalities into modules which can be added or removed as necessary.&lt;/p&gt;
 &lt;h1 id=&#34;understanding-dll-injection-attacks&#34; &gt;Understanding DLL Injection Attacks
 &lt;span&gt;
@@ -210,6 +210,57 @@
     &lt;/a&gt;
 &lt;/span&gt;
 &lt;/h1&gt;&lt;p&gt;DLL Injection Attacks pose a significant threat in today&amp;rsquo;s digital landscape. Understanding how these attacks operate is the first step in recognizing their potential impact. As we move forward in this digital age, being aware of such attack techniques will only become more crucial. This knowledge equips us to better comprehend the underlying threats that lurk in the cyber shadows, helping to shape our strategies to deal with such attacks. Additionally, safeguarding against DLL Injection Attacks is a continuous and multi-faceted process, requiring technical defenses, regular monitoring, and awareness at all organizational levels. By understanding and implementing these defense strategies, we can equip ourselves to prevent, detect, and respond to DLL Injection Attacks effectively.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What the $#@! is Linux System Programming</title>
+      <link>https://www.cihatyildiz.com/post/2023-08-01-what-is-system-programming/</link>
+      <pubDate>Tue, 01 Aug 2023 20:55:00 +0000</pubDate>
+      
+      <guid>https://www.cihatyildiz.com/post/2023-08-01-what-is-system-programming/</guid>
+      <description>&lt;p&gt;Linux system programming is a fascinating field that allows developers to interact with the underlying operating system and harness its power to build robust and efficient applications. By understanding the concepts and principles of Linux system programming, developers can take full advantage of the capabilities offered by the Linux operating system.&lt;/p&gt;
+&lt;p&gt;In this documentation, we will provide an introduction to Linux system programming and explore some fundamental topics that are crucial for any developer looking to delve into this domain. We will cover system calls, file I/O, processes, and signals, giving you a solid foundation to start your journey in Linux system programming using the Go programming language.&lt;/p&gt;
+&lt;h2 id=&#34;understanding-system-calls&#34; &gt;Understanding System Calls
+&lt;span&gt;
+    &lt;a href=&#34;#understanding-system-calls&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;System calls are the interface between user-level programs and the operating system. They provide a way to request services from the kernel, such as interacting with devices, managing processes, accessing files, and more. System calls act as a bridge, allowing applications to make requests that would otherwise be restricted due to the protection mechanisms of the operating system.&lt;/p&gt;
+&lt;p&gt;In Linux, system calls are exposed to developers through the C library. However, with Go, we can directly use system calls using the &lt;code&gt;syscall&lt;/code&gt; package. This package provides a set of functions and constants that allow us to invoke system calls and interact with the operating system.&lt;/p&gt;
+&lt;h2 id=&#34;file-io-operations&#34; &gt;File I/O Operations
+&lt;span&gt;
+    &lt;a href=&#34;#file-io-operations&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;File I/O is a fundamental aspect of system programming. It involves reading from and writing to files, manipulating file descriptors, and managing file permissions. In Linux, everything is treated as a file, including devices and sockets.&lt;/p&gt;
+&lt;p&gt;With Go, we can perform file I/O operations using the standard &lt;code&gt;os&lt;/code&gt; package. It provides functions for opening files, reading data, writing data, and manipulating file attributes. By combining these functions with system calls, we can harness the full power of Linux file I/O in our Go programs.&lt;/p&gt;
+&lt;h2 id=&#34;managing-processes&#34; &gt;Managing Processes
+&lt;span&gt;
+    &lt;a href=&#34;#managing-processes&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Processes are at the heart of any operating system. A process represents the execution of a program and includes its code, data, and resources. Understanding how to create, manage, and interact with processes is crucial for system programming.&lt;/p&gt;
+&lt;p&gt;In Linux, process management is facilitated by system calls such as &lt;code&gt;fork()&lt;/code&gt;, &lt;code&gt;exec()&lt;/code&gt;, &lt;code&gt;wait()&lt;/code&gt;, and &lt;code&gt;kill()&lt;/code&gt;. With Go&amp;rsquo;s &lt;code&gt;os/exec&lt;/code&gt; package, we can execute external programs, capture their output, and control their behavior. Additionally, Go&amp;rsquo;s goroutines and channels provide powerful concurrency primitives for managing processes effectively.&lt;/p&gt;
+&lt;h2 id=&#34;handling-signals&#34; &gt;Handling Signals
+&lt;span&gt;
+    &lt;a href=&#34;#handling-signals&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Signals are a way for the operating system to communicate with processes and notify them of various events. Signals can be used to interrupt a process, terminate it, or convey information about exceptional conditions. As a system programmer, it is essential to understand how to handle signals effectively.&lt;/p&gt;
+&lt;p&gt;In Linux, signals are managed through system calls like &lt;code&gt;signal()&lt;/code&gt; and &lt;code&gt;kill()&lt;/code&gt;. Go provides a mechanism to handle signals using the &lt;code&gt;os/signal&lt;/code&gt; package. This allows us to catch and handle signals in our Go programs, enabling graceful termination and handling of system events.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34; &gt;Conclusion
+&lt;span&gt;
+    &lt;a href=&#34;#conclusion&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Linux system programming opens up a world of possibilities for developers who want to harness the full power of the operating system in their applications. By understanding system calls, file I/O operations, process management, and signal handling, you can build robust, efficient, and scalable applications that take advantage of the Linux ecosystem.&lt;/p&gt;
+&lt;p&gt;In this documentation, we have provided a brief introduction to these fundamental topics, giving you a starting point for your journey into Linux system programming with Go. There is much more to explore and learn in this domain, including interprocess communication, network programming, and system performance optimization.&lt;/p&gt;
+&lt;p&gt;We encourage you to dive deeper into each topic, consult relevant documentation and resources, and experiment with building your own Linux system programs using Go. Embrace the power of Linux, and let your imagination and creativity soar as you develop applications that interact seamlessly with the underlying operating system. Happy coding!&lt;/p&gt;</description>
     </item>
     
   </channel>
